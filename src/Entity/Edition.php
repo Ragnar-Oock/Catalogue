@@ -71,13 +71,14 @@ class Edition
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\collection", inversedBy="editions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Collec", mappedBy="editions")
      */
-    private $collection;
+    private $collecs;
 
     public function __construct()
     {
         $this->authors = new ArrayCollection();
+        $this->collecs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,6 +228,34 @@ class Edition
     public function setCollection(?collection $collection): self
     {
         $this->collection = $collection;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Collec[]
+     */
+    public function getCollecs(): Collection
+    {
+        return $this->collecs;
+    }
+
+    public function addCollec(Collec $collec): self
+    {
+        if (!$this->collecs->contains($collec)) {
+            $this->collecs[] = $collec;
+            $collec->addEdition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollec(Collec $collec): self
+    {
+        if ($this->collecs->contains($collec)) {
+            $this->collecs->removeElement($collec);
+            $collec->removeEdition($this);
+        }
 
         return $this;
     }
