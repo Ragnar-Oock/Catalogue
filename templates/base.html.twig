@@ -2,11 +2,18 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Accueil{% endblock %} - Catalogue</title>
+        {# {{ encore_entry_link_tags('app.scss') }} #}
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header class="header">
+            <img src="{{ asset('medias/img/logo.png') }}" alt="logo" class="header_logo">
+        </header>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        {{ encore_entry_script_tags('main') }}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
