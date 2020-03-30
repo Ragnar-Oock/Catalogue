@@ -75,6 +75,11 @@ class Edition
      */
     private $collecs;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $disponibility;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
@@ -256,6 +261,18 @@ class Edition
             $this->collecs->removeElement($collec);
             $collec->removeEdition($this);
         }
+
+        return $this;
+    }
+
+    public function getDisponibility(): ?int
+    {
+        return $this->disponibility;
+    }
+
+    public function setDisponibility(int $disponibility): self
+    {
+        $this->disponibility = $disponibility;
 
         return $this;
     }
