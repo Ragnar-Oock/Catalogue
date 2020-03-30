@@ -1,0 +1,12 @@
+{% block body %}
+{{ form_start(form) }}
+<div class="row align-items-end">
+	<div class="col-lg-3">
+		{{ form_row(form.search) }}
+	</div>
+	<div class="col-lg-3">
+		<button class="btn btn-secondaire btn-block">Rechercher</button>
+	</div>
+</div>
+{{ form_end(form) }}
+{% endblock %}

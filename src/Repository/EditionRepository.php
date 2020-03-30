@@ -19,6 +19,29 @@ class EditionRepository extends ServiceEntityRepository
         parent::__construct($registry, Edition::class);
     }
 
+    public function searchEdition(String $search)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('ed.name LIKE :search')
+            ->andWhere('d.title LIKE :search')
+            ->andWhere('a.name LIKE :search')
+            ->leftJoin('e.editor', 'ed')
+            ->leftJoin('e.document', 'd')
+            ->leftJoin('e.author', 'a')
+            ->leftJoin('e.type', 't')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAll()
+    {
+        return $this->createQueryBuilder('e')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Edition[] Returns an array of Edition objects
     //  */

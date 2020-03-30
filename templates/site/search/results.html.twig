@@ -1,0 +1,21 @@
+{% block body %}
+{{ render(controller('App\\Controller\\SiteController::search')) }}
+<table class="results">
+	<thead class="results_head">
+		<th class="results_head__label">Titre</th>
+		<th class="results_head__label">Auteur</th>
+		<th class="results_head__label">Editeur(s)</th>
+		<th class="results_head__label">Type de document</th>
+		<th class="results_head__label">Date d'édition</th>
+	</thead>
+</table>
+{% for result in resultList %}
+	<tr class="result_item">
+		<td class="result_item__title"><a href="{{ path('show_edition', {'id': result.id}) }}" title="Voir plus d'informations">{{ result.title }}</a></td>
+		<td class="result_item__author"><a href="{{ path('show_author', {'id': result.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ result.author.name }}</a></td>
+		<td class="result_item__editeur"><a href="{{ path('show_editor', {'id': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a></td>
+		<td class="result_item__type">{{ result.type.name }}</td>
+		<td class="result_item__date">{{ result.publishedAt }}</td>
+	</tr>
+{% endfor %}
+{% endblock %}
