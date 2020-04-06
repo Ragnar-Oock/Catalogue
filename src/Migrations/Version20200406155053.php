@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200324144850 extends AbstractMigration
+final class Version20200406155053 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -26,9 +26,9 @@ final class Version20200324144850 extends AbstractMigration
         $this->addSql('CREATE TABLE collec (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE collec_edition (collec_id INT NOT NULL, edition_id INT NOT NULL, INDEX IDX_94C9AD76584D4E9A (collec_id), INDEX IDX_94C9AD7674281A5E (edition_id), PRIMARY KEY(collec_id, edition_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE document (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, subtitle VARCHAR(255) DEFAULT NULL, alttitle VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE edition (id INT AUTO_INCREMENT NOT NULL, document_id INT NOT NULL, type_id INT NOT NULL, issn VARCHAR(32) DEFAULT NULL, isbn VARCHAR(32) DEFAULT NULL, inventory_number INT NOT NULL, published_at DATE DEFAULT NULL, tome VARCHAR(255) DEFAULT NULL, pages VARCHAR(255) DEFAULT NULL, notes LONGTEXT DEFAULT NULL, INDEX IDX_A891181FC33F7837 (document_id), INDEX IDX_A891181FC54C8C93 (type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE edition (id INT AUTO_INCREMENT NOT NULL, document_id INT NOT NULL, type_id INT NOT NULL, issn VARCHAR(32) DEFAULT NULL, isbn VARCHAR(32) DEFAULT NULL, inventory_number INT NOT NULL, published_at DATE DEFAULT NULL, tome VARCHAR(255) DEFAULT NULL, pages VARCHAR(255) DEFAULT NULL, notes LONGTEXT DEFAULT NULL, disponibility INT NOT NULL, INDEX IDX_A891181FC33F7837 (document_id), INDEX IDX_A891181FC54C8C93 (type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE edition_author (edition_id INT NOT NULL, author_id INT NOT NULL, INDEX IDX_5E366CD074281A5E (edition_id), INDEX IDX_5E366CD0F675F31B (author_id), PRIMARY KEY(edition_id, author_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE editor (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE editor (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, address VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE fond (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE type (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) DEFAULT NULL, lastname VARCHAR(255) DEFAULT NULL, registered_at DATE NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
