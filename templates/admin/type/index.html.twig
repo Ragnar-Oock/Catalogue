@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Actions</th>
@@ -17,7 +16,6 @@
         <tbody>
         {% for type in types %}
             <tr>
-                <td>{{ type.id }}</td>
                 <td>{{ type.title }}</td>
                 <td>{{ type.description }}</td>
                 <td>
@@ -27,7 +25,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="text-center">
+                <td colspan="3" class="text-center">
                     <div class="flex flex-column">
                         <p>Aucun fond trouvé, essayez d'en ajouter un.</p>
                         <a href="{{ path('fond_new') }}" class="btn btn-primary">Ajouter un fond</a>
