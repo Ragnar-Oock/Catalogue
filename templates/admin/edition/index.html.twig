@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition index{% endblock %}
+
+{% block body %}
+    <h1>Edition index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>InventoryNumber</th>
+                <th>Tome</th>
+                <th>Disponibility</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for edition in editions %}
+            <tr>
+                <td>{{ edition.inventoryNumber }}</td>
+                <td>{{ edition.tome }}</td>
+                <td>{{ edition.disponibility }}</td>
+                <td>
+                    <a href="{{ path('edition_show', {'id': edition.id}) }}">show</a>
+                    <a href="{{ path('edition_edit', {'id': edition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    <div class="flex flex-column">
+                        <p>Aucun document trouvé, essayez d'en ajouter un.</p>
+                        <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('edition_new') }}">Create new</a>
+{% endblock %}

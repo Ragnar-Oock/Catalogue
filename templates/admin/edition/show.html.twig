@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition{% endblock %}
+
+{% block body %}
+    <h1>Edition</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ISSN</th>
+                <td>{{ edition.issn }}</td>
+            </tr>
+            <tr>
+                <th>ISBN</th>
+                <td>{{ edition.isbn }}</td>
+            </tr>
+            <tr>
+                <th>Numero d'inventaire</th>
+                <td>{{ edition.inventoryNumber }}</td>
+            </tr>
+            <tr>
+                <th>Date de publication</th>
+                <td>{{ edition.publishedAt ? edition.publishedAt|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Numero de tome</th>
+                <td>{{ edition.tome }}</td>
+            </tr>
+            <tr>
+                <th>nombre de pages</th>
+                <td>{{ edition.pages }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ edition.notes }}</td>
+            </tr>
+            <tr>
+                <th>Disponibilité</th>
+                <td>{{ edition.disponibility }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('edition_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
+
+    {{ include('admin/edition/_delete_form.html.twig') }}
+{% endblock %}
