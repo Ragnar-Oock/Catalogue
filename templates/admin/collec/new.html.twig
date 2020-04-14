@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une collection{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une collection</h1>
+
+    {{ include('collec/_form.html.twig') }}
+
+    <a href="{{ path('collec_index') }}" class="btn btn-primary">Retour à la liste</a>
+{% endblock %}

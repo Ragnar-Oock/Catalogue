@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des collections{% endblock %}
+
+{% block body %}
+    <h1>Liste des collections</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for collec in collecs %}
+            <tr>
+                <td>{{ collec.id }}</td>
+                <td>{{ collec.title }}</td>
+                <td>{{ collec.description }}</td>
+                <td>
+                    <a href="{{ path('collec_show', {'id': collec.id}) }}">Afficher</a>
+                    <a href="{{ path('collec_edit', {'id': collec.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    <div class="flex flex-column">
+                        <p>Aucune collection trouvée, essayez d'en ajouter une.</p>
+                        <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter une collection</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('collec_new') }}" class="btn btn-primary">Ajouter une collection</a>
+{% endblock %}
