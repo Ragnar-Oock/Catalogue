@@ -20,7 +20,7 @@ class EditionController extends AbstractController
      */
     public function index(EditionRepository $editionRepository): Response
     {
-        return $this->render('edition/index.html.twig', [
+        return $this->render('admin/edition/index.html.twig', [
             'editions' => $editionRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class EditionController extends AbstractController
             return $this->redirectToRoute('edition_index');
         }
 
-        return $this->render('edition/new.html.twig', [
+        return $this->render('admin/edition/new.html.twig', [
             'edition' => $edition,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class EditionController extends AbstractController
      */
     public function show(Edition $edition): Response
     {
-        return $this->render('edition/show.html.twig', [
+        return $this->render('admin/edition/show.html.twig', [
             'edition' => $edition,
         ]);
     }
@@ -72,7 +72,7 @@ class EditionController extends AbstractController
             return $this->redirectToRoute('edition_index');
         }
 
-        return $this->render('edition/edit.html.twig', [
+        return $this->render('admin/edition/edit.html.twig', [
             'edition' => $edition,
             'form' => $form->createView(),
         ]);

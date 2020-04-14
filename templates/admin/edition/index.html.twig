@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edition index{% endblock %}
+{% block title %}Liste des édition{% endblock %}
 
-{% block body %}
-    <h1>Edition index</h1>
+{% block main %}
+    <h1>Liste des édition</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>InventoryNumber</th>
+                <th>Numero d'inventaire</th>
                 <th>Tome</th>
-                <th>Disponibility</th>
+                <th>Disponibilité</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,8 +29,8 @@
             <tr>
                 <td colspan="4" class="text-center">
                     <div class="flex flex-column">
-                        <p>Aucun document trouvé, essayez d'en ajouter un.</p>
-                        <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
+                        <p>Aucune edition trouvée, essayez d'en ajouter une.</p>
+                        <a href="{{ path('edition_new') }}" class="btn btn-primary">Ajouter une édition</a>
                     </div>
                 </td>
             </tr>
@@ -38,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('edition_new') }}">Create new</a>
+    <a href="{{ path('edition_new') }}" class="btn btn-primary">Ajouter une édition</a>
 {% endblock %}

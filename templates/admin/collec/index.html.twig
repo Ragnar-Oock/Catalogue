@@ -2,7 +2,7 @@
 
 {% block title %}Liste des collections{% endblock %}
 
-{% block body %}
+{% block main %}
     <h1>Liste des collections</h1>
 
     <table class="table">
@@ -28,7 +28,7 @@
                 <td colspan="3" class="text-center">
                     <div class="flex flex-column">
                         <p>Aucune collection trouvée, essayez d'en ajouter une.</p>
-                        <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter une collection</a>
+                        <a href="{{ path('collec_new') }}" class="btn btn-primary">Ajouter une collection</a>
                     </div>
                 </td>
             </tr>
