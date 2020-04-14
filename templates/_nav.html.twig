@@ -1,0 +1,20 @@
+<nav class="menu">
+	<input type="checkbox" id="menu_toggle" class="menu_toggle">
+
+	<label for="menu_toggle" class="menu_label">
+		<span class="menu_label_text">Fermer le menu</span>
+		<span class="menu_label_icon">X</span>
+	</label>
+
+	<div class="menu-toggleable">
+		<ul class="nav flex-column">
+			<li class="nav-item"><a href="{{ path('editor_index') }}" class="nav-link">gerer les editeurs</a></li>
+			<li class="nav-item"><a href="{{ path('document_index') }}" class="nav-link">gerer les document</a></li>
+			<li class="nav-item"><a href="{{ path('fond_index') }}" class="nav-link">gerer les fonds</a></li>
+			<li class="nav-item"><a href="{{ path('author_index') }}" class="nav-link">gerer les auteurs</a></li>
+			<li class="nav-item"><a href="{{ path('type_index') }}" class="nav-link">gerer les types</a></li>
+			<li class="nav-item"><a href="{{ path('collec_index') }}" class="nav-link">gerer les collections</a></li>
+			<li class="nav-item"><a href="{{ path('edition_index') }}" class="nav-link">gerer les editions</a></li>
+		</ul>
+	</div>
+</nav>

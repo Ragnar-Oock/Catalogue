@@ -11,6 +11,7 @@
         <header class="header">
             <img src="{{ asset('medias/img/logo.png') }}" alt="logo" class="header_logo">
         </header>
+        {{ include('_nav.html.twig') }}
         <main class="main">
             {% block main %}{% endblock %}
         </main>
