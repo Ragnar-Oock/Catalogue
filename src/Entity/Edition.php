@@ -54,18 +54,18 @@ class Edition
     private $notes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\document", inversedBy="editions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Document", inversedBy="editions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $document;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\author", inversedBy="editions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Author", inversedBy="editions")
      */
     private $authors;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\type", inversedBy="editions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="editions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;

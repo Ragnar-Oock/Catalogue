@@ -29,7 +29,7 @@ class Collec
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\edition", inversedBy="collecs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Edition", inversedBy="collecs")
      */
     private $editions;
 

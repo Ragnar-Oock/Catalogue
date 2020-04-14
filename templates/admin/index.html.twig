@@ -3,5 +3,8 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block main %}
-    <a href="{{ path('editor_index') }}">gerer les editeurs</a>
+<ul class="nav flex-column">
+    <li class="nav-item"><a href="{{ path('editor_index') }}" class="nav-link">gerer les editeurs</a></li>
+    <li class="nav-item"><a href="{{ path('document_index') }}" class="nav-link">gerer les document</a></li>
+</ul>
 {% endblock %}

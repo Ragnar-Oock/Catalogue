@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Document index{% endblock %}
+
+{% block main %}
+    <a href="{{ path('admin') }}" class="btn btn-link">Retour au tableau de bord</a>
+
+    <h1>Liste des documents</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Sous-titre</th>
+                <th>Titre alternatif</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                <td>{{ document.title }}</td>
+                <td>{{ document.subtitle }}</td>
+                <td>{{ document.alttitle }}</td>
+                <td>
+                    <a href="{{ path('document_show', {'id': document.id}) }}">show</a>
+                    <a href="{{ path('document_edit', {'id': document.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div class="flex flex-column">
+                    <p>Aucun document trouvé, essayez d'en ajouter un.</p>
+                    <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
+                </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
+{% endblock %}
