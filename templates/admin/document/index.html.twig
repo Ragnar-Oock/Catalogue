@@ -25,17 +25,17 @@
                 <td>{{ document.subtitle }}</td>
                 <td>{{ document.alttitle }}</td>
                 <td>
-                    <a href="{{ path('document_show', {'id': document.id}) }}">show</a>
-                    <a href="{{ path('document_edit', {'id': document.id}) }}">edit</a>
+                    <a href="{{ path('document_show', {'id': document.id}) }}">Afficher</a>
+                    <a href="{{ path('document_edit', {'id': document.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="5" class="text-center">
                     <div class="flex flex-column">
-                    <p>Aucun document trouvé, essayez d'en ajouter un.</p>
-                    <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
-                </div>
+                        <p>Aucun document trouvé, essayez d'en ajouter un.</p>
+                        <a href="{{ path('editor_new') }}" class="btn btn-primary">Ajouter un document</a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}

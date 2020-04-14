@@ -23,8 +23,8 @@
                 <td>{{ fond.title }}</td>
                 <td>{{ fond.description | u.truncate(50,'...') }}</td>
                 <td>
-                    <a href="{{ path('fond_show', {'id': fond.id}) }}">show</a>
-                    <a href="{{ path('fond_edit', {'id': fond.id}) }}">edit</a>
+                    <a href="{{ path('fond_show', {'id': fond.id}) }}">Afficher</a>
+                    <a href="{{ path('fond_edit', {'id': fond.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
