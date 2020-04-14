@@ -20,7 +20,7 @@ class EditorController extends AbstractController
      */
     public function index(EditorRepository $editorRepository): Response
     {
-        return $this->render('editor/index.html.twig', [
+        return $this->render('admin/editor/index.html.twig', [
             'editors' => $editorRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class EditorController extends AbstractController
             return $this->redirectToRoute('editor_index');
         }
 
-        return $this->render('editor/new.html.twig', [
+        return $this->render('admin/editor/new.html.twig', [
             'editor' => $editor,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class EditorController extends AbstractController
      */
     public function show(Editor $editor): Response
     {
-        return $this->render('editor/show.html.twig', [
+        return $this->render('admin/editor/show.html.twig', [
             'editor' => $editor,
         ]);
     }
@@ -72,7 +72,7 @@ class EditorController extends AbstractController
             return $this->redirectToRoute('editor_index');
         }
 
-        return $this->render('editor/edit.html.twig', [
+        return $this->render('admin/editor/edit.html.twig', [
             'editor' => $editor,
             'form' => $form->createView(),
         ]);

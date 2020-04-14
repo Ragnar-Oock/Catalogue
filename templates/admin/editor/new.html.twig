@@ -5,7 +5,8 @@
 {% block main %}
     <h1>Create new Editor</h1>
 
-    {{ include('editor/_form.html.twig') }}
+    {{ include('admin/editor/_form.html.twig') }}
 
-    <a href="{{ path('editor_index') }}">back to list</a>
+    <a href="{{ path('editor_index') }}" class="btn btn-primary">back to list</a>
+
 {% endblock %}
