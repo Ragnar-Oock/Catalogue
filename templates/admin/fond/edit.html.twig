@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Fond{% endblock %}
+{% block title %}Modifier un fond{% endblock %}
 
 {% block main %}
-    <h1>Edit Fond</h1>
+    <h1>Modifier un fond</h1>
 
-    {{ include('admin/fond/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/fond/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
     <a href="{{ path('fond_index') }}" class="btn btn-primary">Retour à la liste</a>
 
