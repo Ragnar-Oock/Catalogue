@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des types{% endblock %}
+
+{% block main %}
+    <h1>Liste des types</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type in types %}
+            <tr>
+                <td>{{ type.id }}</td>
+                <td>{{ type.title }}</td>
+                <td>{{ type.description }}</td>
+                <td>
+                    <a href="{{ path('type_show', {'id': type.id}) }}">Afficher</a>
+                    <a href="{{ path('type_edit', {'id': type.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    <div class="flex flex-column">
+                        <p>Aucun fond trouvé, essayez d'en ajouter un.</p>
+                        <a href="{{ path('fond_new') }}" class="btn btn-primary">Ajouter un fond</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_new') }}">Create new</a>
+{% endblock %}
