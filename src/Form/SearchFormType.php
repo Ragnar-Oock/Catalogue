@@ -13,7 +13,9 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->add('search', SearchType ::class, [
-                'label' => 'Rechercher'
+                'attr' => [
+                    'placeholder' => 'Rechercher un auteur, un editeur, un titre...'
+                ]
             ])
         ;
     }

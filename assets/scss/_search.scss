@@ -1,0 +1,25 @@
+.search {
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 800px;
+
+	&_field {
+		flex-grow: 1;
+
+		input {
+			border-radius: .25rem 0 0 .25rem;
+		}
+	}
+
+	&_btn {
+		flex-grow: 0;
+		
+		button {
+			border-radius: 0 .25rem .25rem 0;
+			padding-left: .5rem;
+			padding-right: .5rem;
+		}
+	}
+}
