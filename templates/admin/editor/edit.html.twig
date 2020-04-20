@@ -5,7 +5,7 @@
 {% block main %}
     <h1>Modifier un éditeur</h1>
 
-    {{ include('admin/editor/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    {{ include('form.html.twig', {'button_label': 'Enregistrer'}) }}
 
     <a href="{{ path('editor_index') }}" class="btn btn-primary">Retour à la liste</a>
 
