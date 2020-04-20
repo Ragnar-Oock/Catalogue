@@ -9,9 +9,12 @@
 // import '../scss/app.scss';
 import '../scss/main.scss';
 
-require('bootstrap');
-
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
+const $ = require('jquery');
+global.$ = global.jQuery = $;
+
+require('bootstrap');
+
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
