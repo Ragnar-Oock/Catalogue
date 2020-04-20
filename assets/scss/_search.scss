@@ -5,6 +5,11 @@
 	width: 80%;
 	max-width: 800px;
 
+	@media screen and (max-width: 992px) {
+		width: 100%;
+		padding: .5em 0;
+	}
+
 	&_field {
 		flex-grow: 1;
 

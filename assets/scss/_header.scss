@@ -1,0 +1,19 @@
+.header {
+	.nav-item + .nav-item {
+		position: relative;
+	
+		&::before {
+			content: '';
+			height: 65%;
+			display: block;
+			position: absolute;
+			border-left: #0008 solid thin;
+			top: 20%;
+		}
+	}
+	@media screen and (max-width: 992px) {
+		.nav-item + .nav-item::before {
+			content: none;
+		}
+	}
+}
