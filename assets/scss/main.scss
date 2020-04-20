@@ -1,11 +1,14 @@
 @import "~bootstrap/scss/bootstrap";
 
 @import "_search";
+@import "_header";
+
 body {
 	background-color: lightgray;
 	display: grid;
 	grid-template-areas: "header header" "nav clear" "nav main" "footer footer";
 	grid-template-columns: 25ch 1fr;
+	grid-template-rows: auto 3em minmax(80vh, auto) auto;
 }
 
 .header {
@@ -20,8 +23,14 @@ body {
 	padding: 2em 1em;
 }
 
-nav {
+.nav_wrapper {
 	grid-area: nav;
+	position: relative;
+
+	.menu {
+		position: sticky;
+		top: 0;
+	}
 }
 
 
@@ -42,6 +51,14 @@ nav {
 		max-height: 100%;
 	}
 
+	input[type="checkbox"]:checked ~ .menu_label .menu_label_text-opened {
+		display: block;
+	}
+	input[type="checkbox"]:checked ~ .menu_label .menu_label_text-closed {
+		display: none;
+	}
+
+
 	&_label {
 		display: flex;
 		justify-content: end;
@@ -55,7 +72,10 @@ nav {
 			transition: max-width 300ms ease-in;
 			white-space: nowrap;
 			overflow: hidden;
-
+			
+			&-opened {
+				display: none;
+			}
 		}
 		&:hover>&_text {
 			max-width: 100%;
