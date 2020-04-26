@@ -1,6 +1,7 @@
+{% extends "base.html.twig" %}
+
 {% block main %}
-{{ render(controller('App\\Controller\\SiteController::search')) }}
-<table class="results">
+<table class="results table">
 	<thead class="results_head">
 		<th class="results_head__label">Titre</th>
 		<th class="results_head__label">Auteur</th>
@@ -8,14 +9,40 @@
 		<th class="results_head__label">Type de document</th>
 		<th class="results_head__label">Date d'édition</th>
 	</thead>
+	<tbody>
+	{% for result in resultList %}
+	{# <pre>
+		{{ dump(result) }}
+	</pre> #}
+		<tr class="result_item">
+			<td class="result_item__title"><a href="{{ path('edition_show', {'id': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
+			<td class="result_item__author">
+				{% if result.authors is not empty %}
+					{% for author in result.authors %}
+						<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur">{{ author.name }}</a>
+					{% endfor %}
+					{# {% if result.authors|length>1 %}
+					<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
+					{% endif %}				 #}
+				{% endif %}
+			</td>
+			<td class="result_item__editeur">
+				{% if result.editor is not empty %}
+					{% for editor in result.editor %}
+						<a href="{{ path('editor_show', {'editor': editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ editor.name }}</a>
+					{% endfor %}
+					{% if result.authors|length>1 %}
+					<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
+					{% endif %}
+				{% endif %}
+			<td class="result_item__type">{{ result.type.title }}</td>
+			<td class="result_item__date">{{ result.publishedAt|date("d/m/Y") }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
 </table>
-{% for result in resultList %}
-	<tr class="result_item">
-		<td class="result_item__title"><a href="{{ path('show_edition', {'id': result.id}) }}" title="Voir plus d'informations">{{ result.title }}</a></td>
-		<td class="result_item__author"><a href="{{ path('show_author', {'id': result.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ result.author.name }}</a></td>
-		<td class="result_item__editeur"><a href="{{ path('show_editor', {'id': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a></td>
-		<td class="result_item__type">{{ result.type.name }}</td>
-		<td class="result_item__date">{{ result.publishedAt }}</td>
-	</tr>
-{% endfor %}
+
+<div class="d-flex justify-content-center">
+	{{ knp_pagination_render(resultList) }}
+</div>
 {% endblock %}
