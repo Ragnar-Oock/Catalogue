@@ -22,13 +22,33 @@ class EditionRepository extends ServiceEntityRepository
     public function searchEdition(String $search)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('ed.name LIKE :search')
-            ->andWhere('d.title LIKE :search')
-            ->andWhere('a.name LIKE :search')
+            ->addSelect('a')
+            ->addSelect('a')
+            ->addSelect('t')
+            ->addSelect('ed')
+            ->orWhere('ed.name LIKE :search')
+            ->orWhere('d.title LIKE :search')
+            ->orWhere('a.name LIKE :search')
             ->leftJoin('e.editor', 'ed')
             ->leftJoin('e.document', 'd')
-            ->leftJoin('e.author', 'a')
+            ->leftJoin('e.authors', 'a')
             ->leftJoin('e.type', 't')
+            ->setParameter('search', '%'.$search.'%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+    /**
+     * @return Edition[] Returns an array of Edition objects
+     */
+    public function findByAuthor($authorId)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.authors = :authorId')
+            ->setParameter('authorId', $authorId)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
