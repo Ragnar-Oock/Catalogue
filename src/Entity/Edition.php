@@ -80,6 +80,11 @@ class Edition
      */
     private $disponibility;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="editions")
+     */
+    private $editor;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
@@ -275,5 +280,22 @@ class Edition
         $this->disponibility = $disponibility;
 
         return $this;
+    }
+
+    public function getEditor(): ?editor
+    {
+        return $this->editor;
+    }
+
+    public function setEditor(?editor $editor): self
+    {
+        $this->editor = $editor;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->inventoryNumber . ' - ' . $this->document;
     }
 }
