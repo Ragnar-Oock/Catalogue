@@ -15,7 +15,6 @@ class AuthorType extends AbstractType
             ->add('name')
             ->add('birth')
             ->add('death')
-            ->add('editions')
         ;
     }
 
