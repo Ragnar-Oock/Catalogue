@@ -8,13 +8,14 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <header class="header">
-            <img src="{{ asset('medias/img/logo.png') }}" alt="logo" class="header_logo">
-        </header>
+        {{ include('_header.html.twig') }}
         {{ include('_nav.html.twig') }}
         <main class="main">
             {% block main %}{% endblock %}
         </main>
+        <footer class="footer">
+            {% block footer %}{% endblock %}
+        </footer>
         {{ encore_entry_script_tags('main') }}
         {% block javascripts %}{% endblock %}
     </body>
