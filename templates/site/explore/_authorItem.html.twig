@@ -1,0 +1,11 @@
+<tr class="result_item">
+	<td>
+		<a href="{{ path('author_show', {'id': author.id}) }}" title="Voir la bibliographie de cet auteur">{{ author.name }}</a>
+	</td>
+	<td>
+		{{ author.birth ? author.birth|date('Y-m-d') : '' }}
+	</td>
+	<td>
+		{{ author.death ? author.death|date('Y-m-d') : '' }}
+	</td>
+</tr>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Author{% endblock %}
+
+{% block main %}
+    <h1>Author</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre du document</th>
+                <td>{{ edition.document.title }}</td>
+            </tr>
+            <tr>
+                <th>Date de publication</th>
+                <td>{{ edition.publishedAt|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Numero de tome</th>
+                <td>{{ edition.tome }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+		<table class="results table">
+			<thead class="results_head">
+				<th class="results_head__label">Nom</th>
+				<th class="results_head__label">Date de naiscence</th>
+				<th class="results_head__label">Date de mort</th>
+			</thead>
+			<tbody>
+			{% for author in authors %}
+                {{ include('site/explore/_authorItem.html.twig') }}
+			{% endfor %}
+			</tbody>
+		</table>
+
+		<div class="d-flex justify-content-center">
+			{{ knp_pagination_render(authors) }}
+		</div>
+{% endblock %}
