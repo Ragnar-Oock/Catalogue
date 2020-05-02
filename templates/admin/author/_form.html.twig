@@ -1,4 +1,18 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {# {{ form_widget(form) }} #}
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm12">
+            {{ form_row(form.birth) }}
+        </div>
+        <div class="col-lg-6 col-sm12">
+            {{ form_row(form.death) }}
+        </div>
+    </div>
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

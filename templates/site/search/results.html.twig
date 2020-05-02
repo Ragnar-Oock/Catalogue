@@ -15,7 +15,7 @@
 		{{ dump(result) }}
 	</pre> #}
 		<tr class="result_item">
-			<td class="result_item__title"><a href="{{ path('edition_show', {'id': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
+			<td class="result_item__title"><a href="{{ path('explore_edition', {'edition': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
 			<td class="result_item__author">
 				{% if result.authors is not empty %}
 					{% for author in result.authors %}

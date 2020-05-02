@@ -3,22 +3,53 @@
 {% block title %}Author{% endblock %}
 
 {% block main %}
-    <h1>Author</h1>
+{% if edition.disponibility %}
+[DISPONIBLE]
+{% else %}
+    [INDISPONIBLE]
+{% endif %}
+
+{% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
+{% endif %}
+
+
+    <h1>{{ edition.document.title }}</h1>
+    <p>Sous titre : {{ edition.document.subtitle }}</p>
+    <p class="text-muted">Titre alternatif : {{ edition.document.alttitle }}</p>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Titre du document</th>
-                <td>{{ edition.document.title }}</td>
-            </tr>
+        {% if edition.publishedAt is not null %}
             <tr>
                 <th>Date de publication</th>
                 <td>{{ edition.publishedAt|date('Y-m-d') }}</td>
             </tr>
+        {% endif %}
+        {% if edition.tome is not null %}
             <tr>
                 <th>Numero de tome</th>
                 <td>{{ edition.tome }}</td>
             </tr>
+        {% endif %}
+        {% if edition.pages is not null %}
+            <tr>
+                <th>Nombre de page</th>
+                <td>{{ edition.pages }}</td>
+            </tr>
+        {% endif %}
+        {% if edition.issn is not null %}
+            <tr>
+                <th>ISSN</th>
+                <td>{{ edition.issn }}</td>
+            </tr>
+        {% endif %}
+        {% if edition.isbn is not null %}
+            <tr>
+                <th>ISBN</th>
+                <td>{{ edition.isbn }}</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 

@@ -16,5 +16,18 @@ global.$ = global.jQuery = $;
 
 require('bootstrap');
 
+const moment = require('moment');
+global.moment = moment;
+require('moment/locale/fr');
+console.log(moment.locale());
+
+require('tempusdominus-bootstrap-4');
+$("[data-toggle='datepicker']").datetimepicker({
+    locale: 'fr',
+    format: 'DD-MM-YYYY',
+    icons: {
+        time: 'fas fa-clock',
+    }
+});
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
