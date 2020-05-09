@@ -34,13 +34,13 @@ class Author
     private $death;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Edition", mappedBy="authors")
+     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="author", orphanRemoval=true)
      */
-    private $editions;
+    private $participations;
 
     public function __construct()
     {
-        $this->editions = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,36 +84,39 @@ class Author
         return $this;
     }
 
-    /**
-     * @return Collection|Edition[]
-     */
-    public function getEditions(): Collection
-    {
-        return $this->editions;
-    }
-
-    public function addEdition(Edition $edition): self
-    {
-        if (!$this->editions->contains($edition)) {
-            $this->editions[] = $edition;
-            $edition->addAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEdition(Edition $edition): self
-    {
-        if ($this->editions->contains($edition)) {
-            $this->editions->removeElement($edition);
-            $edition->removeAuthor($this);
-        }
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Writer[]
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Writer $participation): self
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Writer $participation): self
+    {
+        if ($this->participations->contains($participation)) {
+            $this->participations->removeElement($participation);
+            // set the owning side to null (unless already changed)
+            if ($participation->getAuthor() === $this) {
+                $participation->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

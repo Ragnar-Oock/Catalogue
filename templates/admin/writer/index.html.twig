@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Writer index{% endblock %}
+
+{% block main %}
+    <h1>Auteurs du document <a href="{{ path('edition_show', {'id': edition.id }) }}">{{ edition.document.title }}</a></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Fonction</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for writer in writers %}
+            <tr>
+                <td>{{ writer.author.name }}</td>
+                <td>{{ writer.participationType.title }}</td>
+                <td>
+                    <a href="{{ path('writer_show', {'id': writer.id}) }}">show</a>
+                    <a href="{{ path('writer_edit', {'id': writer.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center">
+                    <div class="flex flex-column">
+                        <p>Aucun auteur trouvé, essayez d'en ajouter un.</p>
+                        <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-primary">Ajouter un participant</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-primary">Ajouter un participant</a>
+{% endblock %}

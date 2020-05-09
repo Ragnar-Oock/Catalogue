@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des édition{% endblock %}
+{% block title %}Liste des éditions{% endblock %}
 
 {% block main %}
-    <h1>Liste des édition</h1>
+    <h1>Liste des éditions</h1>
 
     <table class="table">
         <thead>
             <tr>
+                <th>Titre</th>
                 <th>Numero d'inventaire</th>
                 <th>Tome</th>
                 <th>Disponibilité</th>
@@ -17,6 +18,7 @@
         <tbody>
         {% for edition in editions %}
             <tr>
+                <td>{{ edition.document.title }}</td>
                 <td>{{ edition.inventoryNumber }}</td>
                 <td>{{ edition.tome }}</td>
                 <td>{{ edition.disponibility }}</td>

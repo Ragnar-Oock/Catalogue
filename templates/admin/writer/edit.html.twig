@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Writer{% endblock %}
+
+{% block main %}
+    <h1>Edit Writer</h1>
+
+    {{ include('admin/writer/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('writer_index') }}">back to list</a>
+
+    {{ include('admin/writer/_delete_form.html.twig') }}
+{% endblock %}

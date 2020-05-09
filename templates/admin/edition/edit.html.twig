@@ -10,4 +10,7 @@
     <a href="{{ path('edition_index') }}" class="btn btn-primary">Retour à la liste</a>
 
     {{ include('admin/edition/_delete_form.html.twig') }}
+
+    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-primary">Gérer les participants</a>
+
 {% endblock %}

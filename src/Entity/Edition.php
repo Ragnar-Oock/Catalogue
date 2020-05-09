@@ -60,11 +60,6 @@ class Edition
     private $document;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Author", inversedBy="editions")
-     */
-    private $authors;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="editions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -85,10 +80,15 @@ class Edition
      */
     private $editor;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="edition", orphanRemoval=true)
+     */
+    private $writers;
+
     public function __construct()
     {
-        $this->authors = new ArrayCollection();
         $this->collecs = new ArrayCollection();
+        $this->writers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,32 +192,6 @@ class Edition
         return $this;
     }
 
-    /**
-     * @return Collection|author[]
-     */
-    public function getAuthors(): Collection
-    {
-        return $this->authors;
-    }
-
-    public function addAuthor(author $author): self
-    {
-        if (!$this->authors->contains($author)) {
-            $this->authors[] = $author;
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(author $author): self
-    {
-        if ($this->authors->contains($author)) {
-            $this->authors->removeElement($author);
-        }
-
-        return $this;
-    }
-
     public function getType(): ?type
     {
         return $this->type;
@@ -297,5 +271,36 @@ class Edition
     public function __toString()
     {
         return $this->inventoryNumber . ' - ' . $this->document;
+    }
+
+    /**
+     * @return Collection|Writer[]
+     */
+    public function getWriters(): Collection
+    {
+        return $this->writers;
+    }
+
+    public function addWriter(Writer $writer): self
+    {
+        if (!$this->writers->contains($writer)) {
+            $this->writers[] = $writer;
+            $writer->setEdition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWriter(Writer $writer): self
+    {
+        if ($this->writers->contains($writer)) {
+            $this->writers->removeElement($writer);
+            // set the owning side to null (unless already changed)
+            if ($writer->getEdition() === $this) {
+                $writer->setEdition(null);
+            }
+        }
+
+        return $this;
     }
 }

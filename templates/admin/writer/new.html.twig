@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Writer{% endblock %}
+
+{% block main %}
+    <h1>Create new Writer</h1>
+
+    {{ include('admin/writer/_form.html.twig') }}
+
+    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-primary">Retour a la liste</a>
+
+{% endblock %}

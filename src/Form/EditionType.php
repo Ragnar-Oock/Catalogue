@@ -21,7 +21,6 @@ class EditionType extends AbstractType
             ->add('notes')
             ->add('disponibility')
             ->add('document')
-            ->add('authors')
             ->add('type')
             ->add('collecs')
         ;
