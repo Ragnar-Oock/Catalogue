@@ -35,36 +35,13 @@ class SiteController extends AbstractController
         ]);
     }
 
-    public function showSearchResults(Request $request, PaginatorInterface $paginator, EditionRepository $editionRepository)
-    {
-        $search = $request->query->get('search') != null ? $request->query->get('search') : null;
-
-        if ($search === null) {
-            $res = $editionRepository->findAll();
-        }
-        else {
-            $res = $editionRepository->searchEdition($search);
-        }
-
-        $res = $paginator->paginate(
-            $res,
-            $request->query->get('page', 1),
-            30
-        );
-
-        return $this->render('site/search/results.html.twig', [
-            'resultList' => $res
-        ]);
-    }
-
-
     /**
      * @Route("/explorer/auteur/{author}", name="explore_author")
      */
     public function showAuthor(Request $request, PaginatorInterface $paginator, Author $author)
     {
         if ($author != null) {
-            $bibliography = $author->getEditions();
+            $bibliography = $author->getParticipations();
             $bibliography = $paginator->paginate(
                 $bibliography,
                 $request->query->get('page', 1),
@@ -89,7 +66,7 @@ class SiteController extends AbstractController
 
         if ($edition != null) {
             
-            $authors = $edition->getAuthors();
+            $authors = $edition->getWriters();
             $authors = $paginator->paginate(
                 $authors,
                 $request->query->get('page', 1),
