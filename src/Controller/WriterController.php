@@ -46,7 +46,7 @@ class WriterController extends AbstractController
                 ? 'writer_add'
                 : 'edition_edit';
 
-            return $this->redirectToRoute($nextAction, ['id' => $edition]);
+            return $this->redirectToRoute($nextAction, ['id' => $edition->getId()]);
         }
 
         return $this->render('admin/writer/new.html.twig', [
