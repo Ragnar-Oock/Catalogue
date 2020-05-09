@@ -23,6 +23,7 @@ class EditionType extends AbstractType
             ->add('document')
             ->add('type')
             ->add('collecs')
+            ->add('editor')
         ;
     }
 
