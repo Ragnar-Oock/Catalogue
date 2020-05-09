@@ -1,11 +1,11 @@
 <tr class="result_item">
 	<td>
-		<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur">{{ author.name }}</a>
+		<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
 	</td>
 	<td>
-		{{ author.birth ? author.birth|date('Y-m-d') : '--' }}
+		{{ writer.author.birth ? writer.author.birth|date('Y-m-d') : '--' }}
 	</td>
 	<td>
-		{{ author.death ? author.death|date('Y-m-d') : '--' }}
+		{{ writer.author.death ? writer.author.death|date('Y-m-d') : '--' }}
 	</td>
 </tr>

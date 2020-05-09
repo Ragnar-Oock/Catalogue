@@ -17,9 +17,9 @@
 		<tr class="result_item">
 			<td class="result_item__title"><a href="{{ path('explore_edition', {'edition': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
 			<td class="result_item__author">
-				{% if result.authors is not empty %}
-					{% for author in result.authors %}
-						<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur">{{ author.name }}</a>
+				{% if result.writers is not empty %}
+					{% for writer in result.writers %}
+						<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
 					{% endfor %}
 					{# {% if result.authors|length>1 %}
 					<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
@@ -28,12 +28,7 @@
 			</td>
 			<td class="result_item__editeur">
 				{% if result.editor is not empty %}
-					{% for editor in result.editor %}
-						<a href="{{ path('editor_show', {'editor': editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ editor.name }}</a>
-					{% endfor %}
-					{% if result.authors|length>1 %}
-					<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
-					{% endif %}
+					<a href="{{ path('editor_show', {'id': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a>
 				{% endif %}
 			<td class="result_item__type">{{ result.type.title }}</td>
 			<td class="result_item__date">{{ result.publishedAt|date("d/m/Y") }}</td>
