@@ -1,4 +1,7 @@
 .menu {
+	filter: drop-shadow(0 0 5px #3c3c3c80);
+	padding: 0 .5em .5em .5em;
+
 	&_toggle {
 		scale: 0;
 		position: absolute;
@@ -24,16 +27,22 @@
 
 
 	&_label {
-		display: flex;
-		justify-content: end;
-		background-color: grey;
+		display: inline-flex;
+		margin-bottom: 0;
+		cursor: pointer;
+		font-weight: bold;
 		border-radius: 2px;
 		text-align: right;
 
 		&_text {
 			max-width: 0px;
 			display: inline-block;
-			transition: max-width 300ms ease-in;
+			transition: max-width 300ms ease-in, opacity 300ms ease-in, padding 0ms 300ms linear;
+			opacity: 0;
+			background-color: white;
+			padding: .5em 0;
+			margin: .5em .5em 0 0;
+			border-radius: .5em;
 			white-space: nowrap;
 			overflow: hidden;
 			
@@ -43,11 +52,49 @@
 		}
 		&:hover>&_text {
 			max-width: 100%;
+			opacity: 1;
+			transition: max-width 300ms ease-in, opacity 100ms ease-in;
+			padding: .5em 1em;
+		}
+
+		&_icon {
+			background-color: white;
+			padding: .5em 1em;
+			margin: .5em .5em 0 .5em;
+			border-radius: .5em;
+			transition: background-color 300ms ease-in-out;
+		}
+
+		@at-root :focus ~ .menu_label > span {
+			background-color: #007bff;
+			color: white;
+			}
+	}
+
+	&_item {
+		background-color: #d3d3d3;
+		margin-top: 0.4em;
+		box-shadow: 0 0 0 0 #151617;
+		margin-top: 0.3em;
+		border-radius: 5px;
+		transition: background-color 300ms ease-in-out;
+
+		&:hover {
+			background-color: #bbb;
+		}
+	}
+
+	&_link {
+		transition: color 300ms ease-in-out;
+
+		:hover {
+			color: #003f84;
 		}
 	}
 }
 
 .nav_wrapper {
 	position: fixed;
-	width: 30ch;
+	width: 31ch;
+	filter: drop-shadow(0 0 5px #3c3c3c80);
 }
