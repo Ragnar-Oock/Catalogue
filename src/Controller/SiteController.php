@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Entity\Editor;
 use App\Entity\Edition;
 use App\Form\SearchFormType;
-use App\Repository\AuthorRepository;
-use App\Repository\EditionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +62,6 @@ class SiteController extends AbstractController
      */
     public function showEdition(Request $request, PaginatorInterface $paginator, Edition $edition)
     {
-
         if ($edition != null) {
             
             $authors = $edition->getWriters();
@@ -80,6 +78,26 @@ class SiteController extends AbstractController
         }
         else {
             dd($request->query->get('authorId'));
+        }
+    }
+
+    /**
+     * @Route("/explorer/editeur/{editor}", name="explore_editor")
+     */
+    public function showEditor(Request $request, PaginatorInterface $paginator, Editor $editor)
+    {
+        if ($editor != null) {
+
+            $editions = $paginator->paginate(
+                $editor->getEditions(),
+                $request->query->get('page', 1),
+                15
+            );
+
+            return $this->render('site/explore/editor.html.twig', [
+                'editor' => $editor,
+                'editions' => $editions
+            ]);
         }
     }
 }

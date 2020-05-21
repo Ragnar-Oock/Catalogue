@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editor{% endblock %}
+
+{% block main %}
+
+{% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('editor_edit', {'id': editor.id}) }}" class="btn btn-primary">Modifier</a>
+{% endif %}
+
+
+	<h1>{{ editor.name }}</h1>
+
+	<h2>Informations</h2>
+	<table class="table">
+		<tbody>
+		{% if editor.address is not null %}
+			<tr>
+				<th>Adresse</th>
+				<td>{{ editor.address }}</td>
+			</tr>
+		{% endif %}
+		</tbody>
+	</table>
+
+	<h2>Publications</h2>
+	<table class="results table">
+		<thead class="results_head">
+			<th class="results_head__label">Titre</th>
+			<th class="results_head__label">Auteurs</th>
+			<th class="results_head__label">Editeur(s)</th>
+			<th class="results_head__label">Type de document</th>
+			<th class="results_head__label">Date d'édition</th>
+		</thead>
+		<tbody>
+		{% for edition in editions %}
+			{{ include('site/explore/_editionItem.html.twig') }}
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="d-flex justify-content-center">
+		{{ knp_pagination_render(editions) }}
+	</div>
+{% endblock %}
