@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block main %}
+    <h1>Reservation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Créée le</th>
+                <td>{{ reservation.submimitedAt ? reservation.submimitedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Validée</th>
+                <td>{{ reservation.validated ? 'Oui' : 'Non' }}</td>
+            </tr>
+            {% if reservation.validatedAt is not null %}
+                <tr>
+                    <th>Validée le</th>
+                    <td>{{ reservation.validatedAt ? reservation.validatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% endif %}            
+            <tr>
+                <th>Annulée</th>
+                <td>{{ reservation.canceled ? 'Oui' : 'Non' }}</td>
+            </tr>
+            {% if reservation.lastEditedAt is not null %}
+                <tr>
+                    <th>LastEditedAt</th>
+                    <td>{{ reservation.lastEditedAt ? reservation.lastEditedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('reservation_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">modifier</a>
+
+    {{ include('reservation/_delete_form.html.twig') }}
+{% endblock %}

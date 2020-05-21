@@ -4,7 +4,7 @@
 
 {% block main %}
 {% if edition.disponibility %}
-[DISPONIBLE]
+    <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-primary">Reserver</a>
 {% else %}
     [INDISPONIBLE]
 {% endif %}
@@ -56,7 +56,7 @@
 		<table class="results table">
 			<thead class="results_head">
 				<th class="results_head__label">Nom</th>
-				<th class="results_head__label">Date de naiscence</th>
+				<th class="results_head__label">Date de naiscance</th>
 				<th class="results_head__label">Date de mort</th>
 			</thead>
 			<tbody>
