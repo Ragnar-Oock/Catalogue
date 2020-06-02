@@ -1,4 +1,9 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'id': 'user_form'}}) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+
 {{ form_end(form) }}
+<div class="d-flex">
+    <button class="btn btn-primary" form="user_form">{{ button_label|default('Enregistrer') }}</button>
+    <a href="{{ path('profil_change_psw') }}" class="btn btn-link">Changer mon mot de passe</a>
+    {{ include('site/profil/_delete_form.html.twig') }}
+</div>

@@ -85,10 +85,17 @@ class UserController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
+            // dont remove the user entity as its linked to pentincialy many reservations we ne to keep track of
+            // $entityManager->remove($user);
+
+            // only remove personnal data
+            $user->setEmail('');
+            $user->setFirstname('');
+            $user->setLastname('');
+            $user->setRoles([]);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirect($this->generateUrl('app_logout'));
     }
 }

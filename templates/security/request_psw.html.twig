@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+{% block main %}
+<div class="container-small">
+<h1>Mot de passe oublié</h1>
+{{ form_start(form) }}
+  {{ form_widget(form) }}
+  <p class="d-flex justify-content-end">
+    <a class="btn btn-link" href="{{ path('app_login') }}" title="Retour à la connexion">Retour à la connexion</a>
+    <button class="btn btn-primary">Réinitialiser</button>
+  </p>
+{{ form_end(form) }}
+
+</div>
+{% endblock %}
