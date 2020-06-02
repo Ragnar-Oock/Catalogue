@@ -109,7 +109,7 @@ class ReservationController extends AbstractController
                 return $this->redirectToRoute('reservation_index');
             }
             else {
-                $this->addFlash('danger', 'nope');
+                $this->addFlash('danger', 'Le document que vous essayez de reservé n\'est pas disponible sur la période choisie.');
                 return $this->render('reservation/edit.html.twig', [
                     'reservation' => $reservation,
                     'form' => $form->createView(),
