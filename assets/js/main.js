@@ -5,9 +5,9 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-// any CSS you import will output into a single css file (app.css in this case)
-// import '../scss/app.scss';
+// any CSS you import will output into a single css file
 import '../scss/main.scss';
+import 'tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build.scss'
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
@@ -19,15 +19,12 @@ require('bootstrap');
 const moment = require('moment');
 global.moment = moment;
 require('moment/locale/fr');
-console.log(moment.locale());
 
 require('tempusdominus-bootstrap-4');
-$("[data-toggle='datepicker']").datetimepicker({
-    locale: 'fr',
-    format: 'DD-MM-YYYY',
-    icons: {
-        time: 'fas fa-clock',
-    }
-});
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+// $("[data-toggle='datepicker']").datetimepicker({
+//     locale: 'fr',
+//     icons: {
+//         time: "fa fa-clock-o",
+//     },
+//     minDate: false
+// });

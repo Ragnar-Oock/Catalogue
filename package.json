@@ -18,8 +18,11 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "font-awesome": "^4.7.0",
         "jquery": "3.4.1",
-        "moment": "2.24.0",
-        "tempusdominus-bootstrap-4": "^5.1.2"
+        "moment": "^2.26.0",
+        "moment-timezone": "^0.5.31",
+        "tempusdominus-bootstrap-4": "^5.1.2",
+        "tempusdominus-core": "^5.0.3"
     }
 }
