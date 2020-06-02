@@ -23,11 +23,15 @@
 				<input type="hidden" name="_token" value="{{ csrf_token('reject' ~ reservation.id) }}">
 			</form>
 
-			<div class="btn-group" role="group" aria-label="Basic example">
-				<button class="btn btn-success" form="reservation-{{reservation.id}}-validate">Valider</button>
-
-				<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject">Refuser</button>
-			</div>
 		{% endif %}
+		<div class="btn-group" role="group" aria-label="Basic example">
+			{% if reservation.validatedAt is null %}
+			<button class="btn btn-success" form="reservation-{{reservation.id}}-validate" title="Annuler">{% include "icons/check.svg.twig" %}</button>
+
+			<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject" title="Refuser">{% include "icons/x.svg.twig" %}</button>
+			{% endif %}
+			<a href="{{ path('admin_reservation_add_comment', {'reservation': reservation.id}) }}" class="btn btn-primary" title="Commentaire">{% include "icons/comment.svg.twig" %}</a>
+
+		</div>
 	</td>
 </tr>

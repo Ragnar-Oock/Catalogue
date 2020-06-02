@@ -63,6 +63,11 @@ class Reservation
      */
     private $endingAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $commentaire;
+
     public function __construct() {
         $this->submimitedAt = new \DateTime();
         $this->validated = false;
@@ -179,6 +184,18 @@ class Reservation
     public function setEndingAt(\DateTimeInterface $endingAt): self
     {
         $this->endingAt = $endingAt;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }

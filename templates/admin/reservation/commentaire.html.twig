@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un commentaire
+{% endblock %}
+
+{% block main %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Enregistrer le commentaire') }}</button>
+{{ form_end(form) }}
+{% endblock %}

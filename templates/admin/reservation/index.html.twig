@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminReservationController!
+{% block title %}Administrer les réservation
 {% endblock %}
 
 {% block main %}
@@ -41,11 +41,6 @@
 							<div class="d-flex justify-content-center">
 								<a href="{{path('admin_reservation_pending')}}" class="btn btn-primary">Voir tout</a>
 							</div>
-
-							{# <div class="d-flex justify-content-center">
-																						{{ knp_pagination_render(pending) }}
-																					</div> #}
-
 						</div>
 					</div>
 				</div>
@@ -90,9 +85,6 @@
 									</div>
 								</div>
 							{% endif %}
-							{# <div class="d-flex justify-content-center">
-																				{{ knp_pagination_render(validated) }}
-																			</div> #}
 						</div>
 					</div>
 				</div>
@@ -136,10 +128,6 @@
 									</div>
 								</div>
 							{% endif %}
-
-							{# <div class="d-flex justify-content-center">
-																				{{ knp_pagination_render(rejected) }}
-																			</div> #}
 						</div>
 					</div>
 				</div>

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Form\ReservationCommentaireType;
+use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,33 +22,18 @@ class AdminReservationController extends AbstractController
      */
     public function index(ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
     {
+        // show up to 15 items of each and then a link to the full list
         $validated = $rr->findByValidationStatus(true);
         $validatedCount = count($validated);
         $validated = array_slice($validated, 0, 15);
-        // $validated = $paginator->paginate(
-        //     $validated,
-        //     $request->query->get('vpage', 1),
-        //     1,
-        //     ['pageParameterName' => 'vpage']
-        // );
+
         $rejected = $rr->findByValidationStatus(false);
         $rejectedCount = count($rejected);
         $rejected = array_slice($rejected, 0, 15);
-        // $rejected = $paginator->paginate(
-        //     $rejected,
-        //     $request->query->get('rpage', 1),
-        //     1,
-        //     ['pageParameterName' => 'rpage']
-        // );
+
         $pending = $rr->findPendingValidation();
         $pendingCount = count($pending);
         $pending = array_slice($pending, 0, 15);
-        // $pending = $paginator->paginate(
-        //     $pending,
-        //     $request->query->get('ppage', 1),
-        //     1,
-        //     ['pageParameterName' => 'ppage']
-        // );
 
         return $this->render('admin/reservation/index.html.twig', [
             'validated' => $validated,
@@ -150,6 +137,28 @@ class AdminReservationController extends AbstractController
             $this->addFlash('danger', 'Tokken CSRF invalide, veullez réessayer');
         }
         return $this->redirectToRoute('admin_reservation_index');
+    }
+
+    /**
+     * @Route("/ajouter-un-commentaire/{reservation}", name="admin_reservation_add_comment")
+     */
+    public function addCommentaire(Reservation $reservation, Request $request)
+    {
+        $form = $this->createForm(ReservationCommentaireType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_reservation_index');
+        }
+
+        return $this->render('admin/reservation/commentaire.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form->createView(),
+        ]);
     }
 
     // /**
