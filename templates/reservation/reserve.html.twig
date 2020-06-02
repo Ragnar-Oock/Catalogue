@@ -25,3 +25,45 @@
 	{% endif %}
 	
 {% endblock %}
+
+{% block javascripts %}
+<script>
+
+console.log('dd');
+
+    $(function () {
+            // $('#reservation_beginingAt').datetimepicker();
+            // $('#reservation_endingAt').datetimepicker({
+            //     useCurrent: false
+            // });
+
+
+            $("#reservation_beginingAt").datetimepicker({
+                locale: 'en',
+                icons: {
+                    time: "fa fa-clock-o",
+                },
+                minDate: false,
+                collapse: true
+            });
+
+            $("#reservation_endingAt").datetimepicker({
+                locale: 'en',
+                icons: {
+                    time: "fa fa-clock-o",
+                },
+                minDate: false,
+                useCurrent: false,
+                collapse: true
+            });
+
+
+            $("#reservation_beginingAt").on("change.datetimepicker", function (e) {
+                $('#reservation_endingAt').datetimepicker('minDate', e.date);
+            });
+            $("#reservation_endingAt").on("change.datetimepicker", function (e) {
+                $('#reservation_beginingAt').datetimepicker('maxDate', e.date);
+            });
+        });
+</script>
+{% endblock %}

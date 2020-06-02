@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminReservationController!
+{% endblock %}
+
+{% block main %}
+	<div
+		class="example-wrapper">
+		{# <pre>
+				        {{ dump(validated, rejected, pending) }}
+				    </pre> #}
+
+		<div class="accordion" id="accordionExample">
+			{% if pending|length > 0 %}
+				<div class="card">
+					<div class="card-header" id="headingOne">
+						<h2 class="mb-0">
+							<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								Réservations en attente de validation
+								<span class="badge badge-pill badge-dark">{{pendingCount}}</span>
+							</button>
+						</h2>
+					</div>
+
+					<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<th>Utilisateur</th>
+									<th>Document</th>
+									<th>Debut - Fin</th>
+									<th>Action</th>
+								</thead>
+								<tbody>
+									{% for reservation in pending %}
+										{{ include('admin/reservation/_reservationItem.html.twig') }}
+									{% endfor %}
+								</tbody>
+							</table>
+
+							<div class="d-flex justify-content-center">
+								<a href="{{path('admin_reservation_pending')}}" class="btn btn-primary">Voir tout</a>
+							</div>
+
+							{# <div class="d-flex justify-content-center">
+																						{{ knp_pagination_render(pending) }}
+																					</div> #}
+
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if validated|length > 0 %}
+
+				<div class="card">
+					<div class="card-header" id="headingTwo">
+						<h2 class="mb-0">
+							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								Réservation validées
+								<span class="badge badge-pill badge-dark">{{validatedCount}}</span>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseTwo" class="collapse {{ pending|length is same as(0) ? 'show': '' }}" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<th>Utilisateur</th>
+									<th>Document</th>
+									<th>Debut - Fin</th>
+									<th>Action</th>
+								</thead>
+								<tbody>
+									{% for reservation in validated %}
+										{{ include('admin/reservation/_reservationItem.html.twig') }}
+									{% endfor %}
+								</tbody>
+							</table>
+
+							{% if (validatedCount - validated|length) is not same as(0) %}
+								<div class="d-flex flex-column">
+									<div class="d-flex justify-content-center">
+										<span>
+											{{validatedCount - validated|length}}
+											reservations ne sont pas affichées
+										</span>
+									</div>
+									<div class="d-flex justify-content-center">
+										<a href="{{path('admin_reservation_validated')}}" class="btn btn-primary">Voir tout</a>
+									</div>
+								</div>
+							{% endif %}
+							{# <div class="d-flex justify-content-center">
+																				{{ knp_pagination_render(validated) }}
+																			</div> #}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if rejected|length > 0 %}
+				<div class="card">
+					<div class="card-header" id="headingThree">
+						<h2 class="mb-0">
+							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+								Réservations rejetées
+								<span class="badge badge-pill badge-dark">{{rejectedCount}}</span>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<th>Utilisateur</th>
+									<th>Document</th>
+									<th>Debut - Fin</th>
+									<th>Action</th>
+								</thead>
+								<tbody>
+									{% for reservation in rejected %}
+										{{ include('admin/reservation/_reservationItem.html.twig') }}
+									{% endfor %}
+								</tbody>
+							</table>
+
+							{% if (rejectedCount - rejected|length) is not same as(0) %}
+								<div class="d-flex flex-column">
+									<div class="d-flex justify-content-center">
+										<span>
+											{{rejectedCount - rejected|length}}
+											reservations ne sont pas affichées
+										</span>
+									</div>
+									<div class="d-flex justify-content-center">
+										<a href="{{path('admin_reservation_rejected')}}" class="btn btn-primary">Voir tout</a>
+									</div>
+								</div>
+							{% endif %}
+
+							{# <div class="d-flex justify-content-center">
+																				{{ knp_pagination_render(rejected) }}
+																			</div> #}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

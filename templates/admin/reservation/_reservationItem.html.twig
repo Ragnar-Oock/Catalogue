@@ -1,0 +1,33 @@
+<tr>
+	<td>{{reservation.user.firstname}} {{reservation.user.lastname}}</td>
+	<td>{{reservation.edition.document.title}}</td>
+	<td>{{reservation.beginingAt|date('d/m/Y H:i')}} - {{reservation.endingAt|date('d/m/Y H:i')}}</td>
+	<td>
+		{% if reservation.validatedAt is null %}
+			<form
+				method="POST"
+				action="{{ path('admin_reservation_validate', {'reservation': reservation.id}) }}"
+				id="reservation-{{reservation.id}}-validate"
+				onsubmit="return confirm('Valider?');"
+			>
+				<input type="hidden" name="_method" value="POST">
+				<input type="hidden" name="_token" value="{{ csrf_token('valider' ~ reservation.id) }}">
+			</form>
+			<form
+				method="POST"
+				action="{{ path('admin_reservation_reject', {'reservation': reservation.id}) }}"
+				id="reservation-{{reservation.id}}-reject"
+				onsubmit="return confirm('Rejeter?');"
+			>
+				<input type="hidden" name="_method" value="POST">
+				<input type="hidden" name="_token" value="{{ csrf_token('reject' ~ reservation.id) }}">
+			</form>
+
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button class="btn btn-success" form="reservation-{{reservation.id}}-validate">Valider</button>
+
+				<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject">Refuser</button>
+			</div>
+		{% endif %}
+	</td>
+</tr>

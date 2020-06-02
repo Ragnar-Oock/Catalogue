@@ -3,11 +3,43 @@
 {% block title %}Modifier une reservation{% endblock %}
 
 {% block main %}
-    <h1>Edit Reservation</h1>
+    <h1>Modifier une reservation</h1>
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('reservation/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
     <a href="{{ path('reservation_index') }}">Retour à la liste</a>
 
-    {{ include('reservation/_delete_form.html.twig') }}
+    {# {{ include('reservation/_delete_form.html.twig') }} #}
+{% endblock %}
+{% block javascripts %}
+<script>
+$("#reservation_beginingAt").datetimepicker({
+    locale: 'en',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    minDate: Date.now(),
+    maxDate: moment(Date.now()).add(60, 'days'),
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+$("#reservation_endingAt").datetimepicker({
+    locale: 'en',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    minDate: Date.now(),
+    maxDate: moment(Date.now()).add(60, 'days'),
+    useCurrent: false,
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+
+$("#reservation_beginingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_endingAt').datetimepicker('minDate', e.date);
+});
+$("#reservation_endingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_beginingAt').datetimepicker('maxDate', e.date);
+});
+</script>
 {% endblock %}
