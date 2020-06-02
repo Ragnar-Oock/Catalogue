@@ -65,11 +65,11 @@ class SiteController extends AbstractController
         if ($edition != null) {
             
             $authors = $edition->getWriters();
-            $authors = $paginator->paginate(
-                $authors,
-                $request->query->get('page', 1),
-                15
-            );
+            // $authors = $paginator->paginate(
+            //     $authors,
+            //     $request->query->get('page', 1),
+            //     15
+            // );
 
             return $this->render('site/explore/edition.html.twig', [
                 'authors' => $authors,
