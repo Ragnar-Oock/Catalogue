@@ -3,9 +3,6 @@
 		<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
 	</td>
 	<td>
-		{{ writer.author.birth ? writer.author.birth|date('Y-m-d') : '--' }}
-	</td>
-	<td>
-		{{ writer.author.death ? writer.author.death|date('Y-m-d') : '--' }}
+		{{ writer.participationType }}
 	</td>
 </tr>

@@ -23,7 +23,7 @@ class WriterController extends AbstractController
     {
         return $this->render('admin/writer/index.html.twig', [
             'edition' => $edition,
-            'writers' => $writerRepository->findAll(),
+            'writers' => $writerRepository->findBy(['edition'=>$edition->getId()]),
         ]);
     }
 

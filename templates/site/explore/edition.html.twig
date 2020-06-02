@@ -50,14 +50,19 @@
                 <td>{{ edition.isbn }}</td>
             </tr>
         {% endif %}
+        {% if edition.editor is not null %}
+            <tr>
+                <th>Editeur</th>
+                <td><a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}">{{ edition.editor.name }}</a></td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 
 		<table class="results table">
 			<thead class="results_head">
 				<th class="results_head__label">Nom</th>
-				<th class="results_head__label">Date de naiscance</th>
-				<th class="results_head__label">Date de mort</th>
+				<th class="results_head__label">Type de participation</th>
 			</thead>
 			<tbody>
 			{% for writer in edition.writers %}
