@@ -33,11 +33,6 @@ class ReservationType extends AbstractType
                     'data-target' => '#reservation_endingAt',
                 ]
             ])
-            // ->add('submimitedAt')
-            // ->add('validatedAt')
-            // ->add('canceled')
-            // ->add('lastEditedAt')
-            // ->add('validated')
         ;
     }
 

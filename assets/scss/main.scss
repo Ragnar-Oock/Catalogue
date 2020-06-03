@@ -25,6 +25,14 @@ body {
 	margin-left: auto;
 }
 
+// customise the disabled style on the date picker
+.bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
+  background: #eee;
+  color: #6c757d;
+  cursor: not-allowed;
+  border-radius: 0;
+}
+
 // .main > *,
 // .footer > * {
 // 	max-width: 80em;

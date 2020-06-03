@@ -20,7 +20,12 @@ $("#reservation_beginingAt").datetimepicker({
     },
     minDate: Date.now(),
     maxDate: moment(Date.now()).add(60, 'days'),
-    format: 'DD/MM/YYYY HH:mm'
+    format: 'DD/MM/YYYY',
+    disabledDates: [
+        {% for day in disabledDays %}
+             moment('{{ day|date('c') }}'),
+        {% endfor %}
+    ]
 });
 
 $("#reservation_endingAt").datetimepicker({
@@ -31,7 +36,12 @@ $("#reservation_endingAt").datetimepicker({
     minDate: Date.now(),
     maxDate: moment(Date.now()).add(60, 'days'),
     useCurrent: false,
-    format: 'DD/MM/YYYY HH:mm'
+    format: 'DD/MM/YYYY',
+    disabledDates: [
+        {% for day in disabledDays %}
+             moment('{{ day|date('c') }}'),
+        {% endfor %}
+    ]
 });
 
 

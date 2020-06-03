@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Edition;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\EditionRepository;
 use App\Repository\ReservationRepository;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +30,10 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reserver/nouvelle/{edition}", name="reservation_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Edition $edition): Response
+    public function new(Request $request, Edition $edition, EditionRepository $er): Response
     {
-        // check if user is logged
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // // check if user is logged
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // create new reservation
         $reservation = new Reservation();
@@ -39,11 +43,29 @@ class ReservationController extends AbstractController
         $reservation->setUser($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($reservation);
-            $entityManager->flush();
+            $begining = $form->getData()->getBeginingAt();
+            $end = $form->getData()->getEndingAt();
 
-            return $this->redirectToRoute('reservation_index');
+            dd($er->isAvailable($form->getData()->getEdition(), $begining, $end));
+
+            if (
+                $begining < $end 
+                && $begining->diff($end)->days <= 60 
+                && $er->isAvailable($form->getData()->getEdition(), $begining, $end)
+            ) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($reservation);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('reservation_index');
+            }
+            else {
+                $this->addFlash('danger', 'Le document que vous essayez de reserver n\'est pas disponible sur la période choisie, ou la période choisie c\'est pas valide.');
+                return $this->render('reservation/edit.html.twig', [
+                    'reservation' => $reservation,
+                    'form' => $form->createView(),
+                ]);
+            }
         }
 
         return $this->render('reservation/new.html.twig', [
@@ -92,43 +114,56 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reserver/{id}/modifier", name="reservation_edit", methods={"GET","POST"})
+     * @Route("/reserver/{reservation}/modifier", name="reservation_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Reservation $reservation): Response
+    public function edit(Request $request, Reservation $reservation, EditionRepository $er, ReservationRepository $rr): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
+        $disabledDays = [];
+        // get all reservation overlaping the now to now +60d periode
+        $plus60d = new DateTime();
+        $plus60d->add(DateInterval::createFromDateString('60 day'));
+        $reservedRanges = $rr->findByTimeRange($reservation->getEdition(), new DateTime(), $plus60d);
+        // for each periode
+        foreach ($reservedRanges as $range ) {
+            $interval = DateInterval::createFromDateString('1 day');
+            $period = new DatePeriod($range->getBeginingAt(), $interval, $range->getEndingAt());
 
+            // for each day
+            foreach ($period as $dt) {
+                // push it in an array of disabled days
+                array_push($disabledDays, $dt);
+            }
+        }
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $begining = $form->getData()->getBeginingAt();
             $end = $form->getData()->getEndingAt();
 
-            if ($begining < $end && $begining->diff($end)->days <= 60) {
+            if (
+                $begining < $end 
+                && $begining->diff($end)->days <= 60 
+                && $er->isAvailable($form->getData()->getEdition(), $begining, $end)
+            ) {
                 $this->getDoctrine()->getManager()->flush();
     
                 return $this->redirectToRoute('reservation_index');
             }
             else {
-                $this->addFlash('danger', 'Le document que vous essayez de reservé n\'est pas disponible sur la période choisie.');
+                $this->addFlash('danger', 'Le document que vous essayez de reserver n\'est pas disponible sur la période choisie, ou la période choisie c\'est pas valide.');
                 return $this->render('reservation/edit.html.twig', [
                     'reservation' => $reservation,
                     'form' => $form->createView(),
+                    'disabledDays' => $disabledDays
                 ]);
             }
-
         }
 
         return $this->render('reservation/edit.html.twig', [
             'reservation' => $reservation,
             'form' => $form->createView(),
+            'disabledDays' => $disabledDays
         ]);
-    }
-
-    public function confineDates($begining, $end, $length)
-    {
-        dd($begining < $end && $begining->diff($end), $length);
-        // if ($begining < $end && $begining->diff($end) > 60) {
-        //     # code...
-        // }
     }
 }
