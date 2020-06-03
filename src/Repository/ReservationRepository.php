@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Edition;
 use App\Entity\Reservation;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
@@ -45,15 +47,31 @@ class ReservationRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function findCanceled($canceled=true, $limit=0)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'ASC')
+            ->andWhere('r.canceled = :canceled')
+            ->setParameter('canceled', $canceled)
+            ;
+        // limit results
+        if ($limit != 0) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()->getResult();
+    }
 
     public function findPendingValidation($limit=0)
     {
-        return $this->createQueryBuilder('r')
+        $query = $this->createQueryBuilder('r')
             ->andWhere('r.validatedAt IS NULL')
             ->orderBy('r.id', 'ASC')
-            ->andWhere('r.canceled = TRUE')
-            ->setMaxResults(10)
-            ->getQuery()
+            ->andWhere('r.canceled = FALSE');
+        // limit results
+        if ($limit != 0) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()
             ->getResult()
         ;
     }
@@ -64,7 +82,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->innerJoin('r.edition', 'e')
             ->innerJoin('e.document', 'd')
             ->andWhere('r.user=:user')
-            ->orderBy('r.validated', 'ASC')
+            ->orderBy('r.submitedAt', 'DESC')
             ->setParameter('user', $user)
         ;
 
@@ -76,12 +94,66 @@ class ReservationRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function getDisponibility(Reservation $reservation, DateTimeInterface $begining, DateTimeInterface $end)
+    public function findByTimeRange(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending, $limit=0)
     {
         $query = $this->createQueryBuilder('r')
-            ->andWhere()
-        ;
+            ->innerJoin('r.edition', 'e')
+            ->innerJoin('e.document', 'd')
+            ->andWhere('e = :edition')
+            ->andWhere('r.beginingAt < :ending AND :begining < r.endingAt')
+            ->setParameter('edition', $edition)
+            ->setParameter('begining', $begining)
+            ->setParameter('ending', $ending);
+        // limit results
+        if ($limit != 0) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()->getResult();
     }
+
+
+    public function search(DateTimeInterface $submitedAtBegining, DateTimeInterface $submitedAtEnd, DateTimeInterface $rangeBegining, DateTimeInterface $rangeEnd, Boolean $canceled, Boolean $validated, Boolean $haveCommentaire, $user)
+    {
+        $query = $this->createQueryBuilder('r');
+
+        if ($submitedAtBegining != null) {
+            $query->andWhere('r.submitedAt > :submitedAtBegining')
+                ->setParameter('submitedAtBegining', $submitedAtBegining);
+        }
+        if ($submitedAtEnd != null) {
+            $query->andWhere('r.submitedAt < :submitedAtEnd')
+                ->setParameter('submitedAtEnd', $submitedAtEnd);
+        }
+        if ($rangeBegining != null) {
+            $query->andWhere('r.beginingAt > :rangeBegining')
+                ->setParameter('rangeBegining', $rangeBegining);
+        }
+        if ($rangeEnd != null) {
+            $query->andWhere('r.endingAt < :rangeEnd')
+                ->setParameter('rangeEnd', $rangeEnd);
+        }
+
+        if ($canceled !== null) {
+            $query->andWhere('r.canceled = :canceled')
+                ->setParameter('canceled', $canceled);
+        }
+        if ($validated !== null) {
+            $query->andWhere('r.validated = :validated')
+                ->setParameter('validated', $validated);
+        }
+        if ($haveCommentaire !== null) {
+            $query->andWhere('r.commentaire !== NULL');
+        }
+
+        if ($user != null) {
+            $query->innerJoin('user', 'u')
+                ->andWhere('user.email LIKE :user OR user.firstname LIKE :user OR user.lastname LIKE :user')
+                ->setParameter('user', "%$user%");
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects

@@ -3,7 +3,7 @@
 	<td>{{reservation.edition.document.title}}</td>
 	<td>{{reservation.beginingAt|date('d/m/Y H:i')}} - {{reservation.endingAt|date('d/m/Y H:i')}}</td>
 	<td>
-		{% if reservation.validatedAt is null %}
+		{% if reservation.validatedAt is null and reservation.canceled is same as(false) %}
 			<form
 				method="POST"
 				action="{{ path('admin_reservation_validate', {'reservation': reservation.id}) }}"
@@ -25,8 +25,8 @@
 
 		{% endif %}
 		<div class="btn-group" role="group" aria-label="Basic example">
-			{% if reservation.validatedAt is null %}
-			<button class="btn btn-success" form="reservation-{{reservation.id}}-validate" title="Annuler">{% include "icons/check.svg.twig" %}</button>
+			{% if reservation.validatedAt is null and reservation.canceled is same as(false) %}
+			<button class="btn btn-success" form="reservation-{{reservation.id}}-validate" title="Valider">{% include "icons/check.svg.twig" %}</button>
 
 			<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject" title="Refuser">{% include "icons/x.svg.twig" %}</button>
 			{% endif %}

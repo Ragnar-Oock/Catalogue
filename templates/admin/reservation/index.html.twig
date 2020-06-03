@@ -4,11 +4,8 @@
 {% endblock %}
 
 {% block main %}
-	<div
-		class="example-wrapper">
-		{# <pre>
-				        {{ dump(validated, rejected, pending) }}
-				    </pre> #}
+
+{{ render(controller('App\\Controller\\AdminReservationController::search')) }}
 
 		<div class="accordion" id="accordionExample">
 			{% if pending|length > 0 %}

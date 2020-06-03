@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationCommentaireType;
-use App\Form\ReservationType;
+use App\Form\SearchReservationType;
 use App\Repository\ReservationRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -185,6 +185,61 @@ class AdminReservationController extends AbstractController
         return $this->render('admin/reservation/commentaire.html.twig', [
             'reservation' => $reservation,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * affichage du formulaire de recherche de local
+     * @param Request $request
+     * @return Response
+     */
+    public function search(Request $request)
+    {
+        $form = $this->createForm(SearchReservationType::class);
+
+        return $this->render('admin/reservation/_search.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function searchResults(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
+    {
+        $submitedAtBegining = $request->query->get('submitedAtBegining') != null ? $request->query->get('submitedAtBegining') : null;
+        $submitedAtEnd = $request->query->get('submitedAtEnd') != null ? $request->query->get('submitedAtEnd') : null;
+        $rangeBegining = $request->query->get('rangeBegining') != null ? $request->query->get('rangeBegining') : null;
+        $rangeEnd = $request->query->get('rangeEnd') != null ? $request->query->get('rangeEnd') : null;
+        $canceled = $request->query->get('canceled') != null ? $request->query->get('canceled') : null;
+        $validated = $request->query->get('validated') != null ? $request->query->get('validated') : null;
+        $haveCommentaire = $request->query->get('haveCommentaire') != null ? $request->query->get('haveCommentaire') : null;
+        $user = $request->query->get('user') != null ? $request->query->get('user') : null;
+
+        $reservations = $rr->rechercheLocal($submitedAtBegining, $submitedAtEnd, $rangeBegining, $rangeEnd, $canceled, $validated, $haveCommentaire, $user);
+
+        if ($reservations > 0){
+            $cat = $reservations[0]->getCategorie()->getTitre();
+        }
+
+        $search = [
+            'submitedAtBegining' => $submitedAtBegining,
+            'submitedAtEnd' => $submitedAtEnd,
+            'rangeBegining' => $rangeBegining,
+            'rangeEnd' => $rangeEnd,
+            'canceled' => $canceled,
+            'validated' => $validated,
+            'haveCommentaire' => $haveCommentaire,
+            'user' => $user
+        ];
+
+
+        $reservations = $paginator->paginate(
+            $reservations,
+            $request->query->get('page', 1),
+            12
+        );
+
+        return $this->render('admin/reservation/search_results.html.twig', [
+            'reservations' => $reservations,
+            'search' => $search
         ]);
     }
 

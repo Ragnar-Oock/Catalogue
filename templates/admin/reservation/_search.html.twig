@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+	<div class="row">
+		<div class="position-relative col-lg-6 col-sm-12">
+			{{ form_row(form.submitedAtBegining) }}
+		</div>
+
+		<div class="position-relative col-lg-6 col-sm-12">
+			{{ form_row(form.submitedAtEnd) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="position-relative col-lg-6 col-sm-12">
+			{{ form_row(form.rangeBegining) }}
+		</div>
+
+		<div class="position-relative col-lg-6 col-sm-12">
+			{{ form_row(form.rangeEnd) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="position-relative col-lg-6 col-sm-12">
+			<div class="btn-group">
+				{{ form_row(form.canceled) }}
+				{{ form_row(form.validated) }}
+				{{ form_row(form.haveCommentaire) }}
+			</div>
+		</div>
+
+		<div class="position-relative col-lg-6 col-sm-12">
+			{{ form_row(form.user) }}
+		</div>
+	</div>
+	<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
