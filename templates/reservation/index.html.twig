@@ -21,7 +21,7 @@
                 <td>
                     <a href="{{ path('explore_edition', { 'edition': reservation.edition.id }) }}" title="Voir la fiche de ce document">{{ reservation.edition.document.title }}</a>
                 </td>
-                <td>{{ reservation.submimitedAt ? reservation.submimitedAt|date('d/m/Y H:i') : '' }}</td>
+                <td>{{ reservation.submitedAt ? reservation.submitedAt|date('d/m/Y H:i') : '' }}</td>
                 <td>
                     {{ reservation.beginingAt|date('d/m/Y H:i') }} - {{ reservation.endingAt|date('d/m/Y H:i') }}
                 </td>
@@ -43,7 +43,7 @@
                 <td>
                     {# <a class="btn btn-link" href="{{ path('reservation_show', {'id': reservation.id}) }}">Voir</a> #}
                     {% if reservation.validated == false and reservation.canceled == false %}
-                    <a class="btn btn-link p-0" href="{{ path('reservation_edit', {'id': reservation.id}) }}" title="Modifier la réservation">{% include "icons/pen.svg.twig" %}</a>
+                    <a class="btn btn-link p-0" href="{{ path('reservation_edit', {'reservation': reservation.id}) }}" title="Modifier la réservation">{% include "icons/pen.svg.twig" %}</a>
                     <form
                         class="d-none"
                         method="POST"

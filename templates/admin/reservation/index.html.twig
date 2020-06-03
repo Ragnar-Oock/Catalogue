@@ -38,9 +38,19 @@
 								</tbody>
 							</table>
 
-							<div class="d-flex justify-content-center">
-								<a href="{{path('admin_reservation_pending')}}" class="btn btn-primary">Voir tout</a>
-							</div>
+							{% if (pendingCount - pending|length) is not same as(0) %}
+								<div class="d-flex flex-column">
+									<div class="d-flex justify-content-center">
+										<span>
+											{{pendingCount - pending|length}}
+											reservations ne sont pas affichées
+										</span>
+									</div>
+									<div class="d-flex justify-content-center">
+										<a href="{{path('admin_reservation_pending')}}" class="btn btn-primary">Voir tout</a>
+									</div>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -132,6 +142,48 @@
 					</div>
 				</div>
 			{% endif %}
+			{% if canceled|length > 0 %}
+				<div class="card">
+					<div class="card-header" id="headingFour">
+						<h2 class="mb-0">
+							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+								Réservations annulées
+								<span class="badge badge-pill badge-dark">{{canceledCount}}</span>
+							</button>
+						</h2>
+					</div>
+					<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<th>Utilisateur</th>
+									<th>Document</th>
+									<th>Debut - Fin</th>
+									<th>Action</th>
+								</thead>
+								<tbody>
+									{% for reservation in canceled %}
+										{{ include('admin/reservation/_reservationItem.html.twig') }}
+									{% endfor %}
+								</tbody>
+							</table>
+
+							{% if (canceledCount - canceled|length) is not same as(0) %}
+								<div class="d-flex flex-column">
+									<div class="d-flex justify-content-center">
+										<span>
+											{{canceledCount - canceled|length}}
+											reservations ne sont pas affichées
+										</span>
+									</div>
+									<div class="d-flex justify-content-center">
+										<a href="{{path('admin_reservation_canceled')}}" class="btn btn-primary">Voir tout</a>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
 		</div>
-	</div>
 {% endblock %}

@@ -22,18 +22,22 @@ class AdminReservationController extends AbstractController
      */
     public function index(ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
     {
-        // show up to 15 items of each and then a link to the full list
+        // show up to 5 items of each and then a link to the full list
         $validated = $rr->findByValidationStatus(true);
         $validatedCount = count($validated);
-        $validated = array_slice($validated, 0, 15);
+        $validated = array_slice($validated, 0, 5);
 
         $rejected = $rr->findByValidationStatus(false);
         $rejectedCount = count($rejected);
-        $rejected = array_slice($rejected, 0, 15);
+        $rejected = array_slice($rejected, 0, 5);
 
         $pending = $rr->findPendingValidation();
         $pendingCount = count($pending);
-        $pending = array_slice($pending, 0, 15);
+        $pending = array_slice($pending, 0, 5);
+
+        $canceled = $rr->findCanceled();
+        $canceledCount = count($canceled);
+        $canceled = array_slice($canceled, 0, 5);
 
         return $this->render('admin/reservation/index.html.twig', [
             'validated' => $validated,
@@ -41,7 +45,9 @@ class AdminReservationController extends AbstractController
             'rejected' => $rejected,
             'rejectedCount' => $rejectedCount,
             'pending' => $pending,
-            'pendingCount' => $pendingCount
+            'pendingCount' => $pendingCount,
+            'canceled' => $canceled,
+            'canceledCount' => $canceledCount
         ]);
     }
 
@@ -56,12 +62,13 @@ class AdminReservationController extends AbstractController
         $validated = $paginator->paginate(
             $validated,
             $request->query->get('page', 1),
-            1
+            5
         );
 
-        return $this->render('admin/reservation/listValidated.html.twig', [
-            'validated' => $validated,
-            'validatedCount' => $validatedCount
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $validated,
+            'reservationCount' => $validatedCount,
+            'title' => 'Réservations validées'
         ]);
     }
 
@@ -76,12 +83,13 @@ class AdminReservationController extends AbstractController
         $rejected = $paginator->paginate(
             $rejected,
             $request->query->get('page', 1),
-            1
+            5
         );
 
-        return $this->render('admin/reservation/listRejected.html.twig', [
-            'rejected' => $rejected,
-            'rejectedCount' => $rejectedCount
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $rejected,
+            'reservationCount' => $rejectedCount,
+            'title' => 'Réservations rejetées'
         ]);
     }
 
@@ -92,18 +100,37 @@ class AdminReservationController extends AbstractController
     public function listPending(ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
     {
         $pending = $rr->findPendingValidation();
-
-        $pending = $rr->findByValidationStatus(false);
         $pendingCount = count($pending);
         $pending = $paginator->paginate(
             $pending,
             $request->query->get('page', 1),
-            1
+            5
         );
 
-        return $this->render('admin/reservation/listePending.html.twig', [
-            'pen$pending' => $pending,
-            'pen$pendingCount' => $pendingCount
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $pending,
+            'reservationCount' => $pendingCount,
+            'title' => 'Réservations rejetées'
+        ]);
+    }
+
+    /**
+     * @Route("/liste/annulee", name="admin_reservation_canceled")
+     */
+    public function listCanceled(ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
+    {
+        $Canceled = $rr->findCanceled();
+        $CanceledCount = count($Canceled);
+        $Canceled = $paginator->paginate(
+            $Canceled,
+            $request->query->get('page', 1),
+            5
+        );
+
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $Canceled,
+            'reservationCount' => $CanceledCount,
+            'title' => 'Réservations rejetées'
         ]);
     }
 
