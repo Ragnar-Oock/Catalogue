@@ -17,7 +17,7 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Edition")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Edition", inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $edition;
@@ -31,7 +31,7 @@ class Reservation
     /**
      * @ORM\Column(type="datetime")
      */
-    private $submimitedAt;
+    private $submitedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -69,7 +69,7 @@ class Reservation
     private $commentaire;
 
     public function __construct() {
-        $this->submimitedAt = new \DateTime();
+        $this->submitedAt = new \DateTime();
         $this->validated = false;
         $this->canceled = false;
 
@@ -104,14 +104,14 @@ class Reservation
         return $this;
     }
 
-    public function getSubmimitedAt(): ?\DateTimeInterface
+    public function getsubmitedAt(): ?\DateTimeInterface
     {
-        return $this->submimitedAt;
+        return $this->submitedAt;
     }
 
-    public function setSubmimitedAt(\DateTimeInterface $submimitedAt): self
+    public function setsubmitedAt(\DateTimeInterface $submitedAt): self
     {
-        $this->submimitedAt = $submimitedAt;
+        $this->submitedAt = $submitedAt;
 
         return $this;
     }
