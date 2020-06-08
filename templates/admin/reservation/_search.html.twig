@@ -1,34 +1,90 @@
 {{ form_start(form) }}
-	<div class="row">
-		<div class="position-relative col-lg-6 col-sm-12">
-			{{ form_row(form.submitedAtBegining) }}
-		</div>
+	<div class="accordion mb-3">
+		<div class="card overflow-visible">
+			<div class="card-header" id="headingOne">
+				<div class="col-12">
+					<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filtres" aria-expanded="false" aria-controls="filtres">
+						Filtres
+					</button>
+				</div>
+			</div>
+			<div class="collapse" id="filtres">
+				<div class="card py-3 px-5">
+					<div class="row">
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.submitedAtBegining) }}
+						</div>
 
-		<div class="position-relative col-lg-6 col-sm-12">
-			{{ form_row(form.submitedAtEnd) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="position-relative col-lg-6 col-sm-12">
-			{{ form_row(form.rangeBegining) }}
-		</div>
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.submitedAtEnd) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.rangeBegining) }}
+						</div>
 
-		<div class="position-relative col-lg-6 col-sm-12">
-			{{ form_row(form.rangeEnd) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="position-relative col-lg-6 col-sm-12">
-			<div class="btn-group">
-				{{ form_row(form.canceled) }}
-				{{ form_row(form.validated) }}
-				{{ form_row(form.haveCommentaire) }}
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.rangeEnd) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="position-relative col-lg-6 col-sm-12 d-flex justify-content-around">
+								{{ form_row(form.canceled) }}
+								{{ form_row(form.validated) }}
+								{{ form_row(form.haveCommentaire) }}
+						</div>
+
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.user) }}
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">{{ button_label|default('Recherche une réservation') }}</button>
+				</div>
 			</div>
 		</div>
-
-		<div class="position-relative col-lg-6 col-sm-12">
-			{{ form_row(form.user) }}
-		</div>
 	</div>
-	<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+{% block javascripts %}
+<script>
+$("#search_reservation_submitedAtBegining").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+$("#search_reservation_submitedAtEnd").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+$("#search_reservation_rangeBegining").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+$("#search_reservation_rangeEnd").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+
+$("#reservation_beginingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_endingAt').datetimepicker('minDate', e.date);
+});
+$("#reservation_endingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_beginingAt').datetimepicker('maxDate', e.date);
+});
+</script>
+{% endblock %}

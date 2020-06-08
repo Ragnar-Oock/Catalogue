@@ -193,32 +193,39 @@ class AdminReservationController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function search(Request $request)
+    public function search(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
     {
-        $form = $this->createForm(SearchReservationType::class);
+        $form = $this->createForm(SearchReservationType::class, null, [
+            'action' => $this->generateUrl('admin_reservation_search'),
+            'method' => 'GET',
+        ]);
 
         return $this->render('admin/reservation/_search.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
+    /**
+     * @Route("/rechercher", name="admin_reservation_search")
+     */
     public function searchResults(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
     {
-        $submitedAtBegining = $request->query->get('submitedAtBegining') != null ? $request->query->get('submitedAtBegining') : null;
-        $submitedAtEnd = $request->query->get('submitedAtEnd') != null ? $request->query->get('submitedAtEnd') : null;
-        $rangeBegining = $request->query->get('rangeBegining') != null ? $request->query->get('rangeBegining') : null;
-        $rangeEnd = $request->query->get('rangeEnd') != null ? $request->query->get('rangeEnd') : null;
-        $canceled = $request->query->get('canceled') != null ? $request->query->get('canceled') : null;
-        $validated = $request->query->get('validated') != null ? $request->query->get('validated') : null;
-        $haveCommentaire = $request->query->get('haveCommentaire') != null ? $request->query->get('haveCommentaire') : null;
-        $user = $request->query->get('user') != null ? $request->query->get('user') : null;
+        $form = $this->createForm(SearchReservationType::class);
+        $form->handleRequest($request);
 
-        $reservations = $rr->rechercheLocal($submitedAtBegining, $submitedAtEnd, $rangeBegining, $rangeEnd, $canceled, $validated, $haveCommentaire, $user);
+        $formValues = $request->query->get('search_reservation');
 
-        if ($reservations > 0){
-            $cat = $reservations[0]->getCategorie()->getTitre();
-        }
+        // dd($formValues);
 
+        $submitedAtBegining = $formValues['submitedAtBegining'] != null ? $formValues['submitedAtBegining'] : null;
+        $submitedAtEnd = $formValues['submitedAtEnd'] != null ? $formValues['submitedAtEnd'] : null;
+        $rangeBegining = $formValues['rangeBegining'] != null ? $formValues['rangeBegining'] : null;
+        $rangeEnd = $formValues['rangeEnd'] != null ? $formValues['rangeEnd'] : null;
+        $canceled = isset($formValues['canceled']) && $formValues['canceled'];
+        $validated = isset($formValues['validated']) && $formValues['validated'];
+        $haveCommentaire = isset($formValues['haveCommentaire']) && $formValues['haveCommentaire'];
+        $user = $formValues['user'] != null ? $formValues['user'] : null;
+        
         $search = [
             'submitedAtBegining' => $submitedAtBegining,
             'submitedAtEnd' => $submitedAtEnd,
@@ -230,17 +237,36 @@ class AdminReservationController extends AbstractController
             'user' => $user
         ];
 
+        // if either of the field is filled execute the search
+        if ($submitedAtBegining || $submitedAtEnd || $rangeBegining || $rangeEnd || $canceled || $validated || $haveCommentaire || $user) {
+            $format = 'd/m/Y H:i';
+                
+            $reservations = $rr->search(
+                \DateTime::createFromFormat ($format , $submitedAtBegining),
+                \DateTime::createFromFormat ($format , $submitedAtEnd),
+                \DateTime::createFromFormat ($format , $rangeBegining),
+                \DateTime::createFromFormat ($format , $rangeEnd),
+                $canceled,
+                $validated,
+                $haveCommentaire,
+                $user
+            );
+    
+            $reservations = $paginator->paginate(
+                $reservations,
+                $request->query->get('page', 1),
+                15
+            );
+    
+            return $this->render('admin/reservation/search_results.html.twig', [
+                'reservations' => $reservations,
+                'search' => $search
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('admin_reservation_index');
+        }
 
-        $reservations = $paginator->paginate(
-            $reservations,
-            $request->query->get('page', 1),
-            12
-        );
-
-        return $this->render('admin/reservation/search_results.html.twig', [
-            'reservations' => $reservations,
-            'search' => $search
-        ]);
     }
 
     // /**

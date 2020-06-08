@@ -3,6 +3,17 @@
 	<td>{{reservation.edition.document.title}}</td>
 	<td>{{reservation.beginingAt|date('d/m/Y H:i')}} - {{reservation.endingAt|date('d/m/Y H:i')}}</td>
 	<td>
+		{% if reservation.validated %}
+			<div class="badge badge-success">Validée</div>
+		{% else %}
+			{% if reservation.canceled %}
+				<div class="badge badge-secondary">Annulée</div>
+			{% else %}
+				<div class="badge badge-primary">En attente de validation</div>
+			{% endif %}
+		{% endif %}
+	</td>
+	<td>
 		{% if reservation.validatedAt is null and reservation.canceled is same as(false) %}
 			<form
 				method="POST"

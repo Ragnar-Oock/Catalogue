@@ -112,7 +112,7 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-    public function search(DateTimeInterface $submitedAtBegining, DateTimeInterface $submitedAtEnd, DateTimeInterface $rangeBegining, DateTimeInterface $rangeEnd, Boolean $canceled, Boolean $validated, Boolean $haveCommentaire, $user)
+    public function search ($submitedAtBegining, $submitedAtEnd, $rangeBegining, $rangeEnd, bool $canceled, bool $validated, bool $haveCommentaire, $user)
     {
         $query = $this->createQueryBuilder('r');
 
@@ -133,21 +133,21 @@ class ReservationRepository extends ServiceEntityRepository
                 ->setParameter('rangeEnd', $rangeEnd);
         }
 
-        if ($canceled !== null) {
+        if ($canceled) {
             $query->andWhere('r.canceled = :canceled')
                 ->setParameter('canceled', $canceled);
         }
-        if ($validated !== null) {
+        if ($validated) {
             $query->andWhere('r.validated = :validated')
                 ->setParameter('validated', $validated);
         }
-        if ($haveCommentaire !== null) {
-            $query->andWhere('r.commentaire !== NULL');
+        if ($haveCommentaire) {
+            $query->andWhere('r.commentaire IS NOT NULL');
         }
 
         if ($user != null) {
-            $query->innerJoin('user', 'u')
-                ->andWhere('user.email LIKE :user OR user.firstname LIKE :user OR user.lastname LIKE :user')
+            $query->innerJoin('r.user', 'u')
+                ->andWhere('u.email LIKE :user OR u.firstname LIKE :user OR u.lastname LIKE :user')
                 ->setParameter('user', "%$user%");
         }
 

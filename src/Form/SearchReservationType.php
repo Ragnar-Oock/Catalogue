@@ -22,7 +22,7 @@ class SearchReservationType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#reservation_beginingAt',
+                    'data-target' => '#search_reservation_submitedAtBegining',
                 ],
                 'required' => false
             ])
@@ -33,7 +33,7 @@ class SearchReservationType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#reservation_endingAt',
+                    'data-target' => '#search_reservation_submitedAtEnd',
                 ],
                 'required' => false
             ])
@@ -44,7 +44,7 @@ class SearchReservationType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#reservation_beginingAt',
+                    'data-target' => '#search_reservation_rangeBegining',
                 ],
                 'required' => false
             ])
@@ -55,29 +55,26 @@ class SearchReservationType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#reservation_endingAt',
-                ],
-                'required' => false
-            ])
-            ->add('canceled', CheckboxType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
+                    'data-target' => '#search_reservation_rangeEnd',
                 ],
                 'required' => false
             ])
             ->add('validated', CheckboxType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ],
+                'label' => 'Validées',
+                'required' => false
+            ])
+            ->add('canceled', CheckboxType::class, [
+                'label' => 'Annulées',
                 'required' => false
             ])
             ->add('haveCommentaire', CheckboxType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ],
+                'label' => 'A un commentaire',
                 'required' => false
             ])
-            ->add('user', TextType::class)
+            ->add('user', TextType::class, [
+                'label' => 'Réservé par',
+                'required' => false
+            ])
         ;
     }
 

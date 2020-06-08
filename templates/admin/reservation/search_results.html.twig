@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}Rechercher une reservation{% endblock %}
+{% block main %}
+{{ render(controller('App\\Controller\\AdminReservationController::search')) }}
+
+<table class="table">
+	<thead>
+		<th>Utilisateur</th>
+		<th>Document</th>
+		<th>Debut - Fin</th>
+		<th>Status</th>
+                <th class="text-right">Actions</th>
+	</thead>
+	<tbody>
+		{% for reservation in reservations %}
+			{{ include('admin/reservation/_resultItem.html.twig') }}
+		{% endfor %}
+	</tbody>
+</table>
+<div class="d-flex justify-content-center">
+		{{ knp_pagination_render(reservations) }}
+	</div>
+{% endblock %}
