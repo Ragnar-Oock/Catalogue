@@ -5,9 +5,6 @@
 			{% for writer in result.edition.writers %}
 				<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
 			{% endfor %}
-			{# {% if result.authors|length>1 %}
-			<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
-			{% endif %}				 #}
 		{% endif %}
 	</td>
 	<td class="result_item__editeur">
@@ -15,9 +12,6 @@
 			{% for editor in result.edition.editor %}
 				<a href="{{ path('explore_edition', {'edition': editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ editor.name }}</a>
 			{% endfor %}
-			{% if result.authors|length>1 %}
-			<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
-			{% endif %}
 		{% endif %}
 		</td>
 	<td class="result_item__type">{{ result.edition.type.title }}</td>
