@@ -7,9 +7,7 @@ use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\EditionRepository;
 use App\Repository\ReservationRepository;
-use DateInterval;
-use DatePeriod;
-use DateTime;
+use App\Service\ReservationHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +28,13 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reserver/nouvelle/{edition}", name="reservation_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Edition $edition, EditionRepository $er): Response
+    public function new(Request $request, Edition $edition, EditionRepository $er, ReservationHelper $rh, ReservationRepository $rr): Response
     {
-        // // check if user is logged
-        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // check if user is logged
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        
+        
         // create new reservation
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -42,11 +42,12 @@ class ReservationController extends AbstractController
         $reservation->setEdition($edition);
         $reservation->setUser($this->getUser());
 
+        $disabledDays = $rh->getUnavailableDays($reservation, $rr);
+
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $begining = $form->getData()->getBeginingAt();
             $end = $form->getData()->getEndingAt();
-
-            dd($er->isAvailable($form->getData()->getEdition(), $begining, $end));
 
             if (
                 $begining < $end 
@@ -71,6 +72,7 @@ class ReservationController extends AbstractController
         return $this->render('reservation/new.html.twig', [
             'reservation' => $reservation,
             'form' => $form->createView(),
+            'disabledDays' => $disabledDays
         ]);
     }
 
@@ -116,26 +118,11 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reserver/{reservation}/modifier", name="reservation_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Reservation $reservation, EditionRepository $er, ReservationRepository $rr): Response
+    public function edit(Request $request, Reservation $reservation, EditionRepository $er, ReservationHelper $rh, ReservationRepository $rr): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-        $disabledDays = [];
-        // get all reservation overlaping the now to now +60d periode
-        $plus60d = new DateTime();
-        $plus60d->add(DateInterval::createFromDateString('60 day'));
-        $reservedRanges = $rr->findByTimeRange($reservation->getEdition(), new DateTime(), $plus60d);
-        // for each periode
-        foreach ($reservedRanges as $range ) {
-            $interval = DateInterval::createFromDateString('1 day');
-            $period = new DatePeriod($range->getBeginingAt(), $interval, $range->getEndingAt());
-
-            // for each day
-            foreach ($period as $dt) {
-                // push it in an array of disabled days
-                array_push($disabledDays, $dt);
-            }
-        }
+        $disabledDays = $rh->getUnavailableDays($reservation, $rr);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $begining = $form->getData()->getBeginingAt();
@@ -144,7 +131,7 @@ class ReservationController extends AbstractController
             if (
                 $begining < $end 
                 && $begining->diff($end)->days <= 60 
-                && $er->isAvailable($form->getData()->getEdition(), $begining, $end)
+                && $er->isAvailable($form->getData()->getEdition(), $begining, $end, $reservation)
             ) {
                 $this->getDoctrine()->getManager()->flush();
     

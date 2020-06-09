@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Edition;
+use App\Entity\Reservation;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -65,9 +66,10 @@ class EditionRepository extends ServiceEntityRepository
         ;
     }
 
-    public function isAvailable(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending)
+    public function isAvailable(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending, Reservation $reservation = null)
     {
         // if the begining of the any reservation is before the end of the reuested periode and the end of the reservation after the requested time periode, there is an overlap, the edition is not available
+        // exclude the passed reservation for check (for edit)
         $query = $this->createQueryBuilder('e')
             ->innerJoin('e.reservations', 'r')
             ->andWhere('e = :edition')
@@ -76,12 +78,14 @@ class EditionRepository extends ServiceEntityRepository
             ->setParameter('begining', $begining)
             ->setParameter('ending', $ending)
             ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
         ;
+        if ($reservation != null) {
+            $query->andWhere('r != :reservation')
+                ->setParameter('reservation', $reservation);
+        }
 
         // if ther is no result the edition is available on the given time range
-        return count($query) === 0;
+        return count($query->getQuery()->getResult()) === 0;
     }
 
     // /**
