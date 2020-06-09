@@ -6,6 +6,7 @@ use App\Entity\Author;
 use App\Entity\Editor;
 use App\Entity\Edition;
 use App\Form\SearchFormType;
+use App\Repository\EditionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,11 +66,11 @@ class SiteController extends AbstractController
         if ($edition != null) {
             
             $authors = $edition->getWriters();
-            // $authors = $paginator->paginate(
-            //     $authors,
-            //     $request->query->get('page', 1),
-            //     15
-            // );
+            $authors = $paginator->paginate(
+                $authors,
+                $request->query->get('page', 1),
+                15
+            );
 
             return $this->render('site/explore/edition.html.twig', [
                 'authors' => $authors,
@@ -99,5 +100,22 @@ class SiteController extends AbstractController
                 'editions' => $editions
             ]);
         }
+    }
+
+    /**
+     * @Route("/explorer/", name="explore_all_editions")
+     */
+    public function showAllEditions(Request $request, PaginatorInterface $paginator, EditionRepository $er)
+    {
+        $editions = $er->findAll();
+        $editions = $paginator->paginate(
+            $editions,
+            $request->query->get('page', 1),
+            15
+        );
+
+        return $this->render('site/search/results.html.twig', [
+            'resultList' => $editions
+        ]);
     }
 }
