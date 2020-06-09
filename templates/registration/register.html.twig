@@ -5,11 +5,26 @@
 {% block main %}
     <h1>Register</h1>
 
+    {% if knownEmail %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Email connue</h4>
+            <p>Votre adresse mail est deja connue de nos services, voulez vous plutot vous <a href="{{ path('app_login') }}">Connecter</a> ou <a href="{{ path('app_request_psw') }}">Réinitialiser votre mot de passe</a></p>
+        </div>
+    {% endif %}
+    
+
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button class="btn">Register</button>
+        <div class="row">
+            <div class="col-12">
+                <a href="#" class="btn btn-link">Condition Générales d'Utilisation [TO DO]</a>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn">Register</button>
+        </div>
     {{ form_end(registrationForm) }}
 {% endblock %}
