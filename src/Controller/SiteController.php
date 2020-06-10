@@ -6,6 +6,7 @@ use App\Entity\Author;
 use App\Entity\Editor;
 use App\Entity\Edition;
 use App\Form\SearchFormType;
+use App\Repository\AuthorRepository;
 use App\Repository\EditionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -103,7 +104,7 @@ class SiteController extends AbstractController
     }
 
     /**
-     * @Route("/explorer/", name="explore_all_editions")
+     * @Route("/explorer/tous-les-documents", name="explore_all_editions")
      */
     public function showAllEditions(Request $request, PaginatorInterface $paginator, EditionRepository $er)
     {
@@ -116,6 +117,23 @@ class SiteController extends AbstractController
 
         return $this->render('site/search/results.html.twig', [
             'resultList' => $editions
+        ]);
+    }
+
+    /**
+     * @Route("/explorer/tous-les-auteurs")
+     */
+    public function showAllAuthors(Request $request, PaginatorInterface $paginator, AuthorRepository $ar)
+    {
+        $authors = $ar->findAllInOrder();
+        $authors = $paginator->paginate(
+            $authors,
+            $request->query->get('page', 1),
+            40
+        );
+
+        return $this->render('site/explore/allAuthors.html.twig', [
+            'authorsList' => $authors
         ]);
     }
 }

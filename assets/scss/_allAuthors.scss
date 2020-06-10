@@ -1,0 +1,18 @@
+.author-list {
+	&__enumaration {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	&__item {
+		min-width: 150px;
+		background-color: white;
+		padding: 1em 2em;
+		margin: 0.5em;
+		border: thin solid #c3c3c3;
+		border-radius: 10px;
+		text-align: center;
+	}
+}

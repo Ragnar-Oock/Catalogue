@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+<div class="author-list">
+	<div class="author-list__enumaration">
+		{% for author in authorsList %}
+				<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur" class="author-list__item">{{ author.name }}</a>
+		{% endfor %}
+	</div>
+
+	<div class="author-list__pagination d-flex justify-content-center">
+		{{ knp_pagination_render(authorsList) }}
+	</div>
+</div>
+{% endblock %}
+
