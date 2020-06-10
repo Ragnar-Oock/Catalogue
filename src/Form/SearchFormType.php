@@ -15,7 +15,8 @@ class SearchFormType extends AbstractType
             ->add('search', SearchType ::class, [
                 'attr' => [
                     'placeholder' => 'Rechercher un auteur, un editeur, un titre...'
-                ]
+                ],
+                'required' => false
             ])
         ;
     }

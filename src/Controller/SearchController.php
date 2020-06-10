@@ -15,7 +15,7 @@ class SearchController extends AbstractController
      */
     public function index(EditionRepository $editionRepository, PaginatorInterface $paginator, Request $request)
     {        
-        $results = $editionRepository->searchEdition($request->query->get('search') ? $request->query->get('search') : null);
+        $results = $editionRepository->searchEdition($request->query->get('search', ''));
         $results = $paginator->paginate(
             $results,
             $request->query->get('page', 1),
