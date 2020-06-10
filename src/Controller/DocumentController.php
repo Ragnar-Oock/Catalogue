@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,16 @@ class DocumentController extends AbstractController
     /**
      * @Route("/", name="document_index", methods={"GET"})
      */
-    public function index(DocumentRepository $documentRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, DocumentRepository $documentRepository): Response
     {
+        $documents = $documentRepository->findAll();
+        $documents = $paginator->paginate(
+            $documents,
+            $request->query->get('page', 1),
+            15
+        );
         return $this->render('admin/document/index.html.twig', [
-            'documents' => $documentRepository->findAll(),
+            'documents' => $documents,
         ]);
     }
 

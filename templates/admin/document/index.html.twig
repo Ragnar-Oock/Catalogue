@@ -19,7 +19,7 @@
         <tbody>
         {% for document in documents %}
             <tr>
-                <td>{{ document.title }}</td>
+                <td>{{ document.title | u.truncate(50, '...') }}</td>
                 <td>{{ document.subtitle }}</td>
                 <td>{{ document.alttitle }}</td>
                 <td>
@@ -39,6 +39,11 @@
         {% endfor %}
         </tbody>
     </table>
+
+    
+<div class="d-flex justify-content-center">
+    {{ knp_pagination_render(documents) }}
+</div>
 
     <a href="{{ path('document_new') }}" class="btn btn-primary">Ajouter un document</a>
 {% endblock %}

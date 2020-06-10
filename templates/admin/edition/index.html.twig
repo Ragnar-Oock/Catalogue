@@ -17,7 +17,7 @@
         <tbody>
         {% for edition in editions %}
             <tr>
-                <td>{{ edition.document.title | u.truncate(80) }}</td>
+                <td>{{ edition.document.title | u.truncate(50, '...') }}</td>
                 <td>{{ edition.inventoryNumber }}</td>
                 <td>{{ edition.tome }}</td>
                 <td>{{ edition.disponibility }}</td>
