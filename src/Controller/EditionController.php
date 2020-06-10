@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Edition;
 use App\Form\EditionType;
 use App\Repository\EditionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,16 @@ class EditionController extends AbstractController
     /**
      * @Route("/", name="edition_index", methods={"GET"})
      */
-    public function index(EditionRepository $editionRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, EditionRepository $editionRepository): Response
     {
+        $editions = $editionRepository->findAll();
+        $editions = $paginator->paginate(
+            $editions,
+            $request->query->get('page', 1),
+            15
+        );
         return $this->render('admin/edition/index.html.twig', [
-            'editions' => $editionRepository->findAll(),
+            'editions' => $editions,
         ]);
     }
 

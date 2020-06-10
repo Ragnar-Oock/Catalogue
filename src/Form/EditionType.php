@@ -19,7 +19,6 @@ class EditionType extends AbstractType
             ->add('tome')
             ->add('pages')
             ->add('notes')
-            ->add('disponibility')
             ->add('document')
             ->add('type')
             ->add('collecs')

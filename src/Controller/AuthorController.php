@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,16 @@ class AuthorController extends AbstractController
     /**
      * @Route("/", name="author_index", methods={"GET"})
      */
-    public function index(AuthorRepository $authorRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, AuthorRepository $authorRepository): Response
     {
+        $authors = $authorRepository->findAll();
+        $authors = $paginator->paginate(
+            $authors,
+            $request->query->get('page', 1),
+            15
+        );
         return $this->render('admin/author/index.html.twig', [
-            'authors' => $authorRepository->findAll(),
+            'authors' => $authors,
         ]);
     }
 

@@ -11,14 +11,13 @@
                 <th>Titre</th>
                 <th>Numero d'inventaire</th>
                 <th>Tome</th>
-                <th>Disponibilité</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for edition in editions %}
             <tr>
-                <td>{{ edition.document.title }}</td>
+                <td>{{ edition.document.title | u.truncate(80) }}</td>
                 <td>{{ edition.inventoryNumber }}</td>
                 <td>{{ edition.tome }}</td>
                 <td>{{ edition.disponibility }}</td>
@@ -39,6 +38,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+<div class="d-flex justify-content-center">
+    {{ knp_pagination_render(editions) }}
+</div>
 
     <a href="{{ path('edition_new') }}" class="btn btn-primary">Ajouter une édition</a>
 {% endblock %}
