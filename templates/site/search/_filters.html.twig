@@ -1,0 +1,59 @@
+{{ form_start(form) }}
+	<div class="accordion filters">
+		<div class="card overflow-visible">
+			<div class="card-header" id="headingOne">
+				<div class="col-12">
+					<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filtres" aria-expanded="false" aria-controls="filtres">
+						Filtres
+					</button>
+				</div>
+			</div>
+			<div class="collapse" id="filtres">
+				<div class="card py-3 px-5">
+					<div class="row">
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.publisheAfter) }}
+						</div>
+
+						<div class="position-relative col-lg-6 col-sm-12">
+							{{ form_row(form.publishedBefore) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-sm-12">
+							{{ form_row(form.title) }}
+						</div>
+						<div class="col-lg-6 col-sm-12">
+							{{ form_row(form.type) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-sm-12">
+							{{ form_row(form.author) }}
+						</div>
+						<div class="col-lg-6 col-sm-12">
+							{{ form_row(form.editor) }}
+						</div>
+					</div>
+
+					<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#advenced" aria-expanded="false" aria-controls="advenced">
+						Recherche avancée
+					</button>
+					<div class="collapse" id="advenced">
+						<p class="mb-0 text-muted">Les cotes ISSN et ISBN sont recherchée par valeur exactes</p>
+						<div class="row">
+							<div class="col-lg-6 col-sm-12">
+								{{ form_row(form.issn) }}
+							</div>
+							<div class="col-lg-6 col-sm-12">
+								{{ form_row(form.isbn) }}
+							</div>
+						</div>
+					</div>
+
+					<button class="btn btn-primary" type="submit">{{ button_label|default('Recherche une réservation') }}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{{ form_end(form) }}

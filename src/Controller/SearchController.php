@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AdvencedSearchFormType;
 use App\Repository\EditionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ class SearchController extends AbstractController
      */
     public function index(EditionRepository $editionRepository, PaginatorInterface $paginator, Request $request)
     {        
+        $form = $this->createForm(AdvencedSearchFormType::class);
         $results = $editionRepository->searchEdition($request->query->get('search', ''));
         $results = $paginator->paginate(
             $results,
@@ -23,8 +25,8 @@ class SearchController extends AbstractController
         );
 
         return $this->render('site/search/results.html.twig', [
-            'controller_name' => 'SearchController',
-            'resultList' => $results    
+            'resultList' => $results,
+            'form' => $form->createView()
         ]);
     }
 }

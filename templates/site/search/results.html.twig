@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block main %}
+{% include("site/search/_filters.html.twig") %}
+
 <table class="results table">
 	<thead class="results_head">
 		<th class="results_head__label">Titre</th>
