@@ -42,6 +42,67 @@ class EditionRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function advencedSearchEdition(Array $values)
+    {
+        $v = [
+            'publisheAfter' => empty($values['publisheAfter']),
+            'publishedBefore' => empty($values['publishedBefore']),
+            'type' => empty($values['type']),
+            'title' => empty($values['title']),
+            'author' => empty($values['author']),
+            'editor' => empty($values['editor']),
+            'issn' => empty($values['issn']),
+            'isbn' => empty($values['isbn']),
+        ];
+        $query = $this->createQueryBuilder('e')
+            ->addSelect('a', 'p', 'w', 't', 'd', 'ed');
+        
+            if (!empty($values['publisheAfter'])) {
+                $query->andWhere('e.publishedAt > :publisheAfter')
+                    ->setParameter('publisheAfter', $values['publisheAfter']);
+            }
+            if (!empty($values['publishedBefore'])) {
+                $query->andWhere('e.publishedAt < :publishedBefore')
+                    ->setParameter('publishedBefore', $values['publishedBefore']);
+            }
+            if (!empty($values['type'])) {
+                $query->andWhere('e.type = :type')
+                    ->setParameter('type', $values['type']);
+            }
+            if (!empty($values['title'])) {
+                $query->andWhere('d.title LIKE :title OR d.subtitle LIKE :title OR d.alttitle LIKE :title')
+                    ->setParameter('title', '%'.$values['title'].'%');
+            }
+            if (!empty($values['author'])) {
+                $query->andWhere('a.name LIKE :author')
+                    ->setParameter('author', '%'.$values['author'].'%');
+            }
+            if (!empty($values['editor'])) {
+                $query->andWhere('ed.name LIKE :editor')
+                    ->setParameter('editor', '%'.$values['editor'].'%');
+            }
+            if (!empty($values['issn'])) {
+                $query->andWhere('e.issn LIKE :issn')
+                    ->setParameter('issn', $values['issn']);
+            }
+            if (!empty($values['isbn'])) {
+                $query->andWhere('e.isbn LIKE :isbn')
+                    ->setParameter('isbn', $values['isbn']);
+            }
+            
+            $query->leftJoin('e.editor', 'ed')
+            ->leftJoin('e.document', 'd')
+            ->leftJoin('e.writers', 'w')
+            ->leftJoin('w.author', 'a')
+            ->leftJoin('w.participationType', 'p')
+            ->leftJoin('e.type', 't')
+            ->getQuery()
+            ->getResult();
+        ;
+
+        return $query;
+    }
     
     /**
      * @return Edition[] Returns an array of Edition objects
