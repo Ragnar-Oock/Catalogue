@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/edition")
+ * @Route("/admin/edition")
  */
 class EditionController extends AbstractController
 {
