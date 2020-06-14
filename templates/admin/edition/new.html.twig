@@ -9,3 +9,16 @@
 
     <a href="{{ path('edition_index') }}">Retour à la liste</a>
 {% endblock %}
+
+{% block javascripts %}
+<script>
+$("#edition_publishedAt").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY',
+    maxDate: Date.now()
+});
+</script>
+{% endblock %}

@@ -9,3 +9,31 @@
 
     <a href="{{ path('author_index') }}" class="btn btn-primary">Retour à la liste</a>
 {% endblock %}
+
+{% block javascripts %}
+<script>
+$("#author_birth").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY'
+});
+
+$("#author_death").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY'
+});
+
+
+$("#author_birth").on("change.datetimepicker", function (e) {
+    $('#author_death').datetimepicker('minDate', e.date);
+});
+$("#author_death").on("change.datetimepicker", function (e) {
+    $('#author_birth').datetimepicker('maxDate', e.date);
+});
+</script>
+{% endblock %}

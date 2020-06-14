@@ -14,3 +14,16 @@
     <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-primary">Gérer les participants</a>
 
 {% endblock %}
+
+{% block javascripts %}
+<script>
+$("#edition_publishedAt").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY',
+    maxDate: Date.now()
+});
+</script>
+{% endblock %}

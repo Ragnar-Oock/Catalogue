@@ -13,9 +13,6 @@
 	</thead>
 	<tbody>
 	{% for result in resultList %}
-	{# <pre>
-		{{ dump(result) }}
-	</pre> #}
 		<tr class="result_item">
 			<td class="result_item__title"><a href="{{ path('explore_edition', {'edition': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
 			<td class="result_item__author">
@@ -23,9 +20,6 @@
 					{% for writer in result.writers %}
 						<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
 					{% endfor %}
-					{# {% if result.authors|length>1 %}
-					<span>Ce document a d'autres auteurs, visitez sa fiche pour les voir</span>
-					{% endif %}				 #}
 				{% endif %}
 			</td>
 			<td class="result_item__editeur">
@@ -42,4 +36,28 @@
 <div class="d-flex justify-content-center">
 	{{ knp_pagination_render(resultList) }}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$("#advenced_search_form_publisheAfter").datetimepicker({
+    locale: 'en',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    maxDate: Date.now(),
+    useCurrent: false,
+    format: 'DD/MM/YYYY'
+});
+
+$("#advenced_search_form_publishedBefore").datetimepicker({
+    locale: 'en',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    maxDate: Date.now(),
+    useCurrent: false,
+    format: 'DD/MM/YYYY'
+});
+</script>
 {% endblock %}

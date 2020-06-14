@@ -22,7 +22,7 @@ class AdvencedSearchFormType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#search_reservation_submitedAtBegining',
+                    'data-target' => '#advenced_search_form_publisheAfter',
                 ],
                 'required' => false
             ])
@@ -33,7 +33,7 @@ class AdvencedSearchFormType extends AbstractType
                 'html5' => false,
                 'attr'=>[
                     'data-toggle' => 'datetimepicker',
-                    'data-target' => '#search_reservation_submitedAtEnd',
+                    'data-target' => '#advenced_search_form_publishedBefore',
                 ],
                 'required' => false
             ])
