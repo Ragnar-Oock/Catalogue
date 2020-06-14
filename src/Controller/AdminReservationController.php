@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Edition;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\ReservationCommentaireType;
 use App\Form\SearchReservationType;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +65,7 @@ class AdminReservationController extends AbstractController
         $validated = $paginator->paginate(
             $validated,
             $request->query->get('page', 1),
-            5
+            15
         );
 
         return $this->render('admin/reservation/listReservation.html.twig', [
@@ -83,7 +86,7 @@ class AdminReservationController extends AbstractController
         $rejected = $paginator->paginate(
             $rejected,
             $request->query->get('page', 1),
-            5
+            15
         );
 
         return $this->render('admin/reservation/listReservation.html.twig', [
@@ -104,7 +107,7 @@ class AdminReservationController extends AbstractController
         $pending = $paginator->paginate(
             $pending,
             $request->query->get('page', 1),
-            5
+            15
         );
 
         return $this->render('admin/reservation/listReservation.html.twig', [
@@ -124,7 +127,7 @@ class AdminReservationController extends AbstractController
         $Canceled = $paginator->paginate(
             $Canceled,
             $request->query->get('page', 1),
-            5
+            15
         );
 
         return $this->render('admin/reservation/listReservation.html.twig', [
@@ -135,7 +138,7 @@ class AdminReservationController extends AbstractController
     }
 
     /**
-     * @Route("/validate/{reservation}", name="admin_reservation_validate", methods={"POST"})
+     * @Route("/{reservation}/validees", name="admin_reservation_validate", methods={"POST"})
      */
     public function validate(Reservation $reservation, Request $request)
     {
@@ -151,7 +154,7 @@ class AdminReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reject/{reservation}", name="admin_reservation_reject", methods={"POST"})
+     * @Route("/{reservation}/rejetees", name="admin_reservation_reject", methods={"POST"})
      */
     public function reject(Reservation $reservation, Request $request)
     {
@@ -167,7 +170,7 @@ class AdminReservationController extends AbstractController
     }
 
     /**
-     * @Route("/ajouter-un-commentaire/{reservation}", name="admin_reservation_add_comment")
+     * @Route("/{reservation}/ajouter-un-commentaire", name="admin_reservation_add_comment")
      */
     public function addCommentaire(Reservation $reservation, Request $request)
     {
@@ -187,11 +190,10 @@ class AdminReservationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    
     /**
-     * affichage du formulaire de recherche de local
-     * @param Request $request
-     * @return Response
+     * show the admin reservation serach panel
+     * no route as this is only used by a template
      */
     public function search(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
     {
@@ -214,8 +216,6 @@ class AdminReservationController extends AbstractController
         $form->handleRequest($request);
 
         $formValues = $request->query->get('search_reservation');
-
-        // dd($formValues);
 
         $submitedAtBegining = $formValues['submitedAtBegining'] != null ? $formValues['submitedAtBegining'] : null;
         $submitedAtEnd = $formValues['submitedAtEnd'] != null ? $formValues['submitedAtEnd'] : null;
@@ -267,6 +267,44 @@ class AdminReservationController extends AbstractController
             return $this->redirectToRoute('admin_reservation_index');
         }
 
+    }
+
+    /**
+     * @Route("/edition/{edition}", name="admin_reservation_edition")
+     */
+    public function showReservationOfEdition(Edition $edition, ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
+    {
+        $reservations = $rr->findBy(['edition'=>$edition], ['submitedAt' => 'DESC']);
+        $reservationsCount = count($reservations);
+        $reservations = $paginator->paginate(
+            $reservations,
+            $request->query->get('page', 1),
+            15
+        );
+
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $reservations,
+            'reservationCount' => $reservationsCount,
+            'title' => 'Réservations de '.$edition->getDocument()->getTitle()
+        ]);
+    }
+
+    /**
+     * @Route("/reservation/utilisateur/{user}", name="admin_user_s_reservations")
+     */
+    public function listUsers(User $user, ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
+    {
+        $usersReservations = $rr->findBy(['user' => $user], ['submitedAt' => 'DESC']);
+        $usersReservations = $paginator->paginate(
+            $usersReservations,
+            $request->query->get('page', 1),
+            15
+        );
+
+        return $this->render('admin/reservation/listReservation.html.twig', [
+            'reservations' => $usersReservations,
+            'title' => 'Réservations de l\'utilisateur ' . $user->getFirstname() . ' ' . $user->getLastname()
+        ]);
     }
 
     // /**
