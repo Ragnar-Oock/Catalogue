@@ -19,7 +19,7 @@
   {% endif %}
   
     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-    <ul class="navbar-nav">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
       </li>
@@ -28,8 +28,8 @@
       </li>
     </ul>
     {% else %}
+      {# aligne the dropdown to the rigth in case the search bar is not displayed #}
       <ul class="navbar-nav ml-auto">
-        {# aligne the dropdown to the rigth in case the search bar is not displayed #}
         <li class="nav-item">
           <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if app.user.firstname is not null or app.user.lastname is not null %}

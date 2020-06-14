@@ -34,7 +34,7 @@ class AuthorType extends AbstractType
                 'required' => false
             ])
             ->add('death', DateType::class, [
-                'label'  => 'Date de naissance',
+                'label'  => 'Date de mort',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,

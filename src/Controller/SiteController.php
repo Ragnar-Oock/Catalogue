@@ -105,6 +105,7 @@ class SiteController extends AbstractController
 
     /**
      * @Route("/explorer/tous-les-documents", name="explore_all_editions")
+     * this page is just an alias for a blank search's result page
      */
     public function showAllEditions(Request $request, PaginatorInterface $paginator, EditionRepository $er)
     {

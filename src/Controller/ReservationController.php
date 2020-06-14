@@ -33,8 +33,6 @@ class ReservationController extends AbstractController
         // check if user is logged
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        
-        
         // create new reservation
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
