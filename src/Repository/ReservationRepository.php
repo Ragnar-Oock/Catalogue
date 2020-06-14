@@ -94,7 +94,7 @@ class ReservationRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByTimeRangeExept(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending,Reservation $reservation, $limit=0)
+    public function findByTimeRangeExept(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending, Reservation $reservation, $limit=0)
     {
         $query = $this->createQueryBuilder('r')
             ->innerJoin('r.edition', 'e')
@@ -104,6 +104,23 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere('r.beginingAt < :ending AND :begining < r.endingAt')
             ->setParameter('edition', $edition)
             ->setParameter('reservation', $reservation)
+            ->setParameter('begining', $begining)
+            ->setParameter('ending', $ending);
+        // limit results
+        if ($limit != 0) {
+            $query->setMaxResults($limit);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    public function findByTimeRange(Edition $edition, DateTimeInterface $begining, DateTimeInterface $ending, $limit=0)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->innerJoin('r.edition', 'e')
+            ->innerJoin('e.document', 'd')
+            ->andWhere('e = :edition')
+            ->andWhere('r.beginingAt < :ending AND :begining < r.endingAt')
+            ->setParameter('edition', $edition)
             ->setParameter('begining', $begining)
             ->setParameter('ending', $ending);
         // limit results
@@ -155,7 +172,6 @@ class ReservationRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
-
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects

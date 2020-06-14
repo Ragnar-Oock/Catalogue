@@ -17,8 +17,15 @@ class ReservationHelper
 		$plus60d = new DateTime();
 		$plus60d->add(DateInterval::createFromDateString($_ENV['APP_MAX_RESERVATION_TIME'] . ' day'));
 		
-		// get all reservation overlaping the now to now +60d periode
-		$reservedRanges = $rr->findByTimeRangeExept($reservation->getEdition(), new DateTime(), $plus60d, $reservation);
+		// if the reservation have no ID it don't exist in the database, don't search for it in the overlap calculation
+		if ($reservation->getId() !== null) {
+			// get all reservation overlaping the now to now +60d periode
+			$reservedRanges = $rr->findByTimeRangeExept($reservation->getEdition(), new DateTime(), $plus60d, $reservation);
+		}
+		else {
+			// get all reservation overlaping the now to now +60d periode
+			$reservedRanges = $rr->findByTimeRange($reservation->getEdition(), new DateTime(), $plus60d);
+		}
 
 		// for each periode
 		foreach ($reservedRanges as $range ) {
