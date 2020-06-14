@@ -1,4 +1,48 @@
 {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.document) }}
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.editor) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.pages) }}
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.tome) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 relative">
+            {{ form_row(form.publishedAt) }}
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.inventoryNumber) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.collecs) }}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.issn) }}
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            {{ form_row(form.isbn) }}
+        </div>
+    </div>
+
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
