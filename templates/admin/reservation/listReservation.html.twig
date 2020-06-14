@@ -5,7 +5,10 @@
 
 {% block main %}
 	<h2>{{ title }}
+	{% if reservationCount is defined %}
 		<span class="badge badge-pill badge-dark">{{reservationCount}}</span>
+	{% endif %}
+	
 	</h2>
 	<table class="table">
 		<thead>
