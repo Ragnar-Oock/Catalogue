@@ -21,7 +21,7 @@ class AuthorController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator, AuthorRepository $authorRepository): Response
     {
-        $authors = $authorRepository->findAll();
+        $authors = $authorRepository->findAllInOrder();
         $authors = $paginator->paginate(
             $authors,
             $request->query->get('page', 1),
