@@ -11,6 +11,7 @@
 
 {% if is_granted('ROLE_ADMIN') %}
 <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
+<a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-primary">Voir les reservations</a>
 {% endif %}
 
 
@@ -70,8 +71,4 @@
 			{% endfor %}
 			</tbody>
 		</table>
-
-		{# <div class="d-flex justify-content-center">
-			{{ knp_pagination_render(authors) }}
-		</div> #}
 {% endblock %}
