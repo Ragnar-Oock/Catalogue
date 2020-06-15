@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
@@ -60,6 +61,7 @@ class Reservation
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="beginingAt", message="Vous devez chosir une date supérieur à la date de début")
      */
     private $endingAt;
 

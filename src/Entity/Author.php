@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +31,7 @@ class Author
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan(propertyPath="birth", message="La date de mort doit etre supperieur à la date de naissance")
      */
     private $death;
 
