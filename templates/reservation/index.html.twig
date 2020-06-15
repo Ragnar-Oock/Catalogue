@@ -3,68 +3,75 @@
 {% block title %}Reservation index{% endblock %}
 
 {% block main %}
-    <h1>Reservation index</h1>
+	<h1>Reservation index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Document</th>
-                <th>Créée le</th>
-                <th>Debut - Fin</th>
-                <th>Etat</th>
-                <th class="text-right">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>
-                    <a href="{{ path('explore_edition', { 'edition': reservation.edition.id }) }}" title="Voir la fiche de ce document">{{ reservation.edition.document.title }}</a>
-                </td>
-                <td>{{ reservation.submitedAt ? reservation.submitedAt|date('d/m/Y H:i') : '' }}</td>
-                <td>
-                    {{ reservation.beginingAt|date('d/m/Y H:i') }} - {{ reservation.endingAt|date('d/m/Y H:i') }}
-                </td>
-                <td>
-                    {% if reservation.validated %}
-                        <div class="badge badge-success">Validée</div>
-                        {% else %}
-                            {% if reservation.canceled %}
-                                <div class="badge badge-secondary">Annulée</div>
-                            {% else %}
-                                <div class="badge badge-primary">En attente de validation</div>
-                            {% endif %}
-                                
-                            
-                    {% endif %}
+{% include "reservation/_search.html.twig" %}
 
-                    
-                </td>
-                <td>
-                    {# <a class="btn btn-link" href="{{ path('reservation_show', {'id': reservation.id}) }}">Voir</a> #}
-                    {% if reservation.validated == false and reservation.canceled == false %}
-                    <a class="btn btn-link p-0" href="{{ path('reservation_edit', {'reservation': reservation.id}) }}" title="Modifier la réservation">{% include "icons/pen.svg.twig" %}</a>
-                    <form
-                        class="d-none"
-                        method="POST"
-                        action="{{ path('reservation_cancel', {'reservation': reservation.id}) }}"
-                        id="reservation-{{reservation.id}}-cancel"
-                        onsubmit="return confirm('Annuler?');"
-                    >
-                        <input type="hidden" name="_method" value="POST">
-                        <input type="hidden" name="_token" value="{{ csrf_token('cancel' ~ reservation.id) }}">
-                    </form>
-                    <button class="btn btn-link p-0" form="reservation-{{reservation.id}}-cancel" title="Annuler la réservation">{% include "icons/file-break.svg.twig" %}</button>
 
-                    {% endif %}
-                    
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Document</th>
+				<th>Créée le</th>
+				<th>Debut - Fin</th>
+				<th>Etat</th>
+				<th class="text-right">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for reservation in reservations %}
+			<tr>
+				<td>
+					<a href="{{ path('explore_edition', { 'edition': reservation.edition.id }) }}" title="Voir la fiche de ce document">{{ reservation.edition.document.title }}</a>
+				</td>
+				<td>{{ reservation.submitedAt ? reservation.submitedAt|date('d/m/Y H:i') : '' }}</td>
+				<td>
+					{{ reservation.beginingAt|date('d/m/Y') }} - {{ reservation.endingAt|date('d/m/Y') }}
+				</td>
+				<td>
+					{% if reservation.validated %}
+						<div class="badge badge-success">Validée</div>
+						{% else %}
+							{% if reservation.canceled %}
+								<div class="badge badge-secondary">Annulée</div>
+							{% else %}
+								<div class="badge badge-primary">En attente de validation</div>
+							{% endif %}
+								
+							
+					{% endif %}
+
+					
+				</td>
+				<td>
+					{% if reservation.validated == false and reservation.canceled == false %}
+					<a class="btn btn-link p-0" href="{{ path('reservation_edit', {'reservation': reservation.id}) }}" title="Modifier la réservation">{% include "icons/pen.svg.twig" %}</a>
+					<form
+						class="d-none"
+						method="POST"
+						action="{{ path('reservation_cancel', {'reservation': reservation.id}) }}"
+						id="reservation-{{reservation.id}}-cancel"
+						onsubmit="return confirm('Annuler?');"
+					>
+						<input type="hidden" name="_method" value="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token('cancel' ~ reservation.id) }}">
+					</form>
+					<button class="btn btn-link p-0" form="reservation-{{reservation.id}}-cancel" title="Annuler la réservation">{% include "icons/file-break.svg.twig" %}</button>
+					{% endif %}
+				</td>
+			</tr>
+		{% else %}
+			<tr>
+				<td colspan="8">
+					<div class="no-results">
+						<p class="no-results__text">Vous n'avez pas encore de réservation ou aucune de vos réservations ne correspond aux critères de votre recherche</p>
+						<div class="no-results__btn">
+							<a href="{{ path('reservation_index') }}" class="btn btn-primary">Retourner à la liste complete</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

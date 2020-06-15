@@ -6,7 +6,7 @@ use App\Entity\Edition;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ReservationCommentaireType;
-use App\Form\SearchReservationType;
+use App\Form\AdminSearchReservationType;
 use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -42,6 +42,11 @@ class AdminReservationController extends AbstractController
         $canceledCount = count($canceled);
         $canceled = array_slice($canceled, 0, 5);
 
+        $form = $this->createForm(AdminSearchReservationType::class, null, [
+            'action' => $this->generateUrl('admin_reservation_search'),
+            'method' => 'GET',
+        ]);
+
         return $this->render('admin/reservation/index.html.twig', [
             'validated' => $validated,
             'validatedCount' => $validatedCount,
@@ -50,7 +55,8 @@ class AdminReservationController extends AbstractController
             'pending' => $pending,
             'pendingCount' => $pendingCount,
             'canceled' => $canceled,
-            'canceledCount' => $canceledCount
+            'canceledCount' => $canceledCount,
+            'form' => $form->createView()
         ]);
     }
 
@@ -192,62 +198,64 @@ class AdminReservationController extends AbstractController
     }
     
     /**
-     * show the admin reservation serach panel
-     * no route as this is only used by a template
-     */
-    public function search(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
-    {
-        $form = $this->createForm(SearchReservationType::class, null, [
-            'action' => $this->generateUrl('admin_reservation_search'),
-            'method' => 'GET',
-        ]);
-
-        return $this->render('admin/reservation/_search.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
      * @Route("/rechercher", name="admin_reservation_search")
      */
     public function searchResults(ReservationRepository $rr, PaginatorInterface $paginator, Request $request)
     {
-        $form = $this->createForm(SearchReservationType::class);
-        $form->handleRequest($request);
-
         $formValues = $request->query->get('search_reservation');
+        $format = 'd/m/Y H:i';
 
-        $submitedAtBegining = $formValues['submitedAtBegining'] != null ? $formValues['submitedAtBegining'] : null;
-        $submitedAtEnd = $formValues['submitedAtEnd'] != null ? $formValues['submitedAtEnd'] : null;
-        $rangeBegining = $formValues['rangeBegining'] != null ? $formValues['rangeBegining'] : null;
-        $rangeEnd = $formValues['rangeEnd'] != null ? $formValues['rangeEnd'] : null;
+        $submitedAtBegining = $formValues['submitedAtBegining'] != null ? \DateTime::createFromFormat ($format , $formValues['submitedAtBegining']) : null;
+        if ($submitedAtBegining === false) {
+            $submitedAtBegining = null;
+        }
+        $submitedAtEnd = $formValues['submitedAtEnd'] != null ? \DateTime::createFromFormat ($format , $formValues['submitedAtEnd']) : null;
+        if ($submitedAtEnd === false) {
+            $submitedAtEnd = null;
+        }
+        $rangeBegining = $formValues['rangeBegining'] != null ? \DateTime::createFromFormat ($format , $formValues['rangeBegining']) : null;
+        if ($rangeBegining === false) {
+            $rangeBegining = null;
+        }
+        $rangeEnd = $formValues['rangeEnd'] != null ? \DateTime::createFromFormat ($format , $formValues['rangeEnd']) : null;
+        if ($rangeEnd === false) {
+            $rangeEnd = null;
+        }
         $canceled = isset($formValues['canceled']) && $formValues['canceled'];
         $validated = isset($formValues['validated']) && $formValues['validated'];
+        $pending = isset($formValues['pending']) && $formValues['pending'];
         $haveCommentaire = isset($formValues['haveCommentaire']) && $formValues['haveCommentaire'];
         $user = $formValues['user'] != null ? $formValues['user'] : null;
         
-        $search = [
+        $values = [
             'submitedAtBegining' => $submitedAtBegining,
             'submitedAtEnd' => $submitedAtEnd,
             'rangeBegining' => $rangeBegining,
             'rangeEnd' => $rangeEnd,
             'canceled' => $canceled,
             'validated' => $validated,
+            'pending' => $pending,
             'haveCommentaire' => $haveCommentaire,
             'user' => $user
         ];
 
+        $form = $this->createForm(AdminSearchReservationType::class, $values, [
+            'action' => $this->generateUrl('admin_reservation_search'),
+            'method' => 'GET',
+        ]);
+        $form->handleRequest($request);
+
         // if either of the field is filled execute the search
         if ($submitedAtBegining || $submitedAtEnd || $rangeBegining || $rangeEnd || $canceled || $validated || $haveCommentaire || $user) {
-            $format = 'd/m/Y H:i';
                 
             $reservations = $rr->search(
-                \DateTime::createFromFormat ($format , $submitedAtBegining),
-                \DateTime::createFromFormat ($format , $submitedAtEnd),
-                \DateTime::createFromFormat ($format , $rangeBegining),
-                \DateTime::createFromFormat ($format , $rangeEnd),
+                $submitedAtBegining,
+                $submitedAtEnd,
+                $rangeBegining,
+                $rangeEnd,
                 $canceled,
                 $validated,
+                $pending,
                 $haveCommentaire,
                 $user
             );
@@ -260,7 +268,7 @@ class AdminReservationController extends AbstractController
     
             return $this->render('admin/reservation/search_results.html.twig', [
                 'reservations' => $reservations,
-                'search' => $search
+                'form' => $form->createView()
             ]);
         }
         else {

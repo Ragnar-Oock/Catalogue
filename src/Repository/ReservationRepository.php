@@ -65,8 +65,8 @@ class ReservationRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('r')
             ->andWhere('r.validatedAt IS NULL')
-            ->orderBy('r.id', 'ASC')
-            ->andWhere('r.canceled = FALSE');
+            ->andWhere('r.canceled = FALSE')
+            ->orderBy('r.id', 'ASC');
         // limit results
         if ($limit != 0) {
             $query->setMaxResults($limit);
@@ -131,7 +131,7 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-    public function search ($submitedAtBegining, $submitedAtEnd, $rangeBegining, $rangeEnd, bool $canceled, bool $validated, bool $haveCommentaire, $user)
+    public function search ($submitedAtBegining, $submitedAtEnd, $rangeBegining, $rangeEnd, bool $canceled, bool $validated, bool $pending, ?bool $haveCommentaire, $user)
     {
         $query = $this->createQueryBuilder('r');
 
@@ -152,22 +152,38 @@ class ReservationRepository extends ServiceEntityRepository
                 ->setParameter('rangeEnd', $rangeEnd);
         }
 
-        if ($canceled) {
-            $query->andWhere('r.canceled = :canceled')
-                ->setParameter('canceled', $canceled);
-        }
-        if ($validated) {
-            $query->andWhere('r.validated = :validated')
+        if ($canceled && $validated && $pending) {
+            $query->andWhere('r.canceled = :canceled OR r.validated = :validated OR (r.canceled = FALSE AND r.validatedAt IS NULL)')
+                ->setParameter('canceled', $canceled)
                 ->setParameter('validated', $validated);
+        }
+        else {
+            if ($canceled) {
+                $query->andWhere('r.canceled = :canceled')
+                    ->setParameter('canceled', $canceled);
+            }
+            if ($validated) {
+                $query->andWhere('r.validated = :validated')
+                    ->setParameter('validated', $validated);
+            }
+            if ($pending) {
+                $query->andWhere('r.canceled = FALSE AND r.validatedAt IS NULL');
+            }
         }
         if ($haveCommentaire) {
             $query->andWhere('r.commentaire IS NOT NULL');
         }
 
         if ($user != null) {
-            $query->innerJoin('r.user', 'u')
-                ->andWhere('u.email LIKE :user OR u.firstname LIKE :user OR u.lastname LIKE :user')
-                ->setParameter('user', "%$user%");
+            if (gettype($user) === 'string') {
+                $query->innerJoin('r.user', 'u')
+                    ->andWhere('u.email LIKE :user OR u.firstname LIKE :user OR u.lastname LIKE :user')
+                    ->setParameter('user', "%$user%");
+            }
+            elseif (gettype($user) === 'object') {
+                $query->andWhere('r.user = :user')
+                    ->setParameter('user', $user);
+            }
         }
 
         return $query->getQuery()->getResult();

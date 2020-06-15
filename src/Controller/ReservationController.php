@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Edition;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Form\SearchReservationType;
 use App\Repository\EditionRepository;
 use App\Repository\ReservationRepository;
 use App\Service\ReservationHelper;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +20,22 @@ class ReservationController extends AbstractController
     /**
      * @Route("/profil/mes-reservations", name="reservation_index", methods={"GET"})
      */
-    public function index(ReservationRepository $reservationRepository): Response
+    public function index(ReservationRepository $rr, PaginatorInterface $paginator, Request $request): Response
     {
+        $form = $this->createForm(SearchReservationType::class, null, [
+            'action' => $this->generateUrl('reservation_search'),
+            'method' => 'GET',
+        ]);
+
+        $reservations = $paginator->paginate(
+            $rr->findByUser($this->getUser()),
+            $request->query->get('page', 1),
+            15
+        );
+
         return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findByUser($this->getUser()),
+            'reservations' => $reservations,
+            'form' => $form->createView()
         ]);
     }
 
@@ -150,5 +164,81 @@ class ReservationController extends AbstractController
             'form' => $form->createView(),
             'disabledDays' => $disabledDays
         ]);
+    }
+
+
+    /**
+     * @Route("/profil/mes-reservations/rechercher", name="reservation_search")
+     */
+    public function search(ReservationRepository $rr, PaginatorInterface $paginator, Request $request): Response
+    {
+        $formValues = $request->query->get('search_reservation');
+        $format = 'd/m/Y H:i';
+
+        $submitedAtBegining = $formValues['submitedAtBegining'] != null ? \DateTime::createFromFormat ($format , $formValues['submitedAtBegining']) : null;
+        if ($submitedAtBegining === false) {
+            $submitedAtBegining = null;
+        }
+        $submitedAtEnd = $formValues['submitedAtEnd'] != null ? \DateTime::createFromFormat ($format , $formValues['submitedAtEnd']) : null;
+        if ($submitedAtEnd === false) {
+            $submitedAtEnd = null;
+        }
+        $rangeBegining = $formValues['rangeBegining'] != null ? \DateTime::createFromFormat ($format , $formValues['rangeBegining']) : null;
+        if ($rangeBegining === false) {
+            $rangeBegining = null;
+        }
+        $rangeEnd = $formValues['rangeEnd'] != null ? \DateTime::createFromFormat ($format , $formValues['rangeEnd']) : null;
+        if ($rangeEnd === false) {
+            $rangeEnd = null;
+        }
+        $canceled = isset($formValues['canceled']) && $formValues['canceled'];
+        $validated = isset($formValues['validated']) && $formValues['validated'];
+        $pending = isset($formValues['pending']) && $formValues['pending'];
+        
+        $values = [
+            'submitedAtBegining' => $submitedAtBegining,
+            'submitedAtEnd' => $submitedAtEnd,
+            'rangeBegining' => $rangeBegining,
+            'rangeEnd' => $rangeEnd,
+            'canceled' => $canceled,
+            'validated' => $validated,
+            'pending' => $pending
+        ];
+
+        $form = $this->createForm(SearchReservationType::class, $values, [
+            'action' => $this->generateUrl('reservation_search'),
+            'method' => 'GET',
+        ]);
+        // $form->handleRequest($request);
+
+        // if either of the field is filled execute the search
+        if ($submitedAtBegining || $submitedAtEnd || $rangeBegining || $rangeEnd || $canceled || $validated || $pending) {
+                
+            $reservations = $rr->search(
+                $submitedAtBegining,
+                $submitedAtEnd,
+                $rangeBegining,
+                $rangeEnd,
+                $canceled,
+                $validated,
+                $pending,
+                null,
+                $this->getUser()
+            );
+    
+            $reservations = $paginator->paginate(
+                $reservations,
+                $request->query->get('page', 1),
+                15
+            );
+    
+            return $this->render('reservation/index.html.twig', [
+                'reservations' => $reservations,
+                'form' => $form->createView()
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('reservation_index');
+        }
     }
 }

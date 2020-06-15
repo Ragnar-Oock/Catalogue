@@ -1,12 +1,14 @@
 {% extends "base.html.twig" %}
 {% block title %}Rechercher une reservation{% endblock %}
 {% block main %}
-{{ render(controller('App\\Controller\\AdminReservationController::search')) }}
+{# {{ render(controller('App\\Controller\\AdminReservationController::search')) }} #}
+{% include "admin/reservation/_search.html.twig" %}
 
 <table class="table">
 	<thead>
 		<th>Utilisateur</th>
 		<th>Document</th>
+		<th>Créée le</th>
 		<th>Debut - Fin</th>
 		<th>Status</th>
                 <th class="text-right">Actions</th>
@@ -20,4 +22,47 @@
 <div class="d-flex justify-content-center">
 		{{ knp_pagination_render(reservations) }}
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$("#search_reservation_submitedAtBegining").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+$("#search_reservation_submitedAtEnd").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+$("#search_reservation_rangeBegining").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+$("#search_reservation_rangeEnd").datetimepicker({
+    locale: 'fr',
+    icons: {
+        time: "fa fa-clock-o",
+    },
+    format: 'DD/MM/YYYY HH:mm'
+});
+
+
+$("#reservation_beginingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_endingAt').datetimepicker('minDate', e.date);
+});
+$("#reservation_endingAt").on("change.datetimepicker", function (e) {
+    $('#reservation_beginingAt').datetimepicker('maxDate', e.date);
+});
+</script>
 {% endblock %}

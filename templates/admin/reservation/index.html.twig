@@ -5,7 +5,7 @@
 
 {% block main %}
 
-{{ render(controller('App\\Controller\\AdminReservationController::search')) }}
+{% include "admin/reservation/_search.html.twig" %}
 
 		<div class="accordion" id="accordionExample">
 			{% if pending|length > 0 %}

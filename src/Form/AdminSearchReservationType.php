@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchReservationType extends AbstractType
+class AdminSearchReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -66,8 +66,12 @@ class SearchReservationType extends AbstractType
                 'label' => 'Annulées',
                 'required' => false
             ])
-            ->add('pending', CheckboxType::class, [
-                'label' => 'En attente de validation',
+            ->add('haveCommentaire', CheckboxType::class, [
+                'label' => 'A un commentaire',
+                'required' => false
+            ])
+            ->add('user', TextType::class, [
+                'label' => 'Réservé par',
                 'required' => false
             ])
         ;

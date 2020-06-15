@@ -1,6 +1,9 @@
 <tr>
-	<td>{{reservation.user.firstname}} {{reservation.user.lastname}}</td>
-	<td>{{reservation.edition.document.title}}</td>
+	<td><a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.firstname}} {{reservation.user.lastname}}</a></td>
+	<td>{{reservation.edition.document.title}}
+	<a href="{{ path('admin_reservation_edition', {'edition': reservation.edition.id }) }}" title="liste des reservation" class="badge badge-primary">{% include "icons/card-list.svg.twig" %}</a>
+	<a href="{{ path('edition_show', {'id': reservation.edition.id}) }}" title="page de l'édition" class="badge badge-primary">{% include "icons/file-earmark.svg.twig" %}</a></td>
+	<td>{{reservation.submitedAt|date('d/m/Y H:i')}}</td>
 	<td>{{reservation.beginingAt|date('d/m/Y H:i')}} - {{reservation.endingAt|date('d/m/Y H:i')}}</td>
 	<td>
 		{% if reservation.validated %}

@@ -32,3 +32,19 @@
 .filters {
 	margin: 1em auto 2em;
 }
+
+.no-results {
+	display: flex;
+	flex-direction: column;
+
+	&__text {
+		max-width: 50ch;
+		width: 100%;
+		text-align: center;
+		margin: 0 auto 1em;
+	}
+
+	&__btn {
+		text-align: center;
+	}
+}
