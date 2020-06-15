@@ -8,39 +8,43 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{% if 'ROLE_ADMIN' in user.roles %}
+                        Administrateur
+                    {% elseif user.roles is empty %}
+                        Cet utilisateur a été banni
+                    {% else %}
+                        Utilisateur
+                    {% endif %}
+                </td>
             </tr>
+            {% if user.firstname is not null %}
+                <tr>
+                    <th>Prénom</th>
+                    <td>{{ user.firstname }}</td>
+                </tr>
+            {% endif %}
+            {% if user.lastname is not null %}
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ user.lastname }}</td>
+                </tr>
+            {% endif %}
+            
             <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>RegisteredAt</th>
-                <td>{{ user.registeredAt ? user.registeredAt|date('Y-m-d') : '' }}</td>
+                <th>Date d'inscription</th>
+                <td>{{ user.registeredAt ? user.registeredAt|date('d/m/Y H:i') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <a href="{{ path('user_index') }}">Retour a la liste</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
 
-    {{ include('user/_delete_form.html.twig') }}
+    {# {{ include('admin/user/_delete_form.html.twig') }} #}
 {% endblock %}

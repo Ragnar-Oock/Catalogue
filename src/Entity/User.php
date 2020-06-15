@@ -46,7 +46,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $registeredAt;
 
