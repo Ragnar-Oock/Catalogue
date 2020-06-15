@@ -1,45 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'altbase.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
 
 {% block main %}
-<section>
-	<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, nam.</h1>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos numquam laudantium dolores a debitis neque est molestias dolorum adipisci ea odit quae aperiam natus assumenda, deserunt, earum, consequuntur sint! Molestiae itaque libero ea optio maiores error ipsum recusandae ullam! Unde aut sapiente cumque. Tempore alias expedita, rem dolore voluptatibus eius.</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi minima a earum iste in eius reiciendis illo itaque sed magni dignissimos perferendis laudantium accusantium ducimus corporis tenetur quos provident velit numquam hic ea minus, unde perspiciatis. Veniam possimus sequi dolorum sapiente ratione non laudantium vel aliquid. Vel eligendi eum quam error aut tempora laudantium nulla, velit laboriosam, pariatur quod ipsam dolores placeat doloribus fugit perspiciatis delectus non. Sit exercitationem veniam dolorem quo consequatur impedit, voluptates, natus incidunt qui quaerat possimus doloremque quisquam consectetur optio cum repudiandae? Voluptatum sed, quaerat dolorem ducimus in ipsum fuga quasi reprehenderit quae, labore cum quod fugit facilis iusto voluptatibus possimus ratione vel temporibus excepturi accusamus doloremque beatae assumenda ad? Soluta ratione enim ipsum quam molestias blanditiis rem voluptas, facilis animi!</p>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque odio dicta delectus, excepturi beatae odit inventore doloremque assumenda provident dolores sapiente similique ex modi labore.</p>
+<section class="presentation" id="presentation">
+	<img src="http://127.0.0.1:8000/build/images/sallebiblio.gif" class="presentation__bg-image">
+	<div class="presentation__wrapper">
+		<article>
+			<h1 class="presentation__title">Catalogue de la bibliotheque du LIR3S</h1>
+			<h2 class="presentation__sub-title">Présentation</h2>
+			<div class="presentation__row">
+				<ul class="presentation__list list">
+					<li>Prêt des ouvrages récents pour une durée maximale de trois semaines.
+					<li>Possibilité de photocopies à la B.S. de droit pour quelques ouvrages.
+					<li>Possibilité de photos numériques pour les ouvrages anciens.
+				</ul>
+				<div class="presentation__col-right">
+					<p>
+						Consultation libre du fonds documentaire pour tout étudiant inscrit à l'Université ou toute personne pouvant justifier d'une recherche.
+					</p>
+					<p>
+						20 places assises sont mises à votre disposition
+					</p>
+				</div>
+			</div>
+		</article>
+	</div>
 </section>
-<section>
-	<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, nam.</h1>
 
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos numquam laudantium dolores a debitis neque est molestias dolorum adipisci ea odit quae aperiam natus assumenda, deserunt, earum, consequuntur sint! Molestiae itaque libero ea optio maiores error ipsum recusandae ullam! Unde aut sapiente cumque. Tempore alias expedita, rem dolore voluptatibus eius.</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi minima a earum iste in eius reiciendis illo itaque sed magni dignissimos perferendis laudantium accusantium ducimus corporis tenetur quos provident velit numquam hic ea minus, unde perspiciatis. Veniam possimus sequi dolorum sapiente ratione non laudantium vel aliquid. Vel eligendi eum quam error aut tempora laudantium nulla, velit laboriosam, pariatur quod ipsam dolores placeat doloribus fugit perspiciatis delectus non. Sit exercitationem veniam dolorem quo consequatur impedit, voluptates, natus incidunt qui quaerat possimus doloremque quisquam consectetur optio cum repudiandae? Voluptatum sed, quaerat dolorem ducimus in ipsum fuga quasi reprehenderit quae, labore cum quod fugit facilis iusto voluptatibus possimus ratione vel temporibus excepturi accusamus doloremque beatae assumenda ad? Soluta ratione enim ipsum quam molestias blanditiis rem voluptas, facilis animi!</p>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque odio dicta delectus, excepturi beatae odit inventore doloremque assumenda provident dolores sapiente similique ex modi labore.</p>
+<section class="contact">
+	<article>
+		<div class="contact__left">
+			<h2>Venir nous voir</h2>
+			<address class="location__address">
+				<p>UFR droit
+				<br>Bâtiment droit
+				<br>Bureau 319
+				<br>4 boulevard Gabriel
+				<br>21000 Dijon
+				</p>
+			</address>
+		</article>
+		<article>
+			<h2>Nous contacter</h2>
+			<p>
+				<strong>Par mail&nbsp;: </strong><a href="mailto:contact@catalogue-pfe.fr" class="contact__mail">contact@catalogue-pfe.fr</a>
+			</p>
+		</div>
+		
+		
+		<div class="contact__right">
+			<h2 class="contact__title">Horaires d'ouverture</h2>
+			<table class="contact__table">
+				<tbody>
+					<tr class="table__row">
+						<td class="table__cell">Lundi</td>
+						<td class="table__cell">9h00 - 13h00</td>
+					</tr>
+					<tr class="table__row">
+						<td class="table__cell">Mardi</td>
+						<td class="table__cell">9h00 - 13h00</td>
+					</tr>
+					<tr class="table__row">
+						<td class="table__cell">Mercredi</td>
+						<td class="table__cell">-</td>
+					</tr>
+					<tr class="table__row">
+						<td class="table__cell">Jeudi</td>
+						<td class="table__cell">9h00 - 13h00</td>
+					</tr>
+					<tr class="table__row">
+						<td class="table__cell">Vendredi</td>
+						<td class="table__cell">9h00 - 13h00</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</article>
 </section>
-<section>
-	<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, nam.</h1>
 
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos numquam laudantium dolores a debitis neque est molestias dolorum adipisci ea odit quae aperiam natus assumenda, deserunt, earum, consequuntur sint! Molestiae itaque libero ea optio maiores error ipsum recusandae ullam! Unde aut sapiente cumque. Tempore alias expedita, rem dolore voluptatibus eius.</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi minima a earum iste in eius reiciendis illo itaque sed magni dignissimos perferendis laudantium accusantium ducimus corporis tenetur quos provident velit numquam hic ea minus, unde perspiciatis. Veniam possimus sequi dolorum sapiente ratione non laudantium vel aliquid. Vel eligendi eum quam error aut tempora laudantium nulla, velit laboriosam, pariatur quod ipsam dolores placeat doloribus fugit perspiciatis delectus non. Sit exercitationem veniam dolorem quo consequatur impedit, voluptates, natus incidunt qui quaerat possimus doloremque quisquam consectetur optio cum repudiandae? Voluptatum sed, quaerat dolorem ducimus in ipsum fuga quasi reprehenderit quae, labore cum quod fugit facilis iusto voluptatibus possimus ratione vel temporibus excepturi accusamus doloremque beatae assumenda ad? Soluta ratione enim ipsum quam molestias blanditiis rem voluptas, facilis animi!</p>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque odio dicta delectus, excepturi beatae odit inventore doloremque assumenda provident dolores sapiente similique ex modi labore.</p>
+<section class="schedule">
+	<article>
+		
+	</article>
 </section>
-{% endblock %}
 
-{% block footer %}
-<section>
-	<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, nam.</h1>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos numquam laudantium dolores a debitis neque est molestias dolorum adipisci ea odit quae aperiam natus assumenda, deserunt, earum, consequuntur sint! Molestiae itaque libero ea optio maiores error ipsum recusandae ullam! Unde aut sapiente cumque. Tempore alias expedita, rem dolore voluptatibus eius.</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi minima a earum iste in eius reiciendis illo itaque sed magni dignissimos perferendis laudantium accusantium ducimus corporis tenetur quos provident velit numquam hic ea minus, unde perspiciatis. Veniam possimus sequi dolorum sapiente ratione non laudantium vel aliquid. Vel eligendi eum quam error aut tempora laudantium nulla, velit laboriosam, pariatur quod ipsam dolores placeat doloribus fugit perspiciatis delectus non. Sit exercitationem veniam dolorem quo consequatur impedit, voluptates, natus incidunt qui quaerat possimus doloremque quisquam consectetur optio cum repudiandae? Voluptatum sed, quaerat dolorem ducimus in ipsum fuga quasi reprehenderit quae, labore cum quod fugit facilis iusto voluptatibus possimus ratione vel temporibus excepturi accusamus doloremque beatae assumenda ad? Soluta ratione enim ipsum quam molestias blanditiis rem voluptas, facilis animi!</p>
-
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque odio dicta delectus, excepturi beatae odit inventore doloremque assumenda provident dolores sapiente similique ex modi labore.</p>
-</section>
+<footer class="footer">
+	ksjugdhfvkj
+</footer>
 {% endblock %}
