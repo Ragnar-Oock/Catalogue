@@ -30,9 +30,34 @@
 			{% block main %}{% endblock %}
 		</main>
 		<footer class="footer">
-            {% block footer %}{% endblock %}
-        </footer>
-        {{ encore_entry_script_tags('main') }}
-        {% block javascripts %}{% endblock %}
+			<article>
+				<div class="row">
+					<div class="col-lg-6 col-sm-12">
+						<h3 class="text-danger">Ce projet est un projet d'études</h3>
+						<p>
+							Projet de fin d'études réalisé pas Ugo Dumontot, dans le cadre de la formation Concepteur Developpeur Web et Mobile à Brassart Grenoble
+						</p>
+						<p>
+							Me contacter par mail: <a href="mailto:ugo.dumontot@gmail.com">ugo.dumontot@gmail.com</a>
+						</p>
+						<p>
+							Voir le projet sur Github: [lien vers le github]
+						</p>
+					</div>
+
+					<div class="col-lg-6 col-sm-12">
+					{# <p>Quelque pages d'interet</p> #}
+						<ul class="list">
+							<li><a href="{{ path('explore_all_authors') }}">Liste des auteurs</a></li>
+							<li>plan du site [lien a ajouter]</li>
+							<li>Condition Générales d'Utilisation [lien a ajouter]</li>
+							<li>Mensions légales [lien a ajouter]</li>
+						</ul>
+					</div>
+				</div>
+			</article>
+		</footer>
+		{{ encore_entry_script_tags('main') }}
+		{% block javascripts %}{% endblock %}
     </body>
 </html>
