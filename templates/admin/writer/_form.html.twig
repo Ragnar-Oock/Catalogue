@@ -1,4 +1,25 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_start(form, {'attr': {'id': 'writer-form"'}}) }}
+	<div class="row">
+		<div class="col-lg-6 col-sm-12">
+			{{ form_row(form.participationType) }}
+		</div>
+		<div class="col-lg-6 col-sm-12">
+			{{ form_row(form.author) }}
+		</div>
+	</div>
+	{# <div class="row">
+	{% if edition is defined %}
+		<a href="{{ path('writer_index', {'edition': edition.id }) }}" class="ml-auto mr-2 btn btn-outline-secondary">Retour a la liste</a>
+	{% endif %}
+	{% if writer is defined %}
+		<a href="{{ path('writer_index', {'edition': writer.edition.id }) }}" class="ml-auto mr-2 btn btn-outline-secondary">Retour a la liste</a>
+	{% endif %}
+	
+	
+		<div class="btn-group">
+			{{ form_widget(form.save)}}
+			{{ form_widget(form.saveAndAddMore)}}
+		</div>
+	</div> #}
+	
 {{ form_end(form) }}

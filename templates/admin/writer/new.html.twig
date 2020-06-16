@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Writer{% endblock %}
+{% block title %}Ajouter un auteur{% endblock %}
 
 {% block main %}
-    <h1>Create new Writer</h1>
+    <div class="container-medium">
+        <h1>Ajouter un auteur</h1>
 
-    {{ include('admin/writer/_form.html.twig') }}
+        {{ include('admin/writer/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-primary">Retour a la liste</a>
+        <div class="row">
+            <div class="ml-auto mr-2 btn-group">
+                {% if edition is defined %}
+                    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-outline-secondary">Retour a la liste</a>
+                {% endif %}
+            </div>
+        
+            <div class="btn-group">
+                <button type="submit" form="writer-form" id="writer_save" name="writer[save]" class="btn-primary btn">Enregistrer et retourner a l'edition</button>
+                <button type="submit" form="writer-form" id="writer_saveAndAddMore" name="writer[saveAndAddMore]" class="btn-primary btn">Enregister et ajouter d'autres participants</button>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

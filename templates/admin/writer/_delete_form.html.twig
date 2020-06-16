@@ -1,5 +1,7 @@
-<form method="post" action="{{ path('writer_delete', {'id': writer.id}) }}" onsubmit="return confirm('Etes vous sur de vouloir retirer cet auteur?');">
+<form method="post" id="writter-delete-{{writer.id}}" action="{{ path('writer_delete', {'id': writer.id}) }}" onsubmit="return confirm('Etes vous sur de vouloir retirer cet auteur?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ writer.id) }}">
-    <button class="btn">Supprimer</button>
+    {% if noBtn is not defined %}
+        <button class="btn">Supprimer</button>
+    {% endif %}
 </form>

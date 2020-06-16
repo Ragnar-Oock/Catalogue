@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Writer{% endblock %}
+{% block title %}Modifier l'auteur{% endblock %}
 
 {% block main %}
-    <h1>Edit Writer</h1>
+    <div class="container-medium">
+        <h1>Modifier l'auteur</h1>
 
-    {{ include('admin/writer/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('admin/writer/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('admin/writer/_delete_form.html.twig',  {'noBtn': true}) }}
 
-    <a href="{{ path('writer_index', {'edition': writer.edition.id}) }}">back to list</a>
+        <div class="row">
+            <div class="ml-auto mr-2 btn-group">
+                {% if edition is defined %}
+                    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-outline-secondary">Retour a la liste</a>
+                {% endif %}
+                {% if writer is defined %}
+                    <a href="{{ path('writer_index', {'edition': writer.edition.id }) }}" class="btn btn-outline-secondary">Retour a la liste</a>
+                {% endif %}
 
-    {{ include('admin/writer/_delete_form.html.twig') }}
+                <button class="btn btn-danger" form="writter-delete-{{writer.id}}">Supprimer</button>
+            </div>
+        
+            <div class="btn-group">
+                <button type="submit" form="writer-form" id="writer_save" name="writer[save]" class="btn-primary btn">Enregistrer et retourner a l'edition</button>
+                <button type="submit" form="writer-form" id="writer_saveAndAddMore" name="writer[saveAndAddMore]" class="btn-primary btn">Enregister et ajouter d'autres participants</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
