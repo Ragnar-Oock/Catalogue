@@ -55,9 +55,6 @@ class SiteController extends AbstractController
                 'author' => $author
             ]);
         }
-        else {
-            dd($request->query->get('authorId'));
-        }
     }
     
     /**
@@ -78,9 +75,6 @@ class SiteController extends AbstractController
                 'authors' => $authors,
                 'edition' => $edition
             ]);
-        }
-        else {
-            dd($request->query->get('authorId'));
         }
     }
 
