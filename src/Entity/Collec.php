@@ -29,7 +29,7 @@ class Collec
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Edition", inversedBy="collecs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Edition", mappedBy="collecs")
      */
     private $editions;
 
@@ -79,6 +79,7 @@ class Collec
     {
         if (!$this->editions->contains($edition)) {
             $this->editions[] = $edition;
+            $this->edition->addCollec($this);
         }
 
         return $this;
@@ -88,6 +89,7 @@ class Collec
     {
         if ($this->editions->contains($edition)) {
             $this->editions->removeElement($edition);
+            $this->edition->removeCollec($this);
         }
 
         return $this;

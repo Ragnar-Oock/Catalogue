@@ -66,14 +66,9 @@ class Edition
     private $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Collec", mappedBy="editions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Collec", inversedBy="editions")
      */
     private $collecs;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $disponibility;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="editions")
@@ -210,18 +205,6 @@ class Edition
         return $this;
     }
 
-    public function getCollection(): ?collection
-    {
-        return $this->collection;
-    }
-
-    public function setCollection(?collection $collection): self
-    {
-        $this->collection = $collection;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Collec[]
      */
@@ -234,7 +217,6 @@ class Edition
     {
         if (!$this->collecs->contains($collec)) {
             $this->collecs[] = $collec;
-            $collec->addEdition($this);
         }
 
         return $this;
@@ -244,20 +226,7 @@ class Edition
     {
         if ($this->collecs->contains($collec)) {
             $this->collecs->removeElement($collec);
-            $collec->removeEdition($this);
         }
-
-        return $this;
-    }
-
-    public function getDisponibility(): ?int
-    {
-        return $this->disponibility;
-    }
-
-    public function setDisponibility(int $disponibility): self
-    {
-        $this->disponibility = $disponibility;
 
         return $this;
     }

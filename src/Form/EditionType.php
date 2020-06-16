@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Collec;
 use App\Entity\Document;
 use App\Entity\Edition;
 use App\Entity\Editor;
+use App\Repository\CollecRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\EditorRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -62,7 +64,17 @@ class EditionType extends AbstractType
             ])
             ->add('inventoryNumber')
             ->add('type')
-            ->add('collecs')
+            ->add('collecs', EntityType::class, [
+                'class' => Collec::class,
+                'query_builder' => function (CollecRepository $cr) {
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.title', 'ASC');
+                },
+                'multiple'  => true,
+                'required' => false,
+                'help' => 'Maintenez <code>MAJ</code> effoncer pour selectionner plusieurs collections',
+                'help_html' => true
+            ])
 
             ->add('issn')
             ->add('isbn')

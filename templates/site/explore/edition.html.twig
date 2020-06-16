@@ -1,20 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Author{% endblock %}
+{% block title %}Explorer une édition{% endblock %}
 
 {% block main %}
-{% if edition.disponibility %}
-    <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-primary">Reserver</a>
-{% else %}
-    [INDISPONIBLE]
-{% endif %}
 
 {% if is_granted('ROLE_ADMIN') %}
 <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
 <a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-primary">Voir les reservations</a>
 {% endif %}
-
-
     <h1>{{ edition.document.title }}</h1>
     <p>Sous titre : {{ edition.document.subtitle }}</p>
     <p class="text-muted">Titre alternatif : {{ edition.document.alttitle }}</p>
@@ -24,7 +17,7 @@
         {% if edition.publishedAt is not null %}
             <tr>
                 <th>Date de publication</th>
-                <td>{{ edition.publishedAt|date('Y-m-d') }}</td>
+                <td>{{ edition.publishedAt|date('d/m/Y') }}</td>
             </tr>
         {% endif %}
         {% if edition.tome is not null %}
@@ -37,6 +30,18 @@
             <tr>
                 <th>Nombre de page</th>
                 <td>{{ edition.pages }}</td>
+            </tr>
+        {% endif %}
+        {% if edition.collecs is not null %}
+            <tr>
+                <th>Collections</th>
+                <td>
+                    <ul>
+                        {% for collection in edition.collecs %}
+                            <li>{{collection.title}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
         {% endif %}
         {% if edition.issn is not null %}
