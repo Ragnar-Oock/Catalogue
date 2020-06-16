@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Fond
      * @ORM\Column(type="string", length=255)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Edition::class, mappedBy="fond")
+     */
+    private $editions;
+
+    public function __construct()
+    {
+        $this->editions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,5 +65,41 @@ class Fond
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Edition[]
+     */
+    public function getEditions(): Collection
+    {
+        return $this->editions;
+    }
+
+    public function addEdition(Edition $edition): self
+    {
+        if (!$this->editions->contains($edition)) {
+            $this->editions[] = $edition;
+            $edition->setFond($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEdition(Edition $edition): self
+    {
+        if ($this->editions->contains($edition)) {
+            $this->editions->removeElement($edition);
+            // set the owning side to null (unless already changed)
+            if ($edition->getFond() === $this) {
+                $edition->setFond(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }

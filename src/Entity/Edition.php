@@ -85,6 +85,11 @@ class Edition
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Fond::class, inversedBy="editions")
+     */
+    private $fond;
+
     public function __construct()
     {
         $this->collecs = new ArrayCollection();
@@ -306,6 +311,18 @@ class Edition
                 $reservation->setEdition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFond(): ?Fond
+    {
+        return $this->fond;
+    }
+
+    public function setFond(?Fond $fond): self
+    {
+        $this->fond = $fond;
 
         return $this;
     }

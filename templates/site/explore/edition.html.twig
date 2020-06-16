@@ -38,10 +38,16 @@
                 <td>
                     <ul>
                         {% for collection in edition.collecs %}
-                            <li>{{collection.title}}</li>
+                            <li><a href="{{path('explore_collection', {'collection': collection.id}) }}">{{collection.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </td>
+            </tr>
+        {% endif %}
+        {% if edition.fond is not null %}
+            <tr>
+                <th>Fond documentaire</th>
+                <td>{{ edition.fond }}</td>
             </tr>
         {% endif %}
         {% if edition.issn is not null %}

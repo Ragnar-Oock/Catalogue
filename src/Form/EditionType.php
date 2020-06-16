@@ -6,6 +6,7 @@ use App\Entity\Collec;
 use App\Entity\Document;
 use App\Entity\Edition;
 use App\Entity\Editor;
+use App\Entity\Fond;
 use App\Repository\CollecRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\EditorRepository;
@@ -75,6 +76,11 @@ class EditionType extends AbstractType
                 'help' => 'Maintenez <code>MAJ</code> effoncer pour selectionner plusieurs collections',
                 'help_html' => true
             ])
+            ->add('fond', EntityType::class, [
+                'class' => Fond::class,
+                'required'=> true,
+            ])
+
 
             ->add('issn')
             ->add('isbn')
