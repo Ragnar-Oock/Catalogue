@@ -26,7 +26,7 @@ class FondController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="fond_new", methods={"GET","POST"})
+     * @Route("/ajouer", name="fond_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +59,7 @@ class FondController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="fond_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="fond_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Fond $fond): Response
     {

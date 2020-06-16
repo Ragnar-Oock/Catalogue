@@ -33,7 +33,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="author_new", methods={"GET","POST"})
+     * @Route("/aujouter", name="author_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -66,7 +66,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="author_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="author_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Author $author): Response
     {

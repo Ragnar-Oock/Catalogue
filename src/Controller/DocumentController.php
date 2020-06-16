@@ -33,7 +33,7 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="document_new", methods={"GET","POST"})
+     * @Route("/ajouter", name="document_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -66,7 +66,7 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="document_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="document_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Document $document): Response
     {

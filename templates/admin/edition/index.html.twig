@@ -11,7 +11,7 @@
                 <th>Titre</th>
                 <th>Numero d'inventaire</th>
                 <th>Tome</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,10 +20,11 @@
                 <td>{{ edition.document.title | u.truncate(50, '...') }}</td>
                 <td>{{ edition.inventoryNumber }}</td>
                 <td>{{ edition.tome }}</td>
-                <td>{{ edition.disponibility }}</td>
-                <td>
-                    <a href="{{ path('edition_show', {'id': edition.id}) }}">show</a>
-                    <a href="{{ path('edition_edit', {'id': edition.id}) }}">edit</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche" class="btn btn-primary">{% include "icons/file-earmark.svg.twig" %}</a>
+                        <a href="{{ path('edition_edit', {'id': edition.id}) }}" title="Modifier" class="btn btn-primary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}

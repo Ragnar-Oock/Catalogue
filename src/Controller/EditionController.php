@@ -33,7 +33,7 @@ class EditionController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="edition_new", methods={"GET","POST"})
+     * @Route("/ajouter", name="edition_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -66,7 +66,7 @@ class EditionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edition_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="edition_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Edition $edition): Response
     {
