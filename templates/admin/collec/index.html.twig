@@ -18,9 +18,14 @@
             <tr>
                 <td>{{ collec.title }}</td>
                 <td>{{ collec.description }}</td>
-                <td>
-                    <a href="{{ path('collec_show', {'id': collec.id}) }}">Afficher</a>
-                    <a href="{{ path('collec_edit', {'id': collec.id}) }}">Modifier</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        {# <a href="{{ path('explore_collection', {'collection': collec.id}) }}">Afficher</a>
+                        <a href="{{ path('collec_edit', {'id': collec.id}) }}">Modifier</a> #}
+
+                        <a href="{{ path('explore_collection', {'collection': collec.id}) }}" title="Voir la fiche" class="btn btn-primary">{% include "icons/file-earmark.svg.twig" %}</a>
+                        <a href="{{ path('collec_edit', {'id': collec.id}) }}" title="Modifier" class="btn btn-primary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}

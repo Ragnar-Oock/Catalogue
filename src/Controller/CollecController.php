@@ -26,7 +26,7 @@ class CollecController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="collec_new", methods={"GET","POST"})
+     * @Route("/ajouter", name="collec_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +59,7 @@ class CollecController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="collec_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="collec_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Collec $collec): Response
     {

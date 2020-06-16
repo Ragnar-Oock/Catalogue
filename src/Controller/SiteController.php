@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Entity\Collec;
 use App\Entity\Editor;
 use App\Entity\Edition;
 use App\Form\SearchFormType;
@@ -101,6 +102,28 @@ class SiteController extends AbstractController
                 'editions' => $editions
             ]);
         }
+        throw $this->createNotFoundException('Cet éditeur n\'existe pas');
+    }
+
+    /**
+     * @Route("/explorer/collection/{collection}", name="explore_collection")
+     */
+    public function showCollection(Request $request, PaginatorInterface $paginator, Collec $collection)
+    {
+        if ($collection != null) {
+
+            $editions = $paginator->paginate(
+                $collection->getEditions(),
+                $request->query->get('page', 1),
+                15
+            );
+
+            return $this->render('site/explore/collection.html.twig', [
+                'collection' => $collection,
+                'editions' => $editions
+            ]);
+        }
+        throw $this->createNotFoundException('Cette collection n\'existe pas');
     }
 
     /**
@@ -122,7 +145,7 @@ class SiteController extends AbstractController
     }
 
     /**
-     * @Route("/explorer/tous-les-auteurs")
+     * @Route("/explorer/tous-les-auteurs", name="explore_all_authors")
      */
     public function showAllAuthors(Request $request, PaginatorInterface $paginator, AuthorRepository $ar)
     {

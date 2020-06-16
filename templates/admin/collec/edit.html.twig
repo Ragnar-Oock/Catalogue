@@ -5,9 +5,17 @@
 {% block main %}
     <h1>Modifier une collection</h1>
 
-    {{ include('_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    {{ include('admin/collec/_form.html.twig', {'noBtn': true}) }}
 
-    <a href="{{ path('collec_index') }}" class="btn btn-primary">Retour à la liste</a>
+    {{ include('admin/collec/_delete_form.html.twig', {'noBtn': true}) }}
 
-    {{ include('collec/_delete_form.html.twig') }}
+    <div class="row">
+        <div class="ml-auto mr-2 btn-group">
+            <a href="{{ path('collec_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            <button class="btn btn-danger" form="delete-collec-{{collec.id}}">Supprimer</button>
+        </div>
+        <button class="btn btn-primary" form="edit-collec">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+
+    
 {% endblock %}
