@@ -19,10 +19,11 @@ class SiteController extends AbstractController
     /**
      * @Route("/", name="site")
      */
-    public function index()
+    public function index(AuthorRepository $ar)
     {
         return $this->render('site/index.html.twig', [
             'controller_name' => 'SiteController',
+            'randomAuthors'=>$ar->pickAtRandom(15)
         ]);
     }
 
@@ -147,7 +148,7 @@ class SiteController extends AbstractController
         $authors = $paginator->paginate(
             $authors,
             $request->query->get('page', 1),
-            40
+            50
         );
 
         return $this->render('site/explore/allAuthors.html.twig', [

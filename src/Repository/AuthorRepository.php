@@ -28,6 +28,21 @@ class AuthorRepository extends ServiceEntityRepository
         ;
     }
 
+    public function pickAtRandom($limit=5)
+    {
+        $em = $this->getEntityManager();
+        // get max disponible id value
+        $max = $em->createQuery('SELECT MAX(a.id) FROM App\Entity\Author a')->getSingleScalarResult();
+
+        // select authors above a random index generated between 1 and the max id value
+        return $this->createQueryBuilder('a')
+        ->andWhere('a.id >= :rand')
+        ->setParameter('rand', rand(1, $max-$limit))
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Author[] Returns an array of Author objects
     //  */

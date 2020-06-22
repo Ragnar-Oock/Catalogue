@@ -1,11 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~font-awesome";
 
+@import "_variables.scss";
+
 @import "_search";
 @import "_header";
 @import "_menu";
 @import "_allAuthors";
 @import "_home.scss";
+@import "_edition.scss";
+@import "_fiche.scss";
+
 
 body {
 	background-color: lightgray;
@@ -30,7 +35,7 @@ body {
 	color: $light;
 	background-color: $dark;
 	min-height: 500px;
-	margin-top: 23.08%;
+	margin-top: 16.08%;
 	padding: 0 1em;
 
 	&::before{
@@ -41,7 +46,6 @@ body {
 		height: calc(0.236 * 100vw);
 		left: 0;
 		display: block;
-		z-index: -1;
 		transform: skewY(13deg) translateY(-50%);
 		box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.2);
 		box-sizing: initial;
@@ -96,4 +100,16 @@ body {
 
 .accordion > .card.overflow-visible {
 	overflow: visible;
+}
+
+a {
+	color: $accent;
+	&:hover {
+		color: $accent;
+	}
+}
+
+.bg-accent {
+	background-color: $accent;
+	color: white;
 }

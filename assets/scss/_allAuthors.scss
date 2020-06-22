@@ -1,18 +1,39 @@
 .author-list {
-	&__enumaration {
-		display: flex;
+	&__list {
+		padding: 0;
+		list-style: none;
+		transform: skewX(-13deg);
+		max-height: 350px;
+		overflow-y: auto;
+		overflow-x: hidden;
 		width: 100%;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		scrollbar-width: thin;
+		scrollbar-color: transparent transparent;
+		background-color: $accent;
+		max-width: 30ch;
+		transition: scrollbar-color 300ms ease-in-out;
+		
+		&:hover{
+			scrollbar-color: $dark transparent;
+		}
 	}
 
 	&__item {
-		min-width: 150px;
-		background-color: white;
-		padding: 1em 2em;
-		margin: 0.5em;
-		border: thin solid #c3c3c3;
-		border-radius: 10px;
-		text-align: center;
+		transform: skewX(13deg);
+		background-color: $accent;
+		margin: 0 -1em;
+	}
+
+	&__link {
+		padding: 0.3em 3em;
+		color: $light;
+		width: 100%;
+		display: block;
+		transition: transform 300ms cubic-bezier(.18,.89,.32,1.28);
+		
+		&:hover {
+			transform: translateX(1em);
+			color: $light;
+		}
 	}
 }

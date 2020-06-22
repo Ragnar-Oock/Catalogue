@@ -29,8 +29,8 @@
 </section>
 
 <section class="contact">
-	<article>
-		<div class="contact__left">
+	<div class="contact__left_pannel">
+		<article>
 			<h2>Venir nous voir</h2>
 			<address class="location__address">
 				<p>UFR droit
@@ -40,16 +40,12 @@
 				<br>21000 Dijon
 				</p>
 			</address>
-		</article>
-		<article>
 			<h2>Nous contacter</h2>
 			<p>
 				<strong>Par mail&nbsp;: </strong><a href="mailto:contact@catalogue-pfe.fr" class="contact__mail">contact@catalogue-pfe.fr</a>
 			</p>
-		</div>
-		
-		
-		<div class="contact__right">
+		</article>
+		<article class="pt-5">
 			<h2 class="contact__title">Horaires d'ouverture</h2>
 			<table class="contact__table">
 				<tbody>
@@ -75,7 +71,26 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</article>
+		</article>
+	</div>
+	<div class="contact__right_pannel">
+		<article class="randomAuthors">
+			<div class="randomAuthors__wrapper">
+				<p class="randomAuthors__title">
+					Quelques uns des auteurs que vous pourrez trouver
+				</p>
+				<ul class="randomAuthors__list">
+					{% for author in randomAuthors %}
+						<li class="randomAuthors__item">
+							<a href="{{ path('explore_author', { 'author': author.id }) }}">{{author}}</a>
+						</li>
+					{% endfor %}
+				</ul>
+				<p class="randomAuthors__legend">
+					<a href="{{ path('explore_all_authors') }}">Voir tous les auteurs</a>
+				</p>
+			</div>
+		</article>
+	</div>
 </section>
 {% endblock %}

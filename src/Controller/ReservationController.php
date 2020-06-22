@@ -63,12 +63,16 @@ class ReservationController extends AbstractController
 
             if (
                 $begining < $end 
-                && $begining->diff($end)->days <= 60 
+                && $begining->diff($end)->days <= $_ENV['APP_MAX_RESERVATION_TIME']
+                && $begining->diff(time())->days <= $_ENV['APP_MAX_RESERVATION_LENGTH']
                 && $er->isAvailable($form->getData()->getEdition(), $begining, $end)
             ) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($reservation);
                 $entityManager->flush();
+
+                $this->addFlash('success', 'Votre demade de reservation a bien été enregistrée, elle doit etre maintenant accéptée par un administrateur
+                ');
 
                 return $this->redirectToRoute('reservation_index');
             }
@@ -84,7 +88,9 @@ class ReservationController extends AbstractController
         return $this->render('reservation/new.html.twig', [
             'reservation' => $reservation,
             'form' => $form->createView(),
-            'disabledDays' => $disabledDays
+            'disabledDays' => $disabledDays,
+            'maxReservationLength' => $_ENV['APP_MAX_RESERVATION_LENGTH'],
+            'maxReservationTime' => $_ENV['APP_MAX_RESERVATION_TIME']
         ]);
     }
 
@@ -142,7 +148,8 @@ class ReservationController extends AbstractController
 
             if (
                 $begining < $end 
-                && $begining->diff($end)->days <= 60 
+                && $begining->diff($end)->days <= $_ENV['APP_MAX_RESERVATION_LENGTH']
+                && $end->diff(new \DateTime('NOW'))->days <= $_ENV['APP_MAX_RESERVATION_TIME']
                 && $er->isAvailable($form->getData()->getEdition(), $begining, $end, $reservation)
             ) {
                 $this->getDoctrine()->getManager()->flush();
@@ -154,7 +161,9 @@ class ReservationController extends AbstractController
                 return $this->render('reservation/edit.html.twig', [
                     'reservation' => $reservation,
                     'form' => $form->createView(),
-                    'disabledDays' => $disabledDays
+                    'disabledDays' => $disabledDays,
+                    'maxReservationLength' => $_ENV['APP_MAX_RESERVATION_LENGTH'],
+                    'maxReservationTime' => $_ENV['APP_MAX_RESERVATION_TIME']
                 ]);
             }
         }
@@ -162,7 +171,9 @@ class ReservationController extends AbstractController
         return $this->render('reservation/edit.html.twig', [
             'reservation' => $reservation,
             'form' => $form->createView(),
-            'disabledDays' => $disabledDays
+            'disabledDays' => $disabledDays,
+            'maxReservationLength' => $_ENV['APP_MAX_RESERVATION_LENGTH'],
+            'maxReservationTime' => $_ENV['APP_MAX_RESERVATION_TIME']
         ]);
     }
 
