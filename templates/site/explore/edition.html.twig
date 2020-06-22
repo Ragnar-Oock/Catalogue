@@ -4,38 +4,59 @@
 
 {% block main %}
 
-{% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
-<a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-primary">Voir les reservations</a>
-{% endif %}
-    <h1>{{ edition.document.title }}</h1>
-    <p>Sous titre : {{ edition.document.subtitle }}</p>
-    <p class="text-muted">Titre alternatif : {{ edition.document.alttitle }}</p>
 
-    <table class="table">
+<section class="edition">
+    <div class="btn-group edition__actions">
+        <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-primary">Reserver</a>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-primary">Voir les reservations</a>
+        {% endif %}
+    </div>
+    <div class="edition__head">
+        <h1 class="edition__title">{{ edition.document.title }}</h1>
+        <p class="edition__subtitle">{{ edition.document.subtitle }}</p>
+        <p class="edition__alttitle">{{ edition.document.alttitle }}</p>
+    </div>
+
+    <h2>Auteurs</h2>
+    <table class="authors table">
+        <thead class="authors__head">
+            <th class="authors__label">Nom</th>
+            <th class="authors__label text-right">Type de participation</th>
+        </thead>
+        <tbody>
+        {% for writer in edition.writers %}
+            {{ include('site/explore/_authorItem.html.twig') }}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Informations</h2>
+    <table class="edition__infos table">
         <tbody>
         {% if edition.publishedAt is not null %}
-            <tr>
-                <th>Date de publication</th>
-                <td>{{ edition.publishedAt|date('d/m/Y') }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Date de publication</th>
+                <td class="fiche__value">{{ edition.publishedAt|date('d/m/Y') }}</td>
             </tr>
         {% endif %}
         {% if edition.tome is not null %}
-            <tr>
-                <th>Numero de tome</th>
-                <td>{{ edition.tome }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Numero de tome</th>
+                <td class="fiche__value">{{ edition.tome }}</td>
             </tr>
         {% endif %}
         {% if edition.pages is not null %}
-            <tr>
-                <th>Nombre de page</th>
-                <td>{{ edition.pages }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Nombre de pages</th>
+                <td class="fiche__value">{{ edition.pages }}</td>
             </tr>
         {% endif %}
         {% if edition.collecs is not null %}
-            <tr>
-                <th>Collections</th>
-                <td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Collections</th>
+                <td class="fiche__list">
                     <ul>
                         {% for collection in edition.collecs %}
                             <li><a href="{{path('explore_collection', {'collection': collection.id}) }}">{{collection.title}}</a></li>
@@ -45,41 +66,31 @@
             </tr>
         {% endif %}
         {% if edition.fond is not null %}
-            <tr>
-                <th>Fond documentaire</th>
-                <td>{{ edition.fond }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Fond documentaire</th>
+                <td class="fiche__value">{{ edition.fond }}</td>
             </tr>
         {% endif %}
         {% if edition.issn is not null %}
-            <tr>
-                <th>ISSN</th>
-                <td>{{ edition.issn }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">ISSN</th>
+                <td class="fiche__value">{{ edition.issn }}</td>
             </tr>
         {% endif %}
         {% if edition.isbn is not null %}
-            <tr>
-                <th>ISBN</th>
-                <td>{{ edition.isbn }}</td>
+            <tr class="fiche__row">
+                <th class="fiche__label">ISBN</th>
+                <td class="fiche__value">{{ edition.isbn }}</td>
             </tr>
         {% endif %}
         {% if edition.editor is not null %}
-            <tr>
-                <th>Editeur</th>
-                <td><a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}">{{ edition.editor.name }}</a></td>
+            <tr class="fiche__row">
+                <th class="fiche__label">Editeur</th>
+                <td class="fiche__value"><a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}">{{ edition.editor.name }}</a></td>
             </tr>
         {% endif %}
         </tbody>
     </table>
 
-		<table class="results table">
-			<thead class="results_head">
-				<th class="results_head__label">Nom</th>
-				<th class="results_head__label">Type de participation</th>
-			</thead>
-			<tbody>
-			{% for writer in edition.writers %}
-                {{ include('site/explore/_authorItem.html.twig') }}
-			{% endfor %}
-			</tbody>
-		</table>
+</section>
 {% endblock %}

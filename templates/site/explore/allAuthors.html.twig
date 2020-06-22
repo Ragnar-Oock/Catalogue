@@ -2,15 +2,19 @@
 
 {% block main %}
 <div class="author-list">
-	<div class="author-list__enumaration">
-		{% for author in authorsList %}
-				<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur" class="author-list__item">{{ author.name }}</a>
-		{% endfor %}
+	<div class="author-list__container">
+		<ul class="author-list__list">
+			{% for author in authorsList %}
+			<li class="author-list__item">
+					<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur" class="author-list__link">{{ author.name }}</a>
+			</li>
+			{% endfor %}	
+		</ul>
 	</div>
 
-	<div class="author-list__pagination d-flex justify-content-center">
+	{# <div class="author-list__pagination d-flex justify-content-center">
 		{{ knp_pagination_render(authorsList) }}
-	</div>
-</div>
+	</div> #}
+</div>1
 {% endblock %}
 

@@ -18,7 +18,8 @@ $("#reservation_beginingAt").datetimepicker({
         time: "fa fa-clock-o",
     },
     minDate: Date.now(),
-    maxDate: moment(Date.now()).add(60, 'days'),
+    maxDate: moment(Date.now()).add({{maxReservationTime}}, 'days'),
+    useCurrent: false,
     format: 'DD/MM/YYYY',
     disabledDates: [
         {% for day in disabledDays %}
@@ -33,7 +34,7 @@ $("#reservation_endingAt").datetimepicker({
         time: "fa fa-clock-o",
     },
     minDate: Date.now(),
-    maxDate: moment(Date.now()).add(60, 'days'),
+    maxDate: moment(Date.now()).add({{maxReservationTime}} +  {{maxReservationLength}}, 'days'),
     useCurrent: false,
     format: 'DD/MM/YYYY',
     disabledDates: [
@@ -45,10 +46,19 @@ $("#reservation_endingAt").datetimepicker({
 
 
 $("#reservation_beginingAt").on("change.datetimepicker", function (e) {
+    let maxDate = moment(e.date).add({{maxReservationLength}}, 'days')
+    console.log(maxDate);
+    
     $('#reservation_endingAt').datetimepicker('minDate', e.date);
+    $('#reservation_endingAt').datetimepicker('maxDate', maxDate);
 });
 $("#reservation_endingAt").on("change.datetimepicker", function (e) {
+    let minDate = moment(e.date).subtract({{maxReservationLength}}, 'days')
+    console.log(minDate);
+    
     $('#reservation_beginingAt').datetimepicker('maxDate', e.date);
+    $('#reservation_beginingAt').datetimepicker('minDate', minDate);
+
 });
 </script>
 {% endblock %}

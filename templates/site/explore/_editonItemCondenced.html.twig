@@ -1,0 +1,15 @@
+<tr class="result_item">
+	<td class="result_item__title"><a href="{{ path('explore_edition', {'edition': result.edition.id}) }}" title="Voir la fiche de ce document">{{ result.edition.document.title }}</a></td>
+	<td class="result_item__author">
+		{% if result.edition.writers is not empty %}
+			{% for writer in result.edition.writers %}
+				{% if writer.author.id is same as(author.id) %}
+					<span>{{ writer.author.name }}</span>
+				{% else %}
+					<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
+				{% endif %}
+				{{ (loop.last is same as(false)) ? ', ' : '' }}
+			{% endfor %}
+		{% endif %}
+	</td>
+</tr>

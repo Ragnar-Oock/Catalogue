@@ -1,0 +1,82 @@
+.fiche {
+	margin: 1rem auto;
+	max-width: 800px;
+	width: 100%;
+	background-color: #fff;
+	position: relative;
+	padding: 3rem 2rem;
+
+	&__actions {
+		margin-left: auto;
+		display: flex;
+		width: max-content;
+	}
+
+	&__head {
+		margin-bottom: 1.5rem;
+	}
+
+	&__title {
+		font-size: 2.5rem;
+		font-weight: bold;
+	}
+
+	&__subtitle {
+		font-size: 1.5rem;
+		margin: 0;
+	}
+
+	&__alttitle {
+		color: #6c757d ;
+		margin: 0;
+	}
+
+	@media screen {
+		&--sm-hide {
+			display: none;
+		}
+	}
+
+	&__type {
+		color: #00000080;
+		font-weight: bold;
+		font-size: 1.2em;
+		position: absolute;
+		top: 0;
+		transform: translateY(-100%);
+		background: white;
+		padding: .2em 2em;
+		left: 0;
+		display: block;
+		clip-path: polygon(0 0 , 0 100%, 100% 100%, 86% 0);
+		width: 15em;
+	}
+
+	&__type::after {
+		content: '';
+		display: block;
+		width: 3em;
+		height: 100%;
+		position: relative;
+	}
+}
+
+.authors {
+	&__head {
+		background-color: $dark;
+		border: none;
+	}
+
+	& &__label {
+		color: white;
+		border: none;
+	}
+}
+
+.author_item {
+	border: thin solid $dark;
+
+	& &__cell {
+		border: none;
+	}
+}
