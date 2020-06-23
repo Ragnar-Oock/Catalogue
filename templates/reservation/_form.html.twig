@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': { 'id': 'reservation-form'}}) }}
 <div class="row">
 	<div class="position-relative col-lg-6 col-sm-12">
 		{{ form_row(form.beginingAt) }}
@@ -9,5 +9,7 @@
 	</div>
 </div>
 
-<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{% if noBtn is not defined %}
+	<button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+{% endif %}
 {{ form_end(form) }}

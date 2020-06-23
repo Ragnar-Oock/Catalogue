@@ -4,8 +4,24 @@
 {% endblock %}
 
 {% block main %}
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Enregistrer le commentaire') }}</button>
-{{ form_end(form) }}
+<div class="fiche">
+    <h1 class="fiche__title">Ajouter un commentaire</h1>
+    <p>Réservation du l'utilisateur 
+        {% if reservation.user.firstname is not same as('') or reservation.user.lastname is not same as('') %}
+            <a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}" title="Voir les autres réservations de cet utilisateur">{{reservation.user.firstname}} {{reservation.user.lastname}}</a>
+        {% else %}
+            {% if reservation.user.email is not same as('') %}
+                <a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}" title="Voir les autres réservations de cet utilisateur">{{reservation.user.email}}</a>
+            {% else %}
+                <span class="text-muted">Compte supprimé</span>	
+            {% endif %}
+        {% endif %}
+        portant sur le document <a href="{{ path('explore_edition', {'edition': reservation.edition.id}) }}" title="Voir la fiche de ce document">{{reservation.edition.document.title}}</a> pour la période du {{reservation.beginingAt|date('d/m/Y')}} au {{reservation.endingAt|date('d/m/Y')}}.
+    </p>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-secondary">{{ button_label|default('Enregistrer le commentaire') }}</button>
+    {{ form_end(form) }}
+</div>
 {% endblock %}

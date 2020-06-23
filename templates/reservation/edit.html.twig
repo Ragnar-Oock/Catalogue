@@ -3,18 +3,23 @@
 {% block title %}Modifier une reservation{% endblock %}
 
 {% block main %}
-    <h1>Modifier une reservation</h1>
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+<div class="fiche">
+    <h1>Modifier une réservation</h1>
+    <p>Réservation pour le document <a href="{{ path('explore_edition', {'edition': reservation.edition.id}) }}" title="Voir la fiche de ce document">{{reservation.edition.document.title}}</a> pour la période du {{reservation.beginingAt|date('d/m/Y')}} au {{reservation.endingAt|date('d/m/Y')}}.</p>
 
-    <a href="{{ path('reservation_index') }}">Annuler</a>
+    {{ include('reservation/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
 
-    {# {{ include('reservation/_delete_form.html.twig') }} #}
+    <div class="d-flex">
+        <a href="{{ path('reservation_index') }}" class="btn btn-outline-danger ml-auto mr-3">Annuler</a>
+        <button class="btn btn-secondary" form="reservation-form">Valider</button>
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
 <script>
 $("#reservation_beginingAt").datetimepicker({
-    locale: 'en',
+    locale: 'fr',
     icons: {
         time: "fa fa-clock-o",
     },
@@ -30,7 +35,7 @@ $("#reservation_beginingAt").datetimepicker({
 });
 
 $("#reservation_endingAt").datetimepicker({
-    locale: 'en',
+    locale: 'fr',
     icons: {
         time: "fa fa-clock-o",
     },

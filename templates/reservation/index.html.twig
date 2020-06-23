@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservation index{% endblock %}
+{% block title %}Toutes les réservations{% endblock %}
 
 {% block main %}
-	<h1>Reservation index</h1>
+	<h1>Toutes les réservations</h1>
 
 {% include "reservation/_search.html.twig" %}
 
@@ -66,7 +66,7 @@
 					<div class="no-results">
 						<p class="no-results__text">Vous n'avez pas encore de réservation ou aucune de vos réservations ne correspond aux critères de votre recherche</p>
 						<div class="no-results__btn">
-							<a href="{{ path('reservation_index') }}" class="btn btn-primary">Retourner à la liste complete</a>
+							<a href="{{ path('reservation_index') }}" class="btn btn-secondary">Retourner à la liste complete</a>
 						</div>
 					</div>
 				</td>
