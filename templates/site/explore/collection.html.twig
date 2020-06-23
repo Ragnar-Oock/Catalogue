@@ -5,7 +5,7 @@
 {% block main %}
 
 {% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path('collec_edit', {'id': collection.id}) }}" class="btn btn-primary">Modifier</a>
+<a href="{{ path('collec_edit', {'id': collection.id}) }}" class="btn btn-secondary">Modifier</a>
 {% endif %}
 	<h1>{{ collection.title }}</h1>
 	<p>{{ collection.description }}</p>

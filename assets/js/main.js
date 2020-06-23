@@ -21,10 +21,3 @@ global.moment = moment;
 require('moment/locale/fr');
 
 require('tempusdominus-bootstrap-4');
-// $("[data-toggle='datepicker']").datetimepicker({
-//     locale: 'fr',
-//     icons: {
-//         time: "fa fa-clock-o",
-//     },
-//     minDate: false
-// });

@@ -27,7 +27,7 @@
                 <td colspan="3" class="text-center">
                     <div class="flex flex-column">
                         <p>Aucun auteur trouvé, essayez d'en ajouter un.</p>
-                        <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-primary">Ajouter un participant</a>
+                        <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-secondary">Ajouter un participant</a>
                     </div>
                 </td>
             </tr>
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-primary">Ajouter un participant</a>
+    <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-secondary">Ajouter un participant</a>
 {% endblock %}

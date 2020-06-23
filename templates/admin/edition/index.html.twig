@@ -22,8 +22,8 @@
                 <td>{{ edition.tome }}</td>
                 <td class="text-right">
                     <div class="btn-group ml-auto">
-                        <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche" class="btn btn-primary">{% include "icons/file-earmark.svg.twig" %}</a>
-                        <a href="{{ path('edition_edit', {'id': edition.id}) }}" title="Modifier" class="btn btn-primary">{% include "icons/pen.svg.twig" %}</a>
+                        <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
+                        <a href="{{ path('edition_edit', {'id': edition.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
                     </div>
                 </td>
             </tr>
@@ -32,7 +32,7 @@
                 <td colspan="4" class="text-center">
                     <div class="flex flex-column">
                         <p>Aucune edition trouvée, essayez d'en ajouter une.</p>
-                        <a href="{{ path('edition_new') }}" class="btn btn-primary">Ajouter une édition</a>
+                        <a href="{{ path('edition_new') }}" class="btn btn-secondary">Ajouter une édition</a>
                     </div>
                 </td>
             </tr>
@@ -44,5 +44,5 @@
     {{ knp_pagination_render(editions) }}
 </div>
 
-    <a href="{{ path('edition_new') }}" class="btn btn-primary">Ajouter une édition</a>
+    <a href="{{ path('edition_new') }}" class="btn btn-secondary">Ajouter une édition</a>
 {% endblock %}

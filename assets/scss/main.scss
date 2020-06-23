@@ -1,7 +1,8 @@
+@import "_variables.scss";
+
 @import "~bootstrap/scss/bootstrap";
 @import "~font-awesome";
 
-@import "_variables.scss";
 
 @import "_search";
 @import "_header";
@@ -22,7 +23,7 @@ body {
 }
 
 .main {
-	padding: 2em 1em;
+	padding: 2em 1em 9em;
 	margin-top: 3.5em;
 	max-width: 80em;
 	min-height: 70vh;

@@ -8,43 +8,46 @@
 				<span class="menu_label_text-opened">Fermer le menu</span>
 				<span class="menu_label_text-closed">Ouvrir le menu</span>
 			</span>
-			<span class="menu_label_icon">X</span>
+			<span class="menu_label_icon">{% include "icons/list.svg.twig" %}</span>
 		</label>
 
 		<div class="menu-toggleable">
 			<ul class="nav flex-column">
 				<li class="nav-item menu_item">
-					<a href="{{ path('edition_index') }}" class="nav-link menu_link">gerer les editions</a>
+					<a href="{{ path('edition_index') }}" class="nav-link menu_link">Gérer les editions</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('author_index') }}" class="nav-link menu_link">gerer les auteurs</a>
+					<a href="{{ path('author_index') }}" class="nav-link menu_link">Gérer les auteurs</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('editor_index') }}" class="nav-link menu_link">gerer les editeurs</a>
+					<a href="{{ path('editor_index') }}" class="nav-link menu_link">Gérer les editeurs</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('document_index') }}" class="nav-link menu_link">gerer les documents</a>
+					<a href="{{ path('document_index') }}" class="nav-link menu_link">Gérer les documents</a>
 				</li>
 				<li>
 					<hr class="menu_separator">
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('participation_type_index') }}" class="nav-link menu_link">gerer les types de participations</a>
+					<a href="{{ path('participation_type_index') }}" class="nav-link menu_link">Gérer les types de participations</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('fond_index') }}" class="nav-link menu_link">gerer les fonds</a>
+					<a href="{{ path('fond_index') }}" class="nav-link menu_link">Gérer les fonds</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('type_index') }}" class="nav-link menu_link">gerer les types</a>
+					<a href="{{ path('type_index') }}" class="nav-link menu_link">Gérer les types</a>
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('collec_index') }}" class="nav-link menu_link">gerer les collections</a>
+					<a href="{{ path('collec_index') }}" class="nav-link menu_link">Gérer les collections</a>
 				</li>
 				<li>
 					<hr class="menu_separator">
 				</li>
 				<li class="nav-item menu_item">
-					<a href="{{ path('admin_reservation_index') }}" class="nav-link menu_link">gerer les reservation</a>
+					<a href="{{ path('admin_reservation_index') }}" class="nav-link menu_link">Gérer les reservation</a>
+				</li>
+				<li class="nav-item menu_item">
+					<a href="{{ path('user_index') }}" class="nav-link menu_link">Gérer les utilisateurs</a>
 				</li>
 			</ul>
 		</div>

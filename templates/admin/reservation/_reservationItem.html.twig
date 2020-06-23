@@ -1,9 +1,19 @@
 <tr>
-	<td><a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.firstname}} {{reservation.user.lastname}}</a></td>
+	<td>
+		{% if reservation.user.firstname is not same as('') or reservation.user.lastname is not same as('') %}
+			<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.firstname}} {{reservation.user.lastname}}</a>
+		{% else %}
+			{% if reservation.user.email is not same as('') %}
+				<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.email}}</a>
+			{% else %}
+				<span class="text-muted">Compte supprimé</span>	
+			{% endif %}
+		{% endif %}
+	</td>
 	<td>{{reservation.edition.document.title}}
 	<a href="{{ path('admin_reservation_edition', {'edition': reservation.edition.id }) }}" title="liste des reservation" class="badge badge-primary">{% include "icons/card-list.svg.twig" %}</a>
-	<a href="{{ path('edition_show', {'id': reservation.edition.id}) }}" title="page de l'édition" class="badge badge-primary">{% include "icons/file-earmark.svg.twig" %}</a></td>
-	<td>{{reservation.beginingAt|date('d/m/Y H:i')}} - {{reservation.endingAt|date('d/m/Y H:i')}}</td>
+	<a href="{{ path('explore_edition', {'edition': reservation.edition.id}) }}" title="page de l'édition" class="badge badge-primary">{% include "icons/file-earmark.svg.twig" %}</a></td>
+	<td>{{reservation.beginingAt|date('d/m/Y')}} - {{reservation.endingAt|date('d/m/Y')}}</td>
 	<td>
 		{% if reservation.validatedAt is null and reservation.canceled is same as(false) %}
 			<form
@@ -34,7 +44,7 @@
 				<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject" title="Refuser">{% include "icons/x.svg.twig" %}</button>
 				{% endif %}
 			</div>
-				<a href="{{ path('admin_reservation_add_comment', {'reservation': reservation.id}) }}" class="btn btn-primary" title="Commentaire">{% include "icons/comment.svg.twig" %}</a>
+				<a href="{{ path('admin_reservation_add_comment', {'reservation': reservation.id}) }}" class="btn btn-secondary" title="Commentaire">{% include "icons/comment.svg.twig" %}</a>
 		</div>
 	</td>
 </tr>

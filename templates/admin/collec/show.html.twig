@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('collec_index') }}" class="btn btn-primary">Retour à la liste</a>
+    <a href="{{ path('collec_index') }}" class="btn btn-outline-secondary">Retour à la liste</a>
 
-    <a href="{{ path('collec_edit', {'id': collec.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('collec_edit', {'id': collec.id}) }}" class="btn btn-secondary">Modifier</a>
 
     {{ include('admin/collec/_delete_form.html.twig') }}
 {% endblock %}

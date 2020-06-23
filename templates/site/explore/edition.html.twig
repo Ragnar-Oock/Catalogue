@@ -7,11 +7,11 @@
 
 <section class="edition">
     <div class="btn-group edition__actions">
-        <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-primary">Reserver</a>
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-primary">Modifier</a>
-        <a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-primary">Voir les reservations</a>
+        <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-outline-secondary">Modifier</a>
+        <a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-outline-secondary">Voir les reservations</a>
         {% endif %}
+        <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-secondary">Reserver</a>
     </div>
     <div class="edition__head">
         <h1 class="edition__title">{{ edition.document.title }}</h1>

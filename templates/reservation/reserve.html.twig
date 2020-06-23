@@ -16,7 +16,7 @@
 		</div>
 	</div>
 
-		<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+		<button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
 	{{ form_end(form) }}
 
 	{# go back to the last page if available #}
@@ -32,14 +32,8 @@
 console.log('dd');
 
     $(function () {
-            // $('#reservation_beginingAt').datetimepicker();
-            // $('#reservation_endingAt').datetimepicker({
-            //     useCurrent: false
-            // });
-
-
             $("#reservation_beginingAt").datetimepicker({
-                locale: 'en',
+                locale: 'fr',
                 icons: {
                     time: "fa fa-clock-o",
                 },
@@ -48,7 +42,7 @@ console.log('dd');
             });
 
             $("#reservation_endingAt").datetimepicker({
-                locale: 'en',
+                locale: 'fr',
                 icons: {
                     time: "fa fa-clock-o",
                 },
