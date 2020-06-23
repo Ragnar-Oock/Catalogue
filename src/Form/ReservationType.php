@@ -14,7 +14,7 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('beginingAt', DateType::class, [
-                'label'=>'Date de debut',
+                'label'=>'Date de début',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,

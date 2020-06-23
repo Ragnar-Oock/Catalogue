@@ -16,7 +16,7 @@ class AdvencedSearchFormType extends AbstractType
     {
         $builder
             ->add('publisheAfter', DateType::class, [
-                'label'=>'Edité apres le',
+                'label'=>'Edité après le',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'html5' => false,

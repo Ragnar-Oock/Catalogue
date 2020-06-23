@@ -15,7 +15,7 @@ class SearchReservationType extends AbstractType
     {
         $builder
             ->add('submitedAtBegining', DateTimeType::class, [
-                'label'=>'Soumis apres le',
+                'label'=>'Soumis après le',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm',
                 'html5' => false,
@@ -37,7 +37,7 @@ class SearchReservationType extends AbstractType
                 'required' => false
             ])
             ->add('rangeBegining', DateTimeType::class, [
-                'label'=>'Valable apres le',
+                'label'=>'Valable après le',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy HH:mm',
                 'html5' => false,
