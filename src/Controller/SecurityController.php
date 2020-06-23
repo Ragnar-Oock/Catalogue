@@ -158,7 +158,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('danger', 'Votre mot de passe est incorrect');
 
                 return $this->render(
-                    'security/request_psw.html.twig',
+                    'security/change_psw.html.twig',
                     [
                         'form' => $form->createView()
                     ]
@@ -166,7 +166,7 @@ class SecurityController extends AbstractController
             }
         } else {
             return $this->render(
-                'security/request_psw.html.twig',
+                'security/change_psw.html.twig',
                 [
                     'form' => $form->createView()
                 ]
