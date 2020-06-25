@@ -3,9 +3,10 @@
 {% block title %}User index{% endblock %}
 
 {% block main %}
+<section class="custom-container">
 	<h1>User index</h1>
 
-	<table class="table">
+	<table class="table table-responsive">
 		<thead>
 			<tr>
 				<th>Email</th>
@@ -34,11 +35,7 @@
 				<td>{{ user.firstname }}</td>
 				<td>{{ user.lastname }}</td>
 				<td>{{ user.registeredAt ? user.registeredAt|date('d/m/Y') : '' }}</td>
-				{# <td> #}
-					{# <a href="{{ path('user_show', {'id': user.id}) }}">show</a> #}
-					{# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
-				{# </td> #}
-				<td>
+				<td class="py-1">
 
 					{% if 'ROLE_ADMIN' in user.roles %}
 						<form
@@ -76,8 +73,8 @@
 
 						{% if app.user.id is not same as(user.id) and user.email is not same as('') %}
 							<div class="btn-group">
-								<button class="btn btn-danger" title="bannir l'utilisateur" form="{{user.id}}-bannish">{% include "icons/hammer.svg.twig" %}</button>
-								<button class="btn btn-danger" title="supprimer le compte" form="{{user.id}}-delete">{% include "icons/trash-fill.svg.twig" %}</button>
+								<button class="btn btn-outline-danger" title="bannir l'utilisateur" form="{{user.id}}-bannish">{% include "icons/hammer.svg.twig" %}</button>
+								<button class="btn btn-outline-danger" title="supprimer le compte" form="{{user.id}}-delete">{% include "icons/trash-fill.svg.twig" %}</button>
 							</div>
 							<button class="btn btn-secondary" title="Promouvoir l'utilisateur" form="{{user.id}}-promote">{% include "icons/shield-shaded.svg.twig" %}</button>
 						{% endif %}
@@ -91,6 +88,5 @@
 		{% endfor %}
 		</tbody>
 	</table>
-
-	{# <a href="{{ path('user_new') }}">Create new</a> #}
+</section>
 {% endblock %}

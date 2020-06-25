@@ -14,7 +14,6 @@
     </div>
     {% endif %}
     <div class="fiche__head">
-
         <h1 class="fiche__title">{{ author.name }}</h1>
     </div>
 
@@ -26,7 +25,7 @@
                 <td class="fiche__value">{{ author.birth ? author.birth|date('Y-m-d') : 'Inconnue' }}</td>
             </tr>
             {% if author.death is not null %}
-                <tr class="edition__death">
+                <tr class="fiche__row">
                     <th class="fiche__label">Date de mort</th>
                     <td class="fiche__value">{{ author.death ? author.death|date('Y-m-d') : '' }}</td>
                 </tr>

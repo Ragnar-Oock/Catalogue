@@ -4,20 +4,27 @@
 
 {% block main %}
 
-{% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path('editor_edit', {'id': editor.id}) }}" class="btn btn-secondary">Modifier</a>
-{% endif %}
+<section class="fiche">
+	<p class="fiche__type">
+			Fiche d'éditeur
+	</p>
+	{% if is_granted('ROLE_ADMIN') %}
+	<div class="btn-group fiche__actions">
+		<a href="{{ path('editor_edit', {'id': editor.id}) }}" class="btn btn-secondary">Modifier</a>
+	</div>
+	{% endif %}
 
-
-	<h1>{{ editor.name }}</h1>
+	<div class="fiche__head">
+		<h1 class="fiche__title">{{ editor.name }}</h1>
+	</div>
 
 	<h2>Informations</h2>
 	<table class="table">
 		<tbody>
 		{% if editor.address is not null %}
-			<tr>
-				<th>Adresse</th>
-				<td>{{ editor.address }}</td>
+			<tr class="fiche__row">
+				<th class="fiche__label">Adresse</th>
+				<td class="fiche__value">{{ editor.address }}</td>
 			</tr>
 		{% endif %}
 		</tbody>
@@ -42,4 +49,5 @@
 	<div class="d-flex justify-content-center">
 		{{ knp_pagination_render(editions) }}
 	</div>
+</section>
 {% endblock %}

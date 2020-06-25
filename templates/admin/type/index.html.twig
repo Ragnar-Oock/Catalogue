@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des types{% endblock %}
+{% block title %}Liste des types de document{% endblock %}
 
 {% block main %}
-    <h1>Liste des types</h1>
+<div class="d-flex align-items-center">
+    <h1>Liste des types de document</h1>
+    <a href="{{ path('type_new') }}" class="btn btn-secondary ml-auto">Ajouter un type de document</a>
+</div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +21,10 @@
             <tr>
                 <td>{{ type.title }}</td>
                 <td>{{ type.description }}</td>
-                <td>
-                    <a href="{{ path('type_show', {'id': type.id}) }}">Afficher</a>
-                    <a href="{{ path('type_edit', {'id': type.id}) }}">Modifier</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('type_edit', {'id': type.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -35,6 +39,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('type_new') }}">Create new</a>
 {% endblock %}

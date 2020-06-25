@@ -1,4 +1,6 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'id': 'edit-fond'}}) }}
     {{ form_widget(form) }}
-    <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+     {% if noBtn is not defined %}
+        <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+    {% endif %}
 {{ form_end(form) }}

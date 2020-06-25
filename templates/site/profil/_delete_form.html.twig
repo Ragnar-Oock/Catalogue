@@ -2,6 +2,6 @@
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
     {% if noBtn is not defined %}
-        <button class="btn btn-danger">Supprimer mon compte</button>
+        <button class="btn btn-outline-danger">Supprimer mon compte</button>
     {% endif %}
 </form>

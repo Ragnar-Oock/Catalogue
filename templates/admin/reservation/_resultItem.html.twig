@@ -43,7 +43,7 @@
 				{% if reservation.validatedAt is null and reservation.canceled is same as(false) %}
 				<button class="btn btn-success" form="reservation-{{reservation.id}}-validate" title="Valider">{% include "icons/check.svg.twig" %}</button>
 
-				<button class="btn btn-danger" form="reservation-{{reservation.id}}-reject" title="Refuser">{% include "icons/x.svg.twig" %}</button>
+				<button class="btn btn-outline-danger" form="reservation-{{reservation.id}}-reject" title="Refuser">{% include "icons/x.svg.twig" %}</button>
 				{% endif %}
 			</div>
 				<a href="{{ path('admin_reservation_add_comment', {'reservation': reservation.id}) }}" class="btn btn-secondary" title="Commentaire">{% include "icons/comment.svg.twig" %}</a>

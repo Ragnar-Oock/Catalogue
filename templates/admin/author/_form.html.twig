@@ -1,6 +1,4 @@
-{{ form_start(form) }}
-    {# {{ form_widget(form) }} #}
-
+{{ form_start(form, {'attr': {'id': 'edit-author'}}) }}
     <div class="row">
         <div class="col">
             {{ form_row(form.name) }}
@@ -14,5 +12,7 @@
             {{ form_row(form.death) }}
         </div>
     </div>
-    <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+     {% if noBtn is not defined %}
+        <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+    {% endif %}
 {{ form_end(form) }}

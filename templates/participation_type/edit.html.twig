@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit ParticipationType{% endblock %}
+{% block title %}Modifier un type de participation{% endblock %}
 
 {% block main %}
-    <h1>Edit ParticipationType</h1>
+<div class="fiche">
+    <h1 class="fiche__title">Modifier un type de participation</h1>
 
-    {{ include('participation_type/_form.html.twig') }}
+    {{ include('participation_type/_form.html.twig', { 'noBtn': true }) }}
+    {{ include('participation_type/_delete_form.html.twig', { 'noBtn': true }) }}
 
-    <a href="{{ path('participation_type_index') }}">Retour a la liste</a>
+    <div class="d-flex">
+        <button form="delete-participationType" class="btn btn-outline-danger ml-auto mr-3">Supprimer</button>
+        <div class="btn-group">
+            <a href="{{ path('participation_type_index') }}" class="btn btn-outline-secondary">Retour a la liste</a>
+            <button form="edit-participationType" class="btn btn-secondary">Enregistrer</button>
+        </div>
+    </div>
+</div>
 
-    {{ include('participation_type/_delete_form.html.twig') }}
 {% endblock %}

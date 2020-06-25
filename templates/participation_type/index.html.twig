@@ -3,14 +3,17 @@
 {% block title %}Types de participation{% endblock %}
 
 {% block main %}
+<div class="d-flex align-items-center">
     <h1>Types de participation</h1>
+    <a href="{{ path('participation_type_new') }}" class="btn btn-secondary ml-auto">Ajouter un type de participation</a>
+</div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Action</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,8 +21,10 @@
             <tr>
                 <td>{{ participation_type.title }}</td>
                 <td>{{ participation_type.description|u.truncate(80, '...') }}</td>
-                <td>
-                    <a href="{{ path('participation_type_edit', {'id': participation_type.id}) }}">edit</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('participation_type_edit', {'id': participation_type.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +40,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('participation_type_new') }}" class="btn btn-secondary">Ajouter un type de participation</a>
 {% endblock %}

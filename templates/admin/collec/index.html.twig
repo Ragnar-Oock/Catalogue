@@ -2,15 +2,18 @@
 
 {% block title %}Liste des collections{% endblock %}
 
-{% block main %}
+{% block main %}<div class="d-flex align-items-center">
     <h1>Liste des collections</h1>
+    <a href="{{ path('collec_new') }}" class="btn btn-secondary ml-auto">Ajouter une collection</a>
+</div>
+    <h1></h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,10 +23,6 @@
                 <td>{{ collec.description }}</td>
                 <td class="text-right">
                     <div class="btn-group ml-auto">
-                        {# <a href="{{ path('explore_collection', {'collection': collec.id}) }}">Afficher</a>
-                        <a href="{{ path('collec_edit', {'id': collec.id}) }}">Modifier</a> #}
-
-                        <a href="{{ path('explore_collection', {'collection': collec.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
                         <a href="{{ path('collec_edit', {'id': collec.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
                     </div>
                 </td>
@@ -40,6 +39,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('collec_new') }}" class="btn btn-secondary">Ajouter une collection</a>
 {% endblock %}

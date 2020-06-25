@@ -3,16 +3,17 @@
 {% block title %}Editor index{% endblock %}
 
 {% block main %}
-    <a href="{{ path('admin') }}" class="btn btn-link">Retour au tableau de bord</a>
-
+<div class="d-flex align-items-center">
     <h1>Liste des éditeurs</h1>
+    <a href="{{ path('editor_new') }}" class="btn btn-secondary ml-auto">Ajouter un éditeur</a>
+</div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Address</th>
-                <th>actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
                 <td>
                     <a href="{{ path('editor_show', {'id': editor.id}) }}">Afficher</a>
                     <a href="{{ path('editor_edit', {'id': editor.id}) }}">Modifier</a>
+                </td>
+
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('explore_editor', {'editor': editor.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
+                        <a href="{{ path('editor_edit', {'id': editor.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -38,5 +46,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('editor_new') }}" class="btn btn-secondary">Ajouter un éditeur</a>
 {% endblock %}

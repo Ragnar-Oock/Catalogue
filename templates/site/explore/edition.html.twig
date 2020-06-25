@@ -5,25 +5,28 @@
 {% block main %}
 
 
-<section class="edition">
-    <div class="btn-group edition__actions">
+<section class="fiche">
+    <p class="fiche__type">
+        Fiche d'auteur
+    </p>
+    <div class="btn-group fiche__actions">
         {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('edition_edit', {'id': edition.id}) }}" class="btn btn-outline-secondary">Modifier</a>
         <a href="{{ path('admin_reservation_edition', {'edition': edition.id}) }}" class="btn btn-outline-secondary">Voir les reservations</a>
         {% endif %}
         <a href="{{ path('reservation_new', { 'edition': edition.id}) }}" class="btn btn-secondary">Reserver</a>
     </div>
-    <div class="edition__head">
-        <h1 class="edition__title">{{ edition.document.title }}</h1>
-        <p class="edition__subtitle">{{ edition.document.subtitle }}</p>
-        <p class="edition__alttitle">{{ edition.document.alttitle }}</p>
+    <div class="fiche__head">
+        <h1 class="fiche__title">{{ edition.document.title }}</h1>
+        <p class="fiche__subtitle">{{ edition.document.subtitle }}</p>
+        <p class="fiche__alttitle">{{ edition.document.alttitle }}</p>
     </div>
 
     <h2>Auteurs</h2>
     <table class="authors table">
-        <thead class="authors__head">
-            <th class="authors__label">Nom</th>
-            <th class="authors__label text-right">Type de participation</th>
+        <thead>
+            <th>Nom</th>
+            <th class="text-right">Type de participation</th>
         </thead>
         <tbody>
         {% for writer in edition.writers %}
@@ -33,7 +36,7 @@
     </table>
 
     <h2>Informations</h2>
-    <table class="edition__infos table">
+    <table class="fiche__infos table">
         <tbody>
         {% if edition.publishedAt is not null %}
             <tr class="fiche__row">

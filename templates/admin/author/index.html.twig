@@ -3,9 +3,10 @@
 {% block title %}Author index{% endblock %}
 
 {% block main %}
-    <a href="{{ path('admin') }}" class="btn btn-link">Retour au tableau de bord</a>
-
+<div class="d-flex align-items-center">
     <h1>Liste des auteurs</h1>
+    <a href="{{ path('author_new') }}" class="btn btn-secondary ml-auto">Ajouter un auteur</a>
+</div>
 
     <table class="table">
         <thead>
@@ -13,7 +14,7 @@
                 <th>Nom</th>
                 <th>Date de naissance</th>
                 <th>Date de mort</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,9 +23,11 @@
                 <td>{{ author.name }}</td>
                 <td>{{ author.birth ? author.birth|date('Y-m-d') : '' }}</td>
                 <td>{{ author.death ? author.death|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('author_show', {'id': author.id}) }}">Afficher</a>
-                    <a href="{{ path('author_edit', {'id': author.id}) }}">Modifier</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
+                        <a href="{{ path('author_edit', {'id': author.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -43,6 +46,4 @@
     <div class="d-flex justify-content-center">
         {{ knp_pagination_render(authors) }}
     </div>
-
-    <a href="{{ path('author_new') }}" class="btn btn-secondary">Ajouter un auteur</a>
 {% endblock %}

@@ -3,7 +3,10 @@
 {% block title %}Liste des éditions{% endblock %}
 
 {% block main %}
+<div class="d-flex align-items-center">
     <h1>Liste des éditions</h1>
+    <a href="{{ path('edition_new') }}" class="btn btn-secondary ml-auto">Ajouter une édition</a>
+</div>
 
     <table class="table">
         <thead>
@@ -43,6 +46,4 @@
 <div class="d-flex justify-content-center">
     {{ knp_pagination_render(editions) }}
 </div>
-
-    <a href="{{ path('edition_new') }}" class="btn btn-secondary">Ajouter une édition</a>
 {% endblock %}

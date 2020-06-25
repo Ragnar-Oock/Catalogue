@@ -3,9 +3,10 @@
 {% block title %}Document index{% endblock %}
 
 {% block main %}
-    <a href="{{ path('admin') }}" class="btn btn-link">Retour au tableau de bord</a>
-
+<div class="d-flex align-items-center">
     <h1>Liste des documents</h1>
+    <a href="{{ path('document_new') }}" class="btn btn-secondary ml-auto">Ajouter un document</a>
+</div>
 
     <table class="table">
         <thead>
@@ -13,7 +14,7 @@
                 <th>Titre</th>
                 <th>Sous-titre</th>
                 <th>Titre alternatif</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,9 +23,10 @@
                 <td>{{ document.title | u.truncate(50, '...') }}</td>
                 <td>{{ document.subtitle }}</td>
                 <td>{{ document.alttitle }}</td>
-                <td>
-                    <a href="{{ path('document_show', {'id': document.id}) }}">Afficher</a>
-                    <a href="{{ path('document_edit', {'id': document.id}) }}">Modifier</a>
+                <td class="text-right">
+                    <div class="btn-group ml-auto">
+                        <a href="{{ path('document_edit', {'id': document.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -45,5 +47,4 @@
     {{ knp_pagination_render(documents) }}
 </div>
 
-    <a href="{{ path('document_new') }}" class="btn btn-secondary">Ajouter un document</a>
 {% endblock %}
