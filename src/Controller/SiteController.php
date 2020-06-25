@@ -155,4 +155,12 @@ class SiteController extends AbstractController
             'authorsList' => $authors
         ]);
     }
+
+    /**
+     * @Route("/mentions-legales", name="mentions_legales")
+     */
+    public function mentionsLegales()
+    {
+        return $this->render('site/legal.html.twig');
+    }
 }
