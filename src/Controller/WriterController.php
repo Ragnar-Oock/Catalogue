@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 // /**
-//  * @Route("/writer")
+//  * @Route("/admin/writer")
 //  */
 class WriterController extends AbstractController
 {
@@ -57,7 +57,7 @@ class WriterController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="writer_edit", methods={"GET","POST"})
+     * @Route("/edition/{edition}/participants/{id}/edit", name="writer_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Writer $writer): Response
     {
@@ -77,7 +77,7 @@ class WriterController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="writer_delete", methods={"DELETE"})
+     * @Route("/edition/{edition}/participants/{id}", name="writer_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Writer $writer): Response
     {
