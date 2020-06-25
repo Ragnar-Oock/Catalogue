@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DocumentRepository")
+ * @ORM\Table(name="document", indexes={@ORM\Index(columns={"title", "subtitle", "alttitle"}, flags={"fulltext"})})
  */
 class Document
 {
