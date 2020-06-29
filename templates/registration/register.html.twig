@@ -3,7 +3,8 @@
 {% block title %}Register{% endblock %}
 
 {% block main %}
-    <h1>Register</h1>
+<div class="fiche">
+    <h1 class="fiche_title">S'inscrire</h1>
 
     {% if knownEmail %}
         <div class="alert alert-danger" role="alert">
@@ -20,11 +21,12 @@
 
         <div class="row">
             <div class="col-12">
-                <a href="#" class="btn btn-link">Condition Générales d'Utilisation [TO DO]</a>
+                <a href="{{ path('mentions_legales') }}" class="btn btn-link">Condition Générales d'Utilisation</a>
             </div>
         </div>
         <div class="row">
-            <button class="btn">Register</button>
+            <button class="btn btn-secondary ml-auto">M'inscrire</button>
         </div>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
