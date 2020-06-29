@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Recherche{% endblock %}
+
 {% block main %}
 {% include("site/search/_filters.html.twig") %}
 
@@ -27,7 +29,7 @@
 					<a href="{{ path('editor_show', {'id': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a>
 				{% endif %}
 			<td class="result_item__type">{{ result.type.title }}</td>
-			<td class="result_item__date">{{ result.publishedAt|date("d/m/Y") }}</td>
+			<td class="result_item__date">{% if result.publishedAt is not null %}{{ result.publishedAt|date("d/m/Y") }}{% endif %}</td>
 		</tr>
 	{% endfor %}
 	</tbody>
