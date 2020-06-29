@@ -5,88 +5,89 @@
 {% block main %}
 <section class="custom-container">
 	<h1>User index</h1>
-
-	<table class="table table-responsive">
-		<thead>
-			<tr>
-				<th>Email</th>
-				<th>Prénom</th>
-				<th>Nom</th>
-				<th>Inscrit le</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for user in users %}
-			<tr>
-				<td>
-				{% if user.email is same as('') %}
-					<span class="text-muted">Compte supprimé</span>
-				{% else %}
-					{{ user.email }}		
-				{% endif %}
-				
-				
-				{% if 'ROLE_ADMIN' in user.roles %}
-						<span class="badge badge-primary" title="Cet utilisateur est administrateur">{% include "icons/shield-shaded.svg.twig" %}</span>
-					{% elseif user.roles is empty %}
-						<span class="badge badge-primary" title="Cet utilisateur à été banni">{% include "icons/hammer.svg.twig" %}</span>
-					{% endif %}</td>
-				<td>{{ user.firstname }}</td>
-				<td>{{ user.lastname }}</td>
-				<td>{{ user.registeredAt ? user.registeredAt|date('d/m/Y') : '' }}</td>
-				<td class="py-1">
-
-					{% if 'ROLE_ADMIN' in user.roles %}
-						<form
-							method="post"
-							action="{{ path('user_delete', {'user': user.id}) }}"
-							onsubmit="return confirm('Etes vous sur de vouloir supprimer ce compte?');"
-							id="{{user.id}}-delete"
-						>
-							<input type="hidden" name="_method" value="DELETE">
-							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-						</form>
-
-						<form
-							method="post"
-							action="{{ path('user_promote', {'user': user.id}) }}"
-							onsubmit="return confirm('Etes vous sur de vouloir promouvoir cet utilisateur au rang d'administrateur?');"
-							id="{{user.id}}-promote"
-						>
-							<input type="hidden" name="_method" value="DELETE">
-							<input type="hidden" name="_token" value="{{ csrf_token('promote' ~ user.id) }}">
-						</form>
-
-					{% endif %}
-					
-					<form
-						method="post"
-						action="{{ path('user_bannish', {'user': user.id}) }}"
-						onsubmit="return confirm('Etes vous sur de vouloir bannir cet utilisateur?');"
-						id="{{user.id}}-bannish"
-					>
-						<input type="hidden" name="_method" value="DELETE">
-						<input type="hidden" name="_token" value="{{ csrf_token('bannish' ~ user.id) }}">
-					</form>
-
-
-						{% if app.user.id is not same as(user.id) and user.email is not same as('') %}
-							<div class="btn-group">
-								<button class="btn btn-outline-danger" title="bannir l'utilisateur" form="{{user.id}}-bannish">{% include "icons/hammer.svg.twig" %}</button>
-								<button class="btn btn-outline-danger" title="supprimer le compte" form="{{user.id}}-delete">{% include "icons/trash-fill.svg.twig" %}</button>
-							</div>
-							<button class="btn btn-secondary" title="Promouvoir l'utilisateur" form="{{user.id}}-promote">{% include "icons/shield-shaded.svg.twig" %}</button>
+	<div class="table__container">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Email</th>
+					<th>Prénom</th>
+					<th>Nom</th>
+					<th>Inscrit le</th>
+					<th class="text-right">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for user in users %}
+				<tr>
+					<td>
+						{% if user.email is same as('') %}
+							<span class="text-muted">Compte supprimé</span>
+						{% else %}
+							{{ user.email }}		
 						{% endif %}
-						
-				</td>
-			</tr>
-		{% else %}
-			<tr>
-				<td colspan="8">no records found</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+											
+						{% if 'ROLE_ADMIN' in user.roles %}
+							<span class="badge badge-secondary" title="Cet utilisateur est administrateur">{% include "icons/shield-shaded.svg.twig" %}</span>
+						{% elseif user.roles is empty %}
+							<span class="badge badge-primary" title="Cet utilisateur à été banni">{% include "icons/hammer.svg.twig" %}</span>
+						{% endif %}
+					</td>
+					<td>{{ user.firstname }}</td>
+					<td>{{ user.lastname }}</td>
+					<td>{{ user.registeredAt ? user.registeredAt|date('d/m/Y') : '' }}</td>
+					<td class="py-1 text-right">
+						{% if app.user.id is not same as(user.id) and user.email is not same as('') %}
+							<form
+								method="post"
+								action="{{ path('user_delete', {'user': user.id}) }}"
+								onsubmit="return confirm('Etes vous sur de vouloir supprimer ce compte?');"
+								id="{{user.id}}-delete"
+							>
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+							</form>
+							<form
+								method="post"
+								action="{{ path('user_bannish', {'user': user.id}) }}"
+								onsubmit="return confirm('Etes vous sur de vouloir {% if user.roles is not empty %}bannir{% else %}lever le bannisement de{% endif %} cet utilisateur?');"
+								id="{{user.id}}-bannish"
+							>
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token('bannish' ~ user.id) }}">
+							</form>
+
+							{% if user.roles is not empty %}
+								<form
+									method="post"
+									action="{{ path('user_promote', {'user': user.id}) }}"
+									onsubmit="return confirm('Etes vous sur de vouloir promouvoir cet utilisateur au rang d'administrateur?');"
+									id="{{user.id}}-promote"
+								>
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="hidden" name="_token" value="{{ csrf_token('promote' ~ user.id) }}">
+								</form>
+							{% endif %}
+						{% endif %}
+
+							{% if app.user.id is not same as(user.id) and user.email is not same as('') %}
+								<div class="btn-group">
+									<button class="btn btn-outline-{% if user.roles is not empty %}danger{% else %}secondary{% endif %}" title="{% if user.roles is not empty %}bannir{% else %}lever le bannisement de{% endif %} l'utilisateur" form="{{user.id}}-bannish">{% include "icons/hammer.svg.twig" %}</button>
+									<button class="btn btn-outline-danger" title="supprimer le compte" form="{{user.id}}-delete">{% include "icons/trash-fill.svg.twig" %}</button>
+								</div>
+								{% if user.roles is not empty %}
+									<button class="btn btn-{% if "ROLE_ADMIN" in user.roles %}danger{% else %}secondary{% endif %}" title="{% if "ROLE_ADMIN" in user.roles %}Rétrograder{% else %}Promouvoir{% endif %} l'utilisateur" form="{{user.id}}-promote">{% include "icons/shield-shaded.svg.twig" %}</button>
+								{% endif %}
+							{% endif %}
+							
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </section>
 {% endblock %}
