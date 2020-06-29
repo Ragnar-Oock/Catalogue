@@ -96,13 +96,12 @@ class EditionRepository extends ServiceEntityRepository
                     ->setParameter('isbn', $values['isbn']);
             }
             if (!empty($values['search'])) {
-                $query->orWhere('ed.name LIKE :searchlike')
-                ->orWhere('d.title LIKE :searchlike')
-                ->orWhere('a.name LIKE :searchlike')
-    
-                ->orWhere('MATCH_AGAINST(ed.name) AGAINST(:search boolean)>0')
-                ->orWhere('MATCH_AGAINST(d.title, d.subtitle, d.alttitle) AGAINST(:search boolean)>0')
-                ->orWhere('MATCH_AGAINST(a.name) AGAINST(:search boolean)>0')
+                $query->andWhere('ed.name LIKE :searchlike 
+                OR d.title LIKE :searchlike 
+                OR a.name LIKE :searchlike 
+                OR MATCH_AGAINST(ed.name) AGAINST(:search boolean)>0 
+                OR MATCH_AGAINST(d.title, d.subtitle, d.alttitle) AGAINST(:search boolean)>0 
+                OR MATCH_AGAINST(a.name) AGAINST(:search boolean)>0')
                 ->setParameter('searchlike', '%'.$values['search'].'%')
                 ->setParameter('search', $values['search']);
             }
