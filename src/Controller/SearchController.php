@@ -17,7 +17,7 @@ class SearchController extends AbstractController
     public function index(EditionRepository $editionRepository, PaginatorInterface $paginator, Request $request)
     {
         $values = $request->get('advenced_search_form');
-        $values = [
+        $filters = [
             'publisheAfter' => !empty($values['publisheAfter']) ? \DateTime::createFromFormat('d/m/Y', $values['publisheAfter']) : null,
             'publishedBefore' => !empty($values['publishedBefore']) ? \DateTime::createFromFormat('d/m/Y', $values['publishedBefore']) : null,
             'type' => $values['type'],
@@ -28,6 +28,11 @@ class SearchController extends AbstractController
             'isbn' => $values['isbn'],
         ];
 
+        // filter all falsy values (i.e. empty fields)
+        $filters = array_filter($filters);
+        // store the number of actual filter (i.e. all but the search bar)
+        $filterCount = count($filters);
+
         // affect the value from the nav bar search form (may be null)
         $search = $request->get('search');
         // if the search is null (i.e. the search don't originate from the nav bar)
@@ -37,19 +42,18 @@ class SearchController extends AbstractController
         }
 
         // inject back the search value in the values array
-        $values['search'] = $search;
+        $filters['search'] = $search;
 
-        // filter all falsy values (i.e. empty fields)
-        $values = array_filter($values);
 
-        $form = $this->createForm(AdvencedSearchFormType::class, $values, [
+
+        $form = $this->createForm(AdvencedSearchFormType::class, $filters, [
             'action' => $this->generateUrl('search'),
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $results = $editionRepository->advencedSearchEdition($values);
+            $results = $editionRepository->advencedSearchEdition($filters);
         }
         else {
             $results = $editionRepository->searchEdition($request->query->get('search', ''));
@@ -63,7 +67,8 @@ class SearchController extends AbstractController
         return $this->render('site/search/results.html.twig', [
             'resultList' => $results,
             'form' => $form->createView(),
-            'valuesCount' => count($values)
+            // number of filter applied
+            'filterCount' => $filterCount
         ]);
     }
 }

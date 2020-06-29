@@ -12,7 +12,10 @@
 			<div class="card-header" id="headingOne">
 				<div class="col-12">
 					<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filtres" aria-expanded="false" aria-controls="filtres">
-						Filtres <span class="badge badge-secondary">{{ valuesCount }}</span>
+						Filtres
+						{% if filterCount is not same as(0) %}
+							<span class="badge badge-secondary">{{ filterCount }}</span>
+						{% endif %}
 					</button>
 				</div>
 			</div>
