@@ -1,10 +1,18 @@
 {{ form_start(form) }}
+	<div class="row">
+		<div class="input-group mb-3 col-12">
+			{{ form_widget(form.search) }}
+			<div class="input-group-append">
+				<button class="btn btn-secondary" type="submit">Rechercher</button>
+			</div>
+		</div>
+	</div>
 	<div class="accordion filters mb-5">
 		<div class="card overflow-visible">
 			<div class="card-header" id="headingOne">
 				<div class="col-12">
 					<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filtres" aria-expanded="false" aria-controls="filtres">
-						Filtres
+						Filtres <span class="badge badge-secondary">{{ valuesCount }}</span>
 					</button>
 				</div>
 			</div>
@@ -51,7 +59,7 @@
 						</div>
 					</div>
 
-					<button class="btn btn-secondary" type="submit">{{ button_label|default('Rechercher une réservation') }}</button>
+					<button class="btn btn-secondary" type="submit">Rechercher</button>
 				</div>
 			</div>
 		</div>

@@ -27,6 +27,21 @@ class SearchController extends AbstractController
             'issn' => $values['issn'],
             'isbn' => $values['isbn'],
         ];
+
+        // affect the value from the nav bar search form (may be null)
+        $search = $request->get('search');
+        // if the search is null (i.e. the search don't originate from the nav bar)
+        if (!empty($values['search'])) {
+            // affect the value from the search form (may be null, if so it will not be taken in count)
+            $search = $values['search'];
+        }
+
+        // inject back the search value in the values array
+        $values['search'] = $search;
+
+        // filter all falsy values (i.e. empty fields)
+        $values = array_filter($values);
+
         $form = $this->createForm(AdvencedSearchFormType::class, $values, [
             'action' => $this->generateUrl('search'),
             'method' => 'GET',
@@ -47,7 +62,8 @@ class SearchController extends AbstractController
 
         return $this->render('site/search/results.html.twig', [
             'resultList' => $results,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'valuesCount' => count($values)
         ]);
     }
 }

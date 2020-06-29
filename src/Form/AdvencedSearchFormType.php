@@ -16,6 +16,13 @@ class AdvencedSearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('search', SearchType ::class, [
+                'label' => 'Rechercher',
+                'attr' => [
+                    'placeholder' => 'Rechercher un auteur, un editeur, un titre...'
+                ],
+                'required' => false
+            ])
             ->add('publisheAfter', DateType::class, [
                 'label'=>'Edité après le',
                 'widget' => 'single_text',
