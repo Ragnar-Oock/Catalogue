@@ -2,38 +2,17 @@
 	&__list {
 		padding: 0;
 		list-style: none;
-		transform: skewX(-13deg);
-		max-height: 350px;
-		overflow-y: auto;
-		overflow-x: hidden;
 		width: 100%;
-		scrollbar-width: thin;
-		scrollbar-color: transparent transparent;
-		background-color: $accent;
-		max-width: 30ch;
-		transition: scrollbar-color 300ms ease-in-out;
-		
-		&:hover{
-			scrollbar-color: $dark transparent;
-		}
+
 	}
 
 	&__item {
-		transform: skewX(13deg);
-		background-color: $accent;
-		margin: 0 -1em;
+		text-align: center;
 	}
 
 	&__link {
 		padding: 0.3em 3em;
-		color: $light;
 		width: 100%;
 		display: block;
-		transition: transform 300ms cubic-bezier(.18,.89,.32,1.28);
-		
-		&:hover {
-			transform: translateX(1em);
-			color: $light;
-		}
 	}
 }
