@@ -13,6 +13,7 @@ class SearchController extends AbstractController
 {
     /**
      * @Route("/recherche", name="search")
+     * @Route("/explorer/tous-les-documents", name="explore_all_editions")
      */
     public function index(EditionRepository $editionRepository, PaginatorInterface $paginator, Request $request)
     {

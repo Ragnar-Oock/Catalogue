@@ -122,24 +122,6 @@ class SiteController extends AbstractController
     }
 
     /**
-     * @Route("/explorer/tous-les-documents", name="explore_all_editions")
-     * this page is just an alias for a blank search's result page
-     */
-    public function showAllEditions(Request $request, PaginatorInterface $paginator, EditionRepository $er)
-    {
-        $editions = $er->findAll();
-        $editions = $paginator->paginate(
-            $editions,
-            $request->query->get('page', 1),
-            15
-        );
-
-        return $this->render('site/search/results.html.twig', [
-            'resultList' => $editions
-        ]);
-    }
-
-    /**
      * @Route("/explorer/tous-les-auteurs", name="explore_all_authors")
      */
     public function showAllAuthors(Request $request, PaginatorInterface $paginator, AuthorRepository $ar)
