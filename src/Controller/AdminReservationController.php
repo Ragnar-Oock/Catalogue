@@ -298,7 +298,7 @@ class AdminReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservation/utilisateur/{user}", name="admin_user_s_reservations")
+     * @Route("/utilisateur/{user}", name="admin_user_s_reservations")
      */
     public function listUsers(User $user, ReservationRepository $rr, Request $request, PaginatorInterface $paginator)
     {
@@ -309,9 +309,20 @@ class AdminReservationController extends AbstractController
             15
         );
 
+        $title = 'Réservations de l\'utilisateur ';
+        if (!empty($user->getFirstname()) || !empty($user->getLastname())) {
+            $title .= $user->getFirstname() . ' ' . $user->getLastname();
+        }
+        elseif (!empty($user->getEmail())) {
+            $title .= $user->getEmail();
+        }
+        else {
+            $title = 'Réservations de l\'utilisateur d\'id ' . $user->getId() . ' (compte supprimé)';
+        }
+
         return $this->render('admin/reservation/listReservation.html.twig', [
             'reservations' => $usersReservations,
-            'title' => 'Réservations de l\'utilisateur ' . $user->getFirstname() . ' ' . $user->getLastname()
+            'title' => $title
         ]);
     }
 
