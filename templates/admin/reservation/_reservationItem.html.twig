@@ -1,12 +1,12 @@
 <tr>
 	<td>
-		{% if reservation.user.firstname is not same as('') or reservation.user.lastname is not same as('') %}
-			<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.firstname}} {{reservation.user.lastname}}</a>
+		{% if (reservation.user.firstname is not same as('') or reservation.user.lastname is not same as('')) and (reservation.user.firstname is not null or reservation.user.lastname is not null) %}
+			<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}" title="Voir les réservations de l'utilisateur">{{reservation.user.firstname}} {{reservation.user.lastname}}</a>
 		{% else %}
 			{% if reservation.user.email is not same as('') %}
-				<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}">{{reservation.user.email}}</a>
+				<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}" title="Voir les réservations de l'utilisateur">{{reservation.user.email}}</a>
 			{% else %}
-				<span class="text-muted">Compte supprimé</span>	
+				<a href="{{ path('admin_user_s_reservations', {'user': reservation.user.id}) }}" title="Voir les réservations de l'utilisateur"><span class="text-muted">Compte supprimé</span></a>
 			{% endif %}
 		{% endif %}
 	</td>
