@@ -12,9 +12,39 @@
 			top: 20%;
 		}
 	}
+
+	.collapse_wrapper {
+		width: 100%;
+	}
 	@media screen and (max-width: 992px) {
 		.nav-item + .nav-item::before {
 			content: none;
 		}
+		
+		.dropdown-menu {
+			background-color: transparent;
+			border: none;
+			color: white;
+		}
+		.dropdown-item {
+			color: white;
+		}
+		.dropdown-divider {
+			border-color: #e9ecef50;
+		}
+		.dropdown-item:hover {
+			text-decoration: underline;
+			background-color: transparent;
+		}
+		.navbar-collapse {
+			max-width: 600px;
+			margin: 0 auto;
+		}
+	}
+
+	.nav-link.dropdown-toggle {
+		appearance: none;
+		-webkit-appearance: none;
+		color: white;
 	}
 }
