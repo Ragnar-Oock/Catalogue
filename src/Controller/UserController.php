@@ -106,7 +106,12 @@ class UserController extends AbstractController
 	{
 		if ($this->isCsrfTokenValid('bannish'.$user->getId(), $request->request->get('_token'))) {
 			$entityManager = $this->getDoctrine()->getManager();
-			$user->setRoles([]);
+			if ($user->getRoles() != []) {
+				$user->setRoles([]);
+			}
+			else {
+				$user->setRoles(["ROLE_USER"]);
+			}
 			$entityManager->flush();
 		}
 
@@ -129,7 +134,12 @@ class UserController extends AbstractController
 	{
 		if ($this->isCsrfTokenValid('promote'.$user->getId(), $request->request->get('_token'))) {
 			$entityManager = $this->getDoctrine()->getManager();
-			$user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+			if (in_array('ROLE_ADMIN', $user->getRoles())) {
+				$user->setRoles(['ROLE_USER']);
+			}
+			else {
+				$user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+			}
 			$entityManager->flush();
 		}
 
