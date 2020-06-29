@@ -64,7 +64,7 @@ class ReservationController extends AbstractController
             if (
                 $begining < $end 
                 && $begining->diff($end)->days <= $_ENV['APP_MAX_RESERVATION_TIME']
-                && $begining->diff(time())->days <= $_ENV['APP_MAX_RESERVATION_LENGTH']
+                && $begining->diff(new \DateTime('NOW'))->days <= $_ENV['APP_MAX_RESERVATION_LENGTH']
                 && $er->isAvailable($form->getData()->getEdition(), $begining, $end)
             ) {
                 $entityManager = $this->getDoctrine()->getManager();
