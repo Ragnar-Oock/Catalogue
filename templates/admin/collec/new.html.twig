@@ -3,9 +3,16 @@
 {% block title %}Ajouter une collection{% endblock %}
 
 {% block main %}
-    <h1>Ajouter une collection</h1>
+<div class="fiche">
+    <h1 class="fiche__title">Modifier une collection</h1>
 
-    {{ include('admin/collec/_form.html.twig') }}
+    {{ include('admin/collec/_form.html.twig', {'noBtn': true}) }}
 
-    <a href="{{ path('collec_index') }}" class="btn btn-secondary">Annuler</a>
+    <div class="row">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('collec_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            <button class="btn btn-secondary" form="edit-collec">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    </div>
+</div>   
 {% endblock %}

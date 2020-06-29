@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New ParticipationType{% endblock %}
+{% block title %}Ajouter un type de participation{% endblock %}
 
 {% block main %}
-    <h1>Create new ParticipationType</h1>
+<div class="fiche">
+    <h1 class="fiche__title">Ajouter un type de participation</h1>
 
-    {{ include('participation_type/_form.html.twig') }}
+    {{ include('participation_type/_form.html.twig', { 'noBtn': true }) }}
 
-    <a href="{{ path('participation_type_index') }}">back to list</a>
+    <div class="d-flex">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('participation_type_index') }}" class="btn btn-outline-secondary">Retour a la liste</a>
+            <button form="edit-participationType" class="btn btn-secondary">Enregistrer</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

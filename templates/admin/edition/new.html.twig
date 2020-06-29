@@ -3,11 +3,20 @@
 {% block title %}Ajouter une édition{% endblock %}
 
 {% block main %}
+<div class="fiche">
     <h1>Ajouter une édition</h1>
 
-    {{ include('_form.html.twig') }}
+    {{ include('admin/edition/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
 
-    <a href="{{ path('edition_index') }}">Annuler</a>
+    <div class="row">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('edition_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            {# <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-outline-secondary">Gérer les participants</a> #}
+            <button class="btn btn-secondary" form="edit-edition">Enregistrer</button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -18,7 +27,8 @@ $("#edition_publishedAt").datetimepicker({
         time: "fa fa-clock-o",
     },
     format: 'DD/MM/YYYY',
-    maxDate: Date.now()
+    maxDate: Date.now(),
+    useCurrent: false
 });
 </script>
 {% endblock %}

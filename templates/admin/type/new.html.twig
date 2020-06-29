@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un type{% endblock %}
+{% block title %}Ajouter un type documentaire{% endblock %}
 
 {% block main %}
-    <h1>Ajouter un type de document</h1>
+<div class="fiche">
+    <h1 class="fiche_title">Ajouter un type documentaire</h1>
 
-    {{ include('_form.html.twig') }}
+    {{ include('admin/type/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
 
-    <a href="{{ path('type_index') }}" class="btn btn-secondary">Annuler</a>
+    <div class="d-flex">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('type_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            <button class="btn btn-secondary" form="edit-type">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

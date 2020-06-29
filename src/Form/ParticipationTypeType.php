@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ParticipationTypeType extends AbstractType
 {
@@ -15,10 +16,20 @@ class ParticipationTypeType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Vous devez fournir un titre',
+                    ]),
+                ],
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Vous devez fournir une description',
+                    ]),
+                ],
             ])
         ;
     }

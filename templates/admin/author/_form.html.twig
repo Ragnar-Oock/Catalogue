@@ -12,7 +12,7 @@
             {{ form_row(form.death) }}
         </div>
     </div>
-     {% if noBtn is not defined %}
+    {% if noBtn is not defined %}
         <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
     {% endif %}
 {{ form_end(form) }}

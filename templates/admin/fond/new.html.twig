@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Fond{% endblock %}
+{% block title %}Ajouter un fond{% endblock %}
 
 {% block main %}
-    <h1>Create new Fond</h1>
+<div class="fiche">
+    <h1 class="fiche__title">Ajouter un fond</h1>
 
-    {{ include('_form.html.twig') }}
+    {{ include('admin/fond/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
 
-    <a href="{{ path('fond_index') }}" class="btn btn-secondary">Annuler</a>
+    <div class="d-flex">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('fond_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            <button class="btn btn-secondary" form="edit-fond">Enregistrer</button>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -3,11 +3,18 @@
 {% block title %}Ajouter un auteur{% endblock %}
 
 {% block main %}
+<div class="fiche">
     <h1>Ajouter un auteur</h1>
 
-    {{ include('admin/author/_form.html.twig') }}
+    {{ include('admin/author/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
 
-    <a href="{{ path('author_index') }}" class="btn btn-outline-secondary">Annuler</a>
+    <div class="row">
+        <div class="btn-group ml-auto">
+            <a href="{{ path('author_index') }}" class="btn btn-outline-secondary">Annuler</a>
+            <button class="btn btn-secondary" form="edit-author">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
