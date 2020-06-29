@@ -19,7 +19,6 @@ h1 {
 	}
 	&__img-container {
 		position: relative;
-		background-image: url(http://127.0.0.1:8000/build/images/sallebiblio.jpg);
 		width: 100%;
 		height: 0;
 		padding-top: 46.16%;
@@ -51,7 +50,7 @@ h1 {
 		&::before {
 			background-color: $accent;
 			z-index: -1;
-			transform: translateY(-50%) skewY(-13deg);
+			transform: translateY(-50%) skewY(13deg);
 			box-shadow: 0 0 5px 4px $shadow,
 			0 -1em 0px 1em $dark,
 			0 -2em 5px 4px $shadow,
@@ -61,31 +60,24 @@ h1 {
 		&::after {
 			background-color: $dark;
 			z-index: -2;
-			transform: translateY(-50%) skewY(13deg);
-			clip-path: polygon(0 100%, 100% 0, 100% 200%, 0 200%);
+			transform: translateY(-50%) skewY(-13deg);
+			clip-path: polygon(0 0, 100% 100%, 100% 200%, 0 200%);
+			left: 0;
 			box-shadow: 0 0 5px 4px $shadow,
 				0 -1em 0px 1em $dark,
 				0 -2em 5px 4px $shadow,
 				0 1px 5px 4px $shadow;
 			width: 66%;
-			right: 0;
-			left: auto;
 		}
 	}
 
-	&__title,
-	&__sub-title{
+	&__title{
 		color: $light;
-		text-align: right;
-	}
-	
-	&__title {
-		margin-top: -3em;
-	}
-	
-	&__row {
-		display: flex;
-		flex-direction: column;
+		font-size: 3em;
+		margin-bottom: 1em;
+		font-weight: 700;
+		line-height: 1em;
+		padding: 0 15px;
 	}
 	
 	&__col-right {
@@ -94,21 +86,9 @@ h1 {
 		margin-left: auto;
 		padding: 0 15px ;
 	}
-	
-	@media screen and (max-width: 950px)  {
-		&__row {
-			flex-direction: column;
-		}
-		&__col-right {
-			padding-top: 2em;
-			text-align: left;
-			margin-right: auto;
-		}
-		&__list {
-			margin: 0 auto;
-			width: 100%;
-			max-width: 60ch;
-		}
+
+	&__text {
+		color: #ffffff;
 	}
 }
 
@@ -168,13 +148,12 @@ h1 {
 		content: '';
 		display: block;
 		background: transparent;
-		width: 0;
+		width: 10px;
 		height: 200%;
-		padding: 10%;
 		transform: skewX(-13deg) translateY(-50%);
 		position: absolute;
 		top: 50%;
-		left: -19em;
+		left: -15em;
 		box-shadow: 6px 0 5px 0 #00000040;
 	}
 

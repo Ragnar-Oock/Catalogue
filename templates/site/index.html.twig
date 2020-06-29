@@ -4,22 +4,25 @@
 
 {% block main %}
 <section class="presentation" id="presentation">
-	<img src="http://127.0.0.1:8000/build/images/sallebiblio.jpg" class="presentation__bg-image">
+	<img src="{{ asset('build/images/sallebiblio.jpg') }}" class="presentation__bg-image">
 	<div class="presentation__wrapper">
 		<article>
-			<h1 class="presentation__title">Catalogue de la bibliotheque du LIR3S</h1>
-			<h2 class="presentation__sub-title">Présentation</h2>
-			<div class="presentation__row">
-				<div class="col-12">
-					<p>Prêt des ouvrages récents pour une durée maximale de trois semaines.</p>
-					<p>Possibilité de photocopies à la B.S. de droit pour quelques ouvrages.</p>
-					<p>Possibilité de photos numériques pour les ouvrages anciens.</p>
+			<h1 class="presentation__title">Bibliothèque d'histoire</h1>
+			<div class="row">
+				<div class="col-lg-6">
+					<p class="presentation__text">Laboratoire pluridiciplinaire d'histoire de l'art, de la philosophie, du droit, de la musicologie, de la sociologie et d'anthropologie, le LIR3S rend publique le catalogue de sa bibliotheque multi media riche de plus de 2 500 documents sur divers supports, allant du manuscrit au micro film.</p>
+
+					<p class="presentation__text">Le laboratoire vous permet de reserver des documents pour vous assurer de leur disponibilités au moment où vous aurez besoin de les consulter, notez que seul les documents récents peuvent être sortis de la bibliothèque.</p>
 				</div>
-				<div class="presentation__col-right">
-					<p>
+			
+				<div class="col-lg-6">
+					<p class="presentation__text">Prêt des ouvrages récents pour une durée maximale de trois semaines.</p>
+					<p class="presentation__text">Possibilité de photocopies à la B.S. de droit pour quelques ouvrages.</p>
+					<p class="presentation__text">Possibilité de photos numériques pour les ouvrages anciens.</p>
+					<p class="presentation__text">
 						Consultation libre du fonds documentaire pour tout étudiant inscrit à l'Université ou toute personne pouvant justifier d'une recherche.
 					</p>
-					<p>
+					<p class="presentation__text">
 						20 places assises sont mises à votre disposition
 					</p>
 				</div>
