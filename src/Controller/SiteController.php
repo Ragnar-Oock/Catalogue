@@ -148,7 +148,7 @@ class SiteController extends AbstractController
         $authors = $paginator->paginate(
             $authors,
             $request->query->get('page', 1),
-            50
+            60
         );
 
         return $this->render('site/explore/allAuthors.html.twig', [
