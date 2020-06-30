@@ -89,14 +89,14 @@ class UserController extends AbstractController
 			// $entityManager->remove($user);
 
 			// only remove personnal data
-			$user->setEmail('');
-			$user->setFirstname('');
-			$user->setLastname('');
-			$user->setRoles([]);
+			$user->setEmail(null);
+			$user->setFirstname(null);
+			$user->setLastname(null);
+			$user->setRoles([""]);
 			$entityManager->flush();
 		}
 
-		return $this->redirect($this->generateUrl('app_logout'));
+		return $this->redirectToRoute('user_index');
 	}
 
 	/**

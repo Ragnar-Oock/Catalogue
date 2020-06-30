@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -43,7 +44,7 @@ class ProfilController extends AbstractController
             }
         }
 
-        return $this->render('site/profil/edit.html.twig', [
+    return $this->render('site/profil/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -61,13 +62,21 @@ class ProfilController extends AbstractController
             // $entityManager->remove($user);
 
             // only remove personnal data
-            $user->setEmail('');
-            $user->setFirstname('');
-            $user->setLastname('');
-            $user->setRoles([]);
+            $user->setEmail(null);
+            $user->setFirstname(null);
+            $user->setLastname(null);
+            $user->setRoles([""]);
             $entityManager->flush();
-        }
 
-        return $this->redirect($this->generateUrl('app_logout'));
+            $session = new Session();
+            $session->invalidate();
+
+            return $this->redirectToRoute('site');
+
+        }
+        else {
+            $this->addFlash('danger', "une erreur est survenue lors de la suppression de votre compte");
+        }
+        return $this->redirectToRoute('profil_index');
     }
 }
