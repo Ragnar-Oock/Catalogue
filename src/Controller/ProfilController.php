@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ProfileType;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,16 +20,27 @@ class ProfilController extends AbstractController
     /**
      * @Route("/", name="profil_index", methods={"GET","POST"})
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request, UserRepository $ur): Response
     {
         $user = $this->getUser();
+        $email = $request->request->get('profile')['email'];
         $form = $this->createForm(ProfileType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        // dd($ur->isKnownEmail($email) !== 0, $user->getEmail() !== $email, $email, $user->getEmail());
 
-            return $this->redirectToRoute('profil_index');
+        if ($ur->isKnownEmail($email) !== 0 && $user->getEmail() !== $email) {
+            return $this->render('site/profil/edit.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'knownEmail' => true
+            ]);
+        }
+        else {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();           
+            }
         }
 
         return $this->render('site/profil/edit.html.twig', [

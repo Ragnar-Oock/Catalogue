@@ -6,6 +6,11 @@
 <div class="fiche">
     <h1 class="fiche__title">Mon profil</h1>
 
+    {% if knownEmail is defined %}
+    <p class="alert alert-danger">Cette adresse email est deja utilisée, veuillez en choisir une autre.</p>
+    {% endif %}
+    
+
     {{ include('site/profil/_form.html.twig') }}
 </div>
 {% endblock %}
