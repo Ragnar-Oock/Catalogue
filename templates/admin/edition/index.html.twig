@@ -12,8 +12,6 @@
         <thead>
             <tr>
                 <th>Titre</th>
-                <th>Numero d'inventaire</th>
-                <th>Tome</th>
                 <th class="text-right">Actions</th>
             </tr>
         </thead>
@@ -21,8 +19,6 @@
         {% for edition in editions %}
             <tr>
                 <td>{{ edition.document.title | u.truncate(50, '...') }}</td>
-                <td>{{ edition.inventoryNumber }}</td>
-                <td>{{ edition.tome }}</td>
                 <td class="text-right">
                     <div class="btn-group ml-auto">
                         <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>

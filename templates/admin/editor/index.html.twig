@@ -7,43 +7,42 @@
     <h1>Liste des éditeurs</h1>
     <a href="{{ path('editor_new') }}" class="btn btn-secondary ml-auto">Ajouter un éditeur</a>
 </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th class="text-right">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for editor in editors %}
-            <tr>
-                <td>{{ editor.name }}</td>
-                <td>{{ editor.address }}</td>
-                <td>
-                    <a href="{{ path('editor_show', {'id': editor.id}) }}">Afficher</a>
-                    <a href="{{ path('editor_edit', {'id': editor.id}) }}">Modifier</a>
-                </td>
-
-                <td class="text-right">
-                    <div class="btn-group ml-auto">
-                        <a href="{{ path('explore_editor', {'editor': editor.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
-                        <a href="{{ path('editor_edit', {'id': editor.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3" class="text-center">
-                    <div class="flex flex-column">
-                        <p>Aucun editeur trouvé, essayez d'en ajouter un.</p>
-                        <a href="{{ path('editor_new') }}" class="btn btn-secondary">Ajouter un éditeur</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<div class="table__container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for editor in editors %}
+                <tr>
+                    <td>{{ editor.name }}</td>
+                    <td>{{ editor.address }}</td>
+                    <td class="text-right">
+                        <div class="btn-group ml-auto">
+                            <a href="{{ path('explore_editor', {'editor': editor.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
+                            <a href="{{ path('editor_edit', {'id': editor.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <div class="flex flex-column">
+                            <p>Aucun editeur trouvé, essayez d'en ajouter un.</p>
+                            <a href="{{ path('editor_new') }}" class="btn btn-secondary">Ajouter un éditeur</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center">
+    {{ knp_pagination_render(editors) }}
+</div>
 
 {% endblock %}

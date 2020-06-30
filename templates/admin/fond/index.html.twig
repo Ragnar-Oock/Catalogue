@@ -9,37 +9,40 @@
         <a href="{{ path('fond_new') }}" class="btn btn-secondary">Ajouter un fond</a>
     </div>
 </div>
+	<div class="table__container">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th class="text-right">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for fond in fonds %}
-            <tr>
-                <td>{{ fond.title }}</td>
-                <td>{{ fond.description | u.truncate(50,'...') }}</td>
-                <td class="text-right">
-                    <div class="btn-group ml-auto">
-                        <a href="{{ path('fond_edit', {'id': fond.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3" class="text-center">
-                    <div class="flex flex-column">
-                        <p>Aucun fond trouvé, essayez d'en ajouter un.</p>
-                        <a href="{{ path('fond_new') }}" class="btn btn-secondary">Ajouter un fond</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fond in fonds %}
+                <tr>
+                    <td>{{ fond.title }}</td>
+                    <td>{{ fond.description | u.truncate(50,'...') }}</td>
+                    <td class="text-right">
+                        <div class="btn-group ml-auto">
+                            <a href="{{ path('fond_edit', {'id': fond.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <div class="flex flex-column">
+                            <p>Aucun fond trouvé, essayez d'en ajouter un.</p>
+                            <a href="{{ path('fond_new') }}" class="btn btn-secondary">Ajouter un fond</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock %}

@@ -3,14 +3,14 @@
 {% block title %}Writer index{% endblock %}
 
 {% block main %}
-    <h1>Auteurs du document <a href="{{ path('edition_show', {'id': edition.id }) }}">{{ edition.document.title }}</a></h1>
+    <h1>Auteurs du document <a href="{{ path('explore_edition', {'edition': edition.id }) }}">{{ edition.document.title }}</a></h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Fonction</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,8 +18,8 @@
             <tr>
                 <td>{{ writer.author.name }}</td>
                 <td>{{ writer.participationType.title }}</td>
-                <td>
-                    <a href="{{ path('writer_edit', {'id': writer.id}) }}">edit</a>
+                <td class="text-right">
+                    <a class="btn btn-secondary" href="{{ path('writer_edit', {'edition': edition.id, 'id': writer.id}) }}">{% include "icons/pen.svg.twig" %}</a>
                 </td>
             </tr>
         {% else %}

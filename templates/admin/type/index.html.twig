@@ -7,36 +7,38 @@
     <h1>Liste des types de document</h1>
     <a href="{{ path('type_new') }}" class="btn btn-secondary ml-auto">Ajouter un type de document</a>
 </div>
+    <div class="table__container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for type in types %}
+                <tr>
+                    <td>{{ type.title }}</td>
+                    <td>{{ type.description }}</td>
+                    <td class="text-right">
+                        <div class="btn-group ml-auto">
+                            <a href="{{ path('type_edit', {'id': type.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <div class="flex flex-column">
+                            <p>Aucun type trouvé, essayez d'en ajouter un.</p>
+                            <a href="{{ path('type_new') }}" class="btn btn-secondary">Ajouter un type</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th class="text-right">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for type in types %}
-            <tr>
-                <td>{{ type.title }}</td>
-                <td>{{ type.description }}</td>
-                <td class="text-right">
-                    <div class="btn-group ml-auto">
-                        <a href="{{ path('type_edit', {'id': type.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3" class="text-center">
-                    <div class="flex flex-column">
-                        <p>Aucun type trouvé, essayez d'en ajouter un.</p>
-                        <a href="{{ path('type_new') }}" class="btn btn-secondary">Ajouter un type</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 {% endblock %}

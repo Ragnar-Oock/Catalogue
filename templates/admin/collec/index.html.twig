@@ -2,11 +2,11 @@
 
 {% block title %}Liste des collections{% endblock %}
 
-{% block main %}<div class="d-flex align-items-center">
+{% block main %}
+<div class="d-flex align-items-center">
     <h1>Liste des collections</h1>
     <a href="{{ path('collec_new') }}" class="btn btn-secondary ml-auto">Ajouter une collection</a>
 </div>
-    <h1></h1>
 
     <table class="table">
         <thead>
@@ -20,7 +20,7 @@
         {% for collec in collecs %}
             <tr>
                 <td>{{ collec.title }}</td>
-                <td>{{ collec.description }}</td>
+                <td>{{ collec.description | u.truncate(80, '...') }}</td>
                 <td class="text-right">
                     <div class="btn-group ml-auto">
                         <a href="{{ path('collec_edit', {'id': collec.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
