@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Author{% endblock %}
+{% block title %}Fiche d'auteur{% endblock %}
 
 {% block main %}
 
@@ -35,6 +35,8 @@
     </table>
 
     <h2>Bibliographie</h2>
+	<div class="table__container">
+
     <table class="results table">
         <thead class="results_head">
 			<th class="results_head__label">Titre</th>
@@ -49,6 +51,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
     <div class="d-flex justify-content-center">
         {{ knp_pagination_render(bibliography) }}

@@ -1,31 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Explorer une collection{% endblock %}
+{% block title %}Fiche de collection{% endblock %}
 
 {% block main %}
+<div class="fiche">
+	<p class="fiche__type">
+		Fiche de collection
+	</p>
+	{% if is_granted('ROLE_ADMIN') %}
+	<div class="btn-group fiche__actions">
+		<a href="{{ path('collec_edit', {'id': collection.id}) }}" class="btn btn-secondary">Modifier</a>
+	</div>
+	{% endif %}
+	<h1 class="fiche__title">{{ collection.title }}</h1>
+	<p class="mb-5">{{ collection.description }}</p>
 
-{% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path('collec_edit', {'id': collection.id}) }}" class="btn btn-secondary">Modifier</a>
-{% endif %}
-	<h1>{{ collection.title }}</h1>
-	<p>{{ collection.description }}</p>
-
-	<table class="results table">
-		<thead class="results_head">
-			<th class="results_head__label">Titre</th>
-			<th class="results_head__label">Auteurs</th>
-			<th class="results_head__label">Editeur(s)</th>
-			<th class="results_head__label">Type de document</th>
-			<th class="results_head__label">Date d'édition</th>
-		</thead>
-		<tbody>
-		{% for edition in editions %}
-			{{ include('site/explore/_editionItem.html.twig') }}
-		{% endfor %}
-		</tbody>
-	</table>
+	<div class="table__container">
+		<table class="results table">
+			<thead class="results_head">
+				<th class="results_head__label">Titre</th>
+				<th class="results_head__label">Auteurs</th>
+				<th class="results_head__label">Editeur(s)</th>
+				<th class="results_head__label">Type de document</th>
+				<th class="results_head__label">Date d'édition</th>
+			</thead>
+			<tbody>
+			{% for edition in editions %}
+				{{ include('site/explore/_editionItem.html.twig') }}
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 	<div class="d-flex justify-content-center">
 		{{ knp_pagination_render(editions) }}
 	</div>
+</div>
+
 {% endblock %}
