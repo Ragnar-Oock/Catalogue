@@ -56,16 +56,6 @@ class EditorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="editor_show", methods={"GET"})
-     */
-    public function show(Editor $editor): Response
-    {
-        return $this->render('admin/editor/show.html.twig', [
-            'editor' => $editor,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/modifier", name="editor_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Editor $editor): Response

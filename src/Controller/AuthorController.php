@@ -56,16 +56,6 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="author_show", methods={"GET"})
-     */
-    public function show(Author $author): Response
-    {
-        return $this->render('admin/author/show.html.twig', [
-            'author' => $author,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/modifier", name="author_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Author $author): Response

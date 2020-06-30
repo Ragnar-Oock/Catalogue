@@ -24,10 +24,7 @@ class EditionRepository extends ServiceEntityRepository
     public function searchEdition(String $search)
     {
         return $this->createQueryBuilder('e')
-            ->addSelect('a', 'p')
-            ->addSelect('w')
-            ->addSelect('t')
-            ->addSelect('ed')
+            ->addSelect('a', 'p', 'w', 't', 'd', 'ed')
             ->orWhere('ed.name LIKE :searchlike')
             ->orWhere('d.title LIKE :searchlike')
             ->orWhere('a.name LIKE :searchlike')

@@ -18,17 +18,17 @@
 		<h1 class="fiche__title">{{ editor.name }}</h1>
 	</div>
 
+	{% if editor.address is not empty %}
 	<h2>Informations</h2>
 	<table class="table">
 		<tbody>
-		{% if editor.address is not null %}
 			<tr class="fiche__row">
 				<th class="fiche__label">Adresse</th>
 				<td class="fiche__value">{{ editor.address }}</td>
 			</tr>
-		{% endif %}
 		</tbody>
 	</table>
+	{% endif %}
 
 	<h2>Publications</h2>
 	<table class="results table">
@@ -36,7 +36,6 @@
 			<th class="results_head__label">Titre</th>
 			<th class="results_head__label">Auteurs</th>
 			<th class="results_head__label">Editeur(s)</th>
-			<th class="results_head__label">Type de document</th>
 			<th class="results_head__label">Date d'édition</th>
 		</thead>
 		<tbody>

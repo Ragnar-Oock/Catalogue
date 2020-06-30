@@ -7,13 +7,10 @@
 			{% endfor %}
 		{% endif %}
 	</td>
-	<td class="editionem__editeur">
+	<td class="editiontem__editeur">
 		{% if edition.editor is not empty %}
-			{% for editor in edition.editor %}
-				<a href="{{ path('explore_edition', {'edition': editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ editor.name }}</a>
-			{% endfor %}
+			<a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ edition.editor.name }}</a>
 		{% endif %}
 		</td>
-	<td class="edition_item__type">{{ edition.type.title }}</td>
 	<td class="edition_item__date">{{ edition.publishedAt|date("d/m/Y") }}</td>
 </tr>
