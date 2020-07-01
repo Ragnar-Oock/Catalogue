@@ -161,6 +161,15 @@ class EditionRepository extends ServiceEntityRepository
         return count($query->getQuery()->getResult()) === 0;
     }
 
+    public function getNewInventoryNumber()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('MAX(e.inventoryNumber)')
+            ->getQuery()
+            ->getSingleResult()[1] + 1
+        ;
+    }
+
     // /**
     //  * @return Edition[] Returns an array of Edition objects
     //  */

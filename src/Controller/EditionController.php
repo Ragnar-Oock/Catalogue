@@ -38,6 +38,8 @@ class EditionController extends AbstractController
     public function new(Request $request, EditionRepository $er): Response
     {
         $edition = new Edition();
+        $edition->setInventoryNumber($er->getNewInventoryNumber());
+        
         $form = $this->createForm(EditionType::class, $edition);
         $form->handleRequest($request);
 

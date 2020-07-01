@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditionRepository")
+ * @UniqueEntity(fields="inventoryNumber", message="Ce numéro d'inventaire est déjà utilisé, veuiller en utiliser un autre.")
  */
 class Edition
 {
@@ -29,7 +31,7 @@ class Edition
     private $isbn;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true)
      */
     private $inventoryNumber;
 
