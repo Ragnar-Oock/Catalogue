@@ -36,8 +36,8 @@ class WriterType extends AbstractType
                 },
                 'required'=> true
             ])
-            // ->add('save', SubmitType::class, ['label' => 'Enregistrer et retourner a l\'edition'])
-            // ->add('saveAndAddMore', SubmitType::class, ['label' => 'Enregister et ajouter d\'autres participants'])
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer et retourner a l\'edition'])
+            ->add('saveAndAddMore', SubmitType::class, ['label' => 'Enregister et ajouter d\'autres participants'])
         ;
     }
 

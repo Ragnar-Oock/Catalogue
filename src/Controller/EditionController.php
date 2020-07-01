@@ -35,7 +35,7 @@ class EditionController extends AbstractController
     /**
      * @Route("/ajouter", name="edition_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EditionRepository $er): Response
     {
         $edition = new Edition();
         $form = $this->createForm(EditionType::class, $edition);
@@ -48,6 +48,7 @@ class EditionController extends AbstractController
 
             $this->addFlash('success', 'Nouvelle édition ajoutée avec succes. maintenant ajoutez des auteur à cette édition.');
 
+            return $this->redirectToRoute('writer_index', ['edition' => $edition->getId()]);
         }
 
         return $this->render('admin/edition/new.html.twig', [
@@ -57,7 +58,7 @@ class EditionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="edition_edit", methods={"GET","POST"})
+     * @Route("/{edition}/modifier", name="edition_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Edition $edition): Response
     {
