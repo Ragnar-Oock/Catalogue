@@ -39,6 +39,8 @@ class CollecController extends AbstractController
             $entityManager->persist($collec);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouvelle collection ajoutée avec succes');
+
             return $this->redirectToRoute('collec_index');
         }
 
@@ -68,6 +70,8 @@ class CollecController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('collec_index');
         }

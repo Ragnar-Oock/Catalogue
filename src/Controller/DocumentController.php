@@ -46,6 +46,8 @@ class DocumentController extends AbstractController
             $entityManager->persist($document);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouveau document ajouté avec succes');
+
             return $this->redirectToRoute('document_index');
         }
 
@@ -75,6 +77,8 @@ class DocumentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('document_index');
         }

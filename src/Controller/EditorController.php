@@ -46,6 +46,8 @@ class EditorController extends AbstractController
             $entityManager->persist($editor);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouvel éditeur ajouté avec succes');
+
             return $this->redirectToRoute('editor_index');
         }
 
@@ -65,6 +67,8 @@ class EditorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('editor_index');
         }

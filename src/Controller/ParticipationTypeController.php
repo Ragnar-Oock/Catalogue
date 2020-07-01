@@ -39,6 +39,8 @@ class ParticipationTypeController extends AbstractController
             $entityManager->persist($participationType);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouveau type de participation ajouté avec succes');
+
             return $this->redirectToRoute('participation_type_index');
         }
 
@@ -58,6 +60,9 @@ class ParticipationTypeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
+
 
             return $this->redirectToRoute('participation_type_index');
         }

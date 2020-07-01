@@ -39,6 +39,9 @@ class FondController extends AbstractController
             $entityManager->persist($fond);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouveua fond documentaire ajouté avec succes');
+
+
             return $this->redirectToRoute('fond_index');
         }
 
@@ -68,6 +71,9 @@ class FondController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
+
 
             return $this->redirectToRoute('fond_index');
         }

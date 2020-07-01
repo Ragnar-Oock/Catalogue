@@ -46,7 +46,7 @@ class WriterController extends AbstractController
                 ? 'writer_add'
                 : 'edition_edit';
 
-            return $this->redirectToRoute($nextAction, ['id' => $edition->getId()]);
+            $this->addFlash('success', 'Nouveau participant ajouté avec succes');
         }
 
         return $this->render('admin/writer/new.html.twig', [
@@ -67,7 +67,8 @@ class WriterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('writer_index');
+
+            $this->addFlash('success', 'Modifications enregistrées');
         }
 
         return $this->render('admin/writer/edit.html.twig', [

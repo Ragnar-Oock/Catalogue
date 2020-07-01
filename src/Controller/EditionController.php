@@ -46,7 +46,8 @@ class EditionController extends AbstractController
             $entityManager->persist($edition);
             $entityManager->flush();
 
-            return $this->redirectToRoute('edition_index');
+            $this->addFlash('success', 'Nouvelle édition ajoutée avec succes. maintenant ajoutez des auteur à cette édition.');
+
         }
 
         return $this->render('admin/edition/new.html.twig', [
@@ -65,6 +66,9 @@ class EditionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
+
 
             return $this->redirectToRoute('edition_index');
         }

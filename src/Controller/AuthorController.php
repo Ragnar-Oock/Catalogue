@@ -46,6 +46,8 @@ class AuthorController extends AbstractController
             $entityManager->persist($author);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouvel auteur ajouté avec succes');
+
             return $this->redirectToRoute('author_index');
         }
 
@@ -65,6 +67,8 @@ class AuthorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
 
             return $this->redirectToRoute('author_index');
         }

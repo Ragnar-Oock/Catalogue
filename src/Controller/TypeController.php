@@ -39,6 +39,8 @@ class TypeController extends AbstractController
             $entityManager->persist($type);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouveau type de document ajouté avec succes');
+
             return $this->redirectToRoute('type_index');
         }
 
@@ -68,6 +70,9 @@ class TypeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Modifications enregistrées');
+
 
             return $this->redirectToRoute('type_index');
         }
