@@ -134,6 +134,8 @@ class EditionRepository extends ServiceEntityRepository
     public function findAll()
     {
         return $this->createQueryBuilder('e')
+            ->addSelect('d')
+            ->join('e.document', 'd')
             ->getQuery()
             ->getResult()
         ;
