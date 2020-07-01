@@ -39,7 +39,8 @@
 			display: inline-block;
 			transition: max-width 300ms ease-in, opacity 300ms ease-in, padding 300ms ease-in;
 			opacity: 0;
-			background-color: white;
+			background-color: #4b4849;
+			color: white;
 			padding: .5em 0;
 			margin: .5em 0 0 0;
 			border-radius: .5em;
@@ -58,7 +59,8 @@
 		}
 
 		&_icon {
-			background-color: white;
+			background-color: #4b4849;
+			color: white;
 			padding: .5em 1em;
 			margin: .5em .5em 0 .5em;
 			border-radius: .5em;
@@ -66,7 +68,7 @@
 		}
 
 		@at-root :focus ~ .menu_label > span {
-			background-color: #007bff;
+			background-color: $secondary;
 			color: white;
 			}
 	}
@@ -102,6 +104,6 @@
 .nav_wrapper {
 	position: fixed;
 	width: 32ch;
-	filter: drop-shadow(0 0 5px #3c3c3c80);
+	filter: drop-shadow(0 0 4px #3c3c3cc7);
 	z-index: 100;
 }
