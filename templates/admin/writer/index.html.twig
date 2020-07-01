@@ -3,7 +3,11 @@
 {% block title %}Writer index{% endblock %}
 
 {% block main %}
-    <h1>Auteurs du document <a href="{{ path('explore_edition', {'edition': edition.id }) }}">{{ edition.document.title }}</a></h1>
+
+    <div class="d-flex align-items-center">
+        <h1>Auteurs du document <a href="{{ path('explore_edition', {'edition': edition.id }) }}">{{ edition.document.title }}</a></h1>
+        <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-secondary ml-auto">Ajouter un participant</a>
+    </div>
 
     <table class="table">
         <thead>
@@ -35,5 +39,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('writer_add', {'edition': edition.id}) }}" class="btn btn-secondary">Ajouter un participant</a>
 {% endblock %}

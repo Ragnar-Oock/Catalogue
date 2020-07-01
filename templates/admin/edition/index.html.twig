@@ -22,7 +22,7 @@
                 <td class="text-right">
                     <div class="btn-group ml-auto">
                         <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche" class="btn btn-secondary">{% include "icons/file-earmark.svg.twig" %}</a>
-                        <a href="{{ path('edition_edit', {'id': edition.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
+                        <a href="{{ path('edition_edit', {'edition': edition.id}) }}" title="Modifier" class="btn btn-secondary">{% include "icons/pen.svg.twig" %}</a>
                     </div>
                 </td>
             </tr>

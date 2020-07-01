@@ -1,23 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un auteur{% endblock %}
+{% block title %}Ajouter un participant{% endblock %}
 
 {% block main %}
     <div class="container-medium">
-        <h1>Ajouter un auteur</h1>
+        <h1>Ajouter un participant</h1>
+        <p>Ajout d'un auteur pour l'édition <a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir la fiche de ce document">{{edition.document.title}}</a></p>
 
         {{ include('admin/writer/_form.html.twig', {'button_label': 'Update'}) }}
 
         <div class="row">
             <div class="ml-auto mr-2 btn-group">
                 {% if edition is defined %}
-                    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-outline-secondary">Retour a la liste</a>
+                    <a href="{{ path('writer_index', {'edition': edition.id }) }}" class="btn btn-outline-secondary">Retour à la liste</a>
                 {% endif %}
             </div>
         
-            <div class="btn-group">
-                <button type="submit" form="writer-form" id="writer_save" name="writer[save]" class="btn-secondary btn">Enregistrer et retourner a l'edition</button>
-                <button type="submit" form="writer-form" id="writer_saveAndAddMore" name="writer[saveAndAddMore]" class="btn-secondary btn">Enregister et ajouter d'autres participants</button>
+            <div class="input-group w-auto">
+                <span class="input-group-text" id="addon-wrapping">Enregistrer et</span>
+                <div class="input-group-append">
+                    <button type="submit" form="writer-form" id="writer_save" name="writer[save]" class="btn-secondary btn">retourner à l'edition</button>
+                    <button type="submit" form="writer-form" id="writer_saveAndAddMore" name="writer[saveAndAddMore]" class="btn-secondary btn">ajouter d'autres participants</button>
+                </div>
             </div>
         </div>
     </div>

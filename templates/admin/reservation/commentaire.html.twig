@@ -21,7 +21,9 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn btn-secondary">{{ button_label|default('Enregistrer le commentaire') }}</button>
+        <div class="d-flex">
+            <button class="btn btn-secondary ml-auto">{{ button_label|default('Enregistrer le commentaire') }}</button>
+        </div>
     {{ form_end(form) }}
 </div>
 {% endblock %}

@@ -24,8 +24,11 @@
         <input type="hidden" name="_csrf_token"
             value="{{ csrf_token('authenticate') }}"
         >
-        <div class="d-flex mt-3">
-            <a class="btn btn-outline-secondary ml-auto mr-3" href="{{ path('app_request_psw') }}">J'ai oublié mon mot de passe</a>
+        <div class="d-flex flex-wrap mt-3">
+            <div class="btn-group flex-wrap ml-auto mr-3">
+                <a class="btn btn-outline-secondary" href="{{ path('app_request_psw') }}">J'ai oublié mon mot de passe</a>
+                <a class="btn btn-outline-secondary" href="{{ path('app_register') }}">Je n'ai pas encore de compte</a>
+            </div>
             <button class="btn btn-secondary" type="submit">Se connecter</button>
         </div>
 

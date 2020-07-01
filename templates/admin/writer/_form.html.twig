@@ -1,4 +1,4 @@
-{{ form_start(form, {'attr': {'id': 'writer-form"'}}) }}
+{{ form_start(form, {'attr': {'id': 'writer-form'}}) }}
 	<div class="row">
 		<div class="col-lg-6 col-sm-12">
 			{{ form_row(form.participationType) }}
@@ -7,19 +7,8 @@
 			{{ form_row(form.author) }}
 		</div>
 	</div>
-	{# <div class="row">
-	{% if edition is defined %}
-		<a href="{{ path('writer_index', {'edition': edition.id }) }}" class="ml-auto mr-2 btn btn-outline-secondary">Retour a la liste</a>
-	{% endif %}
-	{% if writer is defined %}
-		<a href="{{ path('writer_index', {'edition': writer.edition.id }) }}" class="ml-auto mr-2 btn btn-outline-secondary">Retour a la liste</a>
-	{% endif %}
+
+			{{ form_row(form._token) }}
+
 	
-	
-		<div class="btn-group">
-			{{ form_widget(form.save)}}
-			{{ form_widget(form.saveAndAddMore)}}
-		</div>
-	</div> #}
-	
-{{ form_end(form) }}
+{{ form_end(form, {'render_rest': false}) }}
