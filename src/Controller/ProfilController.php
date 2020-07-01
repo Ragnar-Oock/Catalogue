@@ -11,23 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-/**
- * @Route("/profil")
- */
 class ProfilController extends AbstractController
 {
 
     /**
-     * @Route("/", name="profil_index", methods={"GET","POST"})
+     * @Route("/profil", name="profil_index", methods={"GET","POST"})
      */
     public function edit(Request $request, UserRepository $ur): Response
     {
         $user = $this->getUser();
         $email = $request->request->get('profile')['email'];
         $form = $this->createForm(ProfileType::class, $user);
-
-        // dd($ur->isKnownEmail($email) !== 0, $user->getEmail() !== $email, $email, $user->getEmail());
 
         if ($ur->isKnownEmail($email) !== 0 && $user->getEmail() !== $email) {
             return $this->render('site/profil/edit.html.twig', [
@@ -51,7 +45,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/supprimmer-mon-compte", name="account_delete", methods={"DELETE"})
+     * @Route("/profil/supprimmer-mon-compte", name="account_delete", methods={"DELETE"})
      */
     public function delete(Request $request): Response
     {
@@ -71,12 +65,20 @@ class ProfilController extends AbstractController
             $session = new Session();
             $session->invalidate();
 
-            return $this->redirectToRoute('site');
+            return $this->redirectToRoute('account_deleted');
 
         }
         else {
             $this->addFlash('danger', "une erreur est survenue lors de la suppression de votre compte");
+            return $this->redirectToRoute('profil_index');
         }
-        return $this->redirectToRoute('profil_index');
+    }
+
+    /**
+     * @Route("/compte-supprime", name="account_deleted")
+     */
+    public function deletedAccount()
+    {
+        return $this->render('site/profil/deleted_account.html.twig');
     }
 }
