@@ -56,6 +56,15 @@
             {{ form_row(form.notes) }}
         </div>
     </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.miscData) }}
+        </div>
+    </div>
+
     {{ form_widget(form) }}
      {% if noBtn is not defined %}
         <button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>

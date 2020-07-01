@@ -14,8 +14,11 @@ use App\Repository\EditorRepository;
 use App\Repository\TypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -107,11 +110,58 @@ class EditionType extends AbstractType
                 'required'=> true,
             ])
 
+            ->add('miscData', TextareaType::class, [
+                'label' => 'Autres données diverse',
+                'help' => "Les données additionnelles doivent être présentées sous forme d'une liste <code>clef: valeur</code> avec une donnée par ligne.",
+                'help_html' => true,
+                'attr' => [
+                    'placeholder' => "clef: valeur\r\nclef: valeur\r\n...",
+                ],
+                'required' => false
+            ])
 
             ->add('issn')
             ->add('isbn')
             ->add('notes')
         ;
+
+        // add data transformer to change the miscdata list in an array
+        $builder->get('miscData')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($dataAsArray) {
+                    try {
+                        if ($dataAsArray === null) {
+                            return '';
+                        }
+                        $list = '';
+                        foreach ($dataAsArray as $key => $value) {
+                            $list .= $key.': '.$value."\r\n";
+                        }
+                        return trim($list);
+                    } catch (\Throwable $th) {
+                        throw new TransformationFailedException('Valeur invalide');
+                    }
+                },
+                function ($dataAsString) {
+                    try {
+                        if (!empty($dataAsString)) {
+                            $dataAsString = preg_split('/\r\n|\r|\n/', $dataAsString);
+                            $array = [];
+                            foreach ($dataAsString as $line) {
+                                $line = preg_split('/:/', $line, 2);
+                                $value = trim($line[1]);
+                                $array[$line[0]] = $value;
+                            }
+                            return $array;
+                        }
+                        return [];
+                        
+                    } catch (\Throwable $th) {
+                        dd($dataAsString);
+                        throw new TransformationFailedException('Valeur invalide');
+                    }
+                }
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

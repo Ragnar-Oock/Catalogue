@@ -92,6 +92,11 @@ class Edition
      */
     private $fond;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $miscData = [];
+
     public function __construct()
     {
         $this->collecs = new ArrayCollection();
@@ -325,6 +330,18 @@ class Edition
     public function setFond(?Fond $fond): self
     {
         $this->fond = $fond;
+
+        return $this;
+    }
+
+    public function getMiscData(): ?array
+    {
+        return $this->miscData;
+    }
+
+    public function setMiscData(?array $miscData): self
+    {
+        $this->miscData = $miscData;
 
         return $this;
     }

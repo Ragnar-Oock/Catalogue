@@ -92,6 +92,14 @@
                 <td class="fiche__value"><a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}">{{ edition.editor.name }}</a></td>
             </tr>
         {% endif %}
+
+        {# misc data stored as JSON #}
+        {% for key, value in edition.miscData %}
+            <tr class="fiche__row">
+                <th class="fiche__label">{{ key }}</th>
+                <td class="fiche__value">{{ value }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
