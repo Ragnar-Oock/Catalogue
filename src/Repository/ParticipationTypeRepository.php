@@ -19,6 +19,20 @@ class ParticipationTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, ParticipationType::class);
     }
 
+    public function findInstance(ParticipationType $participationType)
+    {
+        return $this->createQueryBuilder('pt')
+            ->andWhere('pt.title = :title')
+
+            ->setParameters([
+                'title' => $participationType->getTitle()
+            ])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return ParticipationType[] Returns an array of ParticipationType objects
     //  */

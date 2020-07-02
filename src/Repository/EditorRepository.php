@@ -19,6 +19,22 @@ class EditorRepository extends ServiceEntityRepository
         parent::__construct($registry, Editor::class);
     }
 
+    public function findInstance(Editor $editor)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.name = :name')
+            ->andWhere('e.address = :address')
+
+            ->setParameters([
+                'name' => $editor->getName(),
+                'address' => $editor->getAddress()
+            ])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Editor[] Returns an array of Editor objects
     //  */

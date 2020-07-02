@@ -78,7 +78,7 @@ class Edition
     private $editor;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="edition", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="edition", orphanRemoval=true,cascade={"persist"})
      */
     private $writers;
 

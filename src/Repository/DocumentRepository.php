@@ -19,6 +19,24 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
+    public function findInstance(Document $document)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.title = :title')
+            ->andWhere('d.alttitle = :alttitle')
+            ->andWhere('d.subtitle = :subtitle')
+
+            ->setParameters([
+                'title' => $document->getTitle(),
+                'alttitle' => $document->getAlttitle(),
+                'subtitle' => $document->getSubtitle()
+            ])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Document[] Returns an array of Document objects
     //  */

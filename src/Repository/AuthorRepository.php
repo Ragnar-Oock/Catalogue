@@ -43,6 +43,20 @@ class AuthorRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function findInstance(Author $author)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.name = :name')
+
+            ->setParameters([
+                'name' => $author->getName()
+            ])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Author[] Returns an array of Author objects
     //  */
