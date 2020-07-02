@@ -71,20 +71,26 @@ class LoadAncienCommand extends Command
             
             // 	creer une nouvelle entité
             $edition = new Edition();
-            $edition->setIssn($line['ISSN']);
-            $edition->setIsbn($line['ISBN']);
+            if (empty($line['ISSN'])) {
+                $edition->setIssn($line['ISSN']);
+            }
+            if (empty($line['ISBN'])) {
+                $edition->setIsbn($line['ISBN']);
+            }
+            if (empty($line['Tome'])) {
+                $edition->setTome($line['Tome']);
+            }
+            if (empty($line['Nb_Pages'])) {
+                $edition->setPages($line['Nb_Pages']);
+            }
+            if (empty($line['Notes'])) {
+                $edition->setNotes($line['Notes']);
+            }
             $edition->setInventoryNumber($line['Numero_inventaire']);
-            $edition->setTome($line['Tome']);
-            $edition->setPages($line['Nb_Pages']);
-            $edition->setNotes($line['Notes']);
 
-            try {
-                if (!empty($line['Annee_edition']) && $line['Annee_edition'] !== 's.d.') {
-                    $year = explode('-', $line['Annee_edition']);
-                    $edition->setPublishedAt(\DateTime::createFromFormat('Y/m/d', $year[0].'/01/01'));
-                }
-            } catch (\Throwable $th) {
-                $io->error($line['Annee_edition']);
+            if (!empty($line['Annee_edition']) && $line['Annee_edition'] !== 's.d.') {
+                $year = explode('-', $line['Annee_edition']);
+                $edition->setPublishedAt(\DateTime::createFromFormat('Y/m/d', $year[0].'/01/01'));
             }
             
             // find or create document
