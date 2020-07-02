@@ -56,7 +56,7 @@
                 <td class="fiche__value">{{ edition.pages }}</td>
             </tr>
         {% endif %}
-        {% if edition.collecs is not null %}
+        {% if edition.collecs|length > 0 %}
             <tr class="fiche__row">
                 <th class="fiche__label">Collections</th>
                 <td class="fiche__list">
