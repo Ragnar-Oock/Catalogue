@@ -97,7 +97,12 @@
         {% for key, value in edition.miscData %}
             <tr class="fiche__row">
                 <th class="fiche__label">{{ key }}</th>
-                <td class="fiche__value">{{ value }}</td>
+                {% if 'http' in value %}
+                    <td class="fiche__value"><a href="{{value}}" rel="noreferrer noopener" target="_blank">{{ value }}</a></td>
+                {% else %}
+                    <td class="fiche__value">{{ value }}</td>
+                {% endif %}
+                
             </tr>
         {% endfor %}
         </tbody>
