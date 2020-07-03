@@ -80,6 +80,7 @@ class TypeController extends AbstractController
         return $this->render('admin/type/edit.html.twig', [
             'type' => $type,
             'form' => $form->createView(),
+            'allowDelete' => count($type->getEditions()) === 0,
         ]);
     }
 

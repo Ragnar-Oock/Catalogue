@@ -81,6 +81,7 @@ class FondController extends AbstractController
         return $this->render('admin/fond/edit.html.twig', [
             'fond' => $fond,
             'form' => $form->createView(),
+            'allowDelete' => count($fond->getEditions()) === 0,
         ]);
     }
 

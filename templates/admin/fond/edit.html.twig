@@ -7,15 +7,38 @@
     <h1 class="fiche__title">Modifier un fond</h1>
 
     {{ include('admin/fond/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
-
-    {{ include('admin/fond/_delete_form.html.twig', {'noBtn': true}) }}
+    {% if allowDelete %}
+        {{ include('admin/fond/_delete_form.html.twig', {'noBtn': true}) }}
+    {% endif %}
 
     <div class="d-flex">
-        <button form="delete-fond" class="btn btn-outline-danger ml-auto mr-3">Supprimer</button>
+        <button form="delete-fond" class="btn btn-outline-danger ml-auto mr-3"{% if allowDelete is same as(false) %}data-toggle="modal" data-target="#delete-dialogue"{% endif %}>Supprimer</button>
         <div class="btn-group">
             <a href="{{ path('fond_index') }}" class="btn btn-outline-secondary">Annuler</a>
             <button class="btn btn-secondary" form="edit-fond">Enregistrer</button>
         </div>
     </div>
+    
+    <div class="modal" tabindex="-1" role="dialog" id="delete-dialogue">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header align-items-center">
+					<span aria-hidden="true" class="mr-3" style="font-size: 1.5em">
+						{% include "icons/warning.svg.twig" %}
+					</span>
+					<h5 class="modal-title">Impossible de supprimer ce fond</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Ce fond est utilisé par au moins une édition, modifiez ou supprimez cette edition avant de supprimer de fond</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

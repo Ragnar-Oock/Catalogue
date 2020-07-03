@@ -17,7 +17,7 @@ class Writer
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ParticipationType")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ParticipationType", inversedBy="participations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $participationType;

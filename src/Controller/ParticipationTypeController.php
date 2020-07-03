@@ -70,6 +70,7 @@ class ParticipationTypeController extends AbstractController
         return $this->render('participation_type/edit.html.twig', [
             'participation_type' => $participationType,
             'form' => $form->createView(),
+            'allowDelete' => count($participationType->getParticipations()) === 0,
         ]);
     }
 

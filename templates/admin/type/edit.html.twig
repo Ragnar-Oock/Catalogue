@@ -4,17 +4,43 @@
 
 {% block main %}
 <div class="fiche">
-    <h1 class="fiche_title">Modifier un type documentaire</h1>
+	<h1 class="fiche_title">Modifier un type documentaire</h1>
 
-    {{ include('admin/type/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
-    {{ include('admin/type/_delete_form.html.twig', {'noBtn': true}) }}
+	{{ include('admin/type/_form.html.twig', {'button_label': 'Enregistrer', 'noBtn': true}) }}
+	{% if allowDelete %}
+		{{ include('admin/type/_delete_form.html.twig', {'noBtn': true}) }}
+	{% endif %}
+	
 
-    <div class="d-flex">
-        <button form="delete-type" class="btn btn-outline-danger ml-auto mr-3">Supprimer</button>
-        <div class="btn-group">
-            <a href="{{ path('type_index') }}" class="btn btn-outline-secondary">Annuler</a>
-            <button class="btn btn-secondary" form="edit-type">{{ button_label|default('Enregistrer') }}</button>
-        </div>
-    </div>
+	<div class="d-flex">
+		<button form="delete-type" class="btn btn-outline-danger ml-auto mr-3" {% if allowDelete is same as(false) %}data-toggle="modal" data-target="#delete-dialogue"{% endif %}>Supprimer</button>
+		<div class="btn-group">
+			<a href="{{ path('type_index') }}" class="btn btn-outline-secondary">Annuler</a>
+			<button class="btn btn-secondary" form="edit-type">{{ button_label|default('Enregistrer') }}</button>
+		</div>
+	</div>
+
+	<div class="modal" tabindex="-1" role="dialog" id="delete-dialogue">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header align-items-center">
+					<span aria-hidden="true" class="mr-3" style="font-size: 1.5em">
+						{% include "icons/warning.svg.twig" %}
+					</span>
+					<h5 class="modal-title">Impossible de supprimer ce type de document</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Ce type de document est utilisé par au moins une édition, modifiez ou supprimez cette edition avant de supprimer de type de document</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 {% endblock %}

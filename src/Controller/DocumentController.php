@@ -86,6 +86,7 @@ class DocumentController extends AbstractController
         return $this->render('admin/document/edit.html.twig', [
             'document' => $document,
             'form' => $form->createView(),
+            'allowDelete' => count($document->getEditions()) === 0,
         ]);
     }
 
