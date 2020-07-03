@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class LoadAncienCommand extends Command
 {
-    protected static $defaultName = 'app:loadAncien';
+    protected static $defaultName = 'app:load:ancien';
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, ParameterBagInterface $params,
     DocumentRepository $dr,
