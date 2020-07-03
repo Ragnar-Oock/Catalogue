@@ -4,6 +4,8 @@
 
 {% block main %}
 {% include("site/search/_filters.html.twig") %}
+
+<p>Affichage de {{ resultList|length }} résultats sur {{ resultList.getTotalItemCount }} trouvés</p>
 <div class="table__container">
 	<table class="results table">
 		<thead class="results_head">
@@ -14,27 +16,44 @@
 			<th class="results_head__label">Date d'édition</th>
 		</thead>
 		<tbody>
-		{% for result in resultList %}
-			<tr class="result_item">
-				<td class="result_item__title"><a href="{{ path('explore_edition', {'edition': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a></td>
-				<td class="result_item__author">
-					{% if result.writers is not empty %}
-						{% for writer in result.writers %}
-							<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
-						{% endfor %}
-					{% endif %}
-				</td>
-				<td class="result_item__editeur">
-					{% if result.editor is not empty %}
-						<a href="{{ path('explore_editor', {'editor': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a>
-					{% endif %}
-				<td class="result_item__type">{{ result.type.title }}</td>
-				<td class="result_item__date">{% if result.publishedAt is not null %}{{ result.publishedAt|date("d/m/Y") }}{% endif %}</td>
-			</tr>
-		{% endfor %}
+			{% for result in resultList %}
+				<tr class="result_item">
+					<td class="result_item__title">
+						<a href="{{ path('explore_edition', {'edition': result.id}) }}" title="Voir plus d'informations">{{ result.document.title }}</a>
+					</td>
+					<td class="result_item__author">
+						{% if result.writers is not empty %}
+							{% for writer in result.writers %}
+								<a href="{{ path('explore_author', {'author': writer.author.id}) }}" title="Voir la bibliographie de cet auteur">{{ writer.author.name }}</a>
+							{% endfor %}
+						{% endif %}
+					</td>
+					<td class="result_item__editeur">
+						{% if result.editor is not empty %}
+							<a href="{{ path('explore_editor', {'editor': result.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ result.editor.name }}</a>
+						{% endif %}
+					</td>
+					<td class="result_item__type">{{ result.type.title }}</td>
+					<td class="result_item__date">
+						{% if result.publishedAt is not null %}
+							{{ result.publishedAt|date("d/m/Y") }}
+						{% endif %}
+					</td>
+				</tr>
+
+			{% else %}
+				<tr>
+					<td colspan="5" class="text-center">
+						<div class="flex flex-column">
+							<p>Aucune résultat trouvé, essayez de modifier votre recherche</p>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
+
 
 <div class="d-flex justify-content-center">
 	{{ knp_pagination_render(resultList) }}
