@@ -2,9 +2,9 @@
 
 {% block main %}
 <div class="author-list">
-	<ul class="author-list__list row">
+	<ul class="author-list__list">
 		{% for author in authorsList %}
-		<li class="author-list__item col-lg-4 col-md-6 col-sm-12">
+		<li class="author-list__item">
 				<a href="{{ path('explore_author', {'author': author.id}) }}" title="Voir la bibliographie de cet auteur" class="author-list__link">{{ author.name }}</a>
 		</li>
 		{% endfor %}
