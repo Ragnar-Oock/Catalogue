@@ -74,6 +74,10 @@
                 <td class="fiche__value">{{ edition.fond }}</td>
             </tr>
         {% endif %}
+        <tr class="fiche__row">
+            <th class="fiche__label">Type de document</th>
+            <td class="fiche__value">{{ edition.type.title }}</td>
+        </tr>
         {% if edition.issn is not null %}
             <tr class="fiche__row">
                 <th class="fiche__label">ISSN</th>
