@@ -1,5 +1,7 @@
 <tr class="edition_item">
-	<td class="editionitem__title"><a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir plus d'informations">{{ edition.document.title }}</a></td>
+	<td class="editionitem__title">
+		<a href="{{ path('explore_edition', {'edition': edition.id}) }}" title="Voir plus d'informations">{{ edition.document.title }}</a>
+	</td>
 	<td class="editiontem__author">
 		{% if edition.writers is not empty %}
 			{% for writer in edition.writers %}
@@ -11,6 +13,6 @@
 		{% if edition.editor is not empty %}
 			<a href="{{ path('explore_editor', {'editor': edition.editor.id}) }}" title="Voir la bibliographie de cet editeur">{{ edition.editor.name }}</a>
 		{% endif %}
-		</td>
-	<td class="edition_item__date">{{ edition.publishedAt|date("d/m/Y") }}</td>
+	</td>
+	<td class="edition_item__date">{{ edition.publishedAt ? edition.publishedAt|date('d/m/Y') : '' }}</td>
 </tr>
