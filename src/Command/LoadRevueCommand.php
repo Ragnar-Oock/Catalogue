@@ -16,6 +16,7 @@ use App\Repository\ParticipationTypeRepository;
 use App\Repository\TypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -59,7 +60,11 @@ class LoadRevueCommand extends Command
 
         $file = $this->params->get('kernel.project_dir') . '/data/catalogueFondsRevue.csv';
         $datas = $this->serializer->decode(file_get_contents($file), 'csv');
-        $datas = array_slice($datas, 473);
+        // $datas = array_slice($datas, 176);
+
+        $progressBar = new ProgressBar($output, count($datas));
+
+        $progressBar->start();
 
         // pour chaque ligne:
         foreach ($datas as $line) {
@@ -93,12 +98,17 @@ class LoadRevueCommand extends Command
                 try {
                     // handle values like "something (year)"
                     $year = explode('(', $line['Annee_edition']);
-                    $year = count($year) > 1 ? $year[1]: $year[0];
-                    $year = explode(')', $year);
-                    // handle values like "year-year" keep the first year
-                    $year = explode('-', $year[0]);
-                    // handle values like "year something"
-                    $year = explode(' ', $year[0]);
+                    if (preg_match('/[0-9]{4}/', $year[0])) {
+                        $year = $year[0];
+                    }
+                    else {
+                        $year = count($year) > 1 ? $year[1]: $year[0];
+                        $year = explode(')', $year);
+                        // handle values like "year-year" keep the first year
+                        $year = explode('-', $year[0]);
+                        // handle values like "year something"
+                        $year = explode(' ', $year[0]);
+                    }
                     $edition->setPublishedAt(\DateTime::createFromFormat('Y/m/d', $year[0] . '/01/01'));
                 } catch (\Throwable $th) {
                     $io->error($line['Annee_edition'] . ' => '. $year[0] . '/01/01');
@@ -187,7 +197,7 @@ class LoadRevueCommand extends Command
             }
             $edition->setEditor($editor);
 
-            $this->em->persist($edition);
+            $this->em->persist($editor);
 
             // 	pour chaque auteur:
             // 		si l'auteur existe deja:
@@ -233,7 +243,13 @@ class LoadRevueCommand extends Command
             $this->em->persist($edition);
 
             $this->em->flush();
+
+            unset($edition);
+
+            $progressBar->advance();
         }
+
+        $progressBar->finish();
 
         $this->em->flush();
 

@@ -21,15 +21,17 @@ class EditorRepository extends ServiceEntityRepository
 
     public function findInstance(Editor $editor)
     {
-        return $this->createQueryBuilder('e')
+        $query = $this->createQueryBuilder('e')
             ->andWhere('e.name = :name')
-            ->andWhere('e.address = :address')
+            ->setParameter('name', $editor->getName());
 
-            ->setParameters([
-                'name' => $editor->getName(),
-                'address' => $editor->getAddress()
-            ])
-            ->getQuery()
+            if (!empty($editor->getAddress())) {
+                
+                $query->andWhere('e.address = :address')
+                    ->setParameter('address', $editor->getAddress());
+            }
+
+            return $query->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult()
             ;

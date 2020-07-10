@@ -19,6 +19,20 @@ class FondRepository extends ServiceEntityRepository
         parent::__construct($registry, Fond::class);
     }
 
+    public function findInstance(Fond $fond)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.title = :title')
+
+            ->setParameters([
+                'title' => $fond->getTitle()
+            ])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Fond[] Returns an array of Fond objects
     //  */

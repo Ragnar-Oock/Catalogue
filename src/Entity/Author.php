@@ -37,7 +37,7 @@ class Author
     private $death;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Writer", mappedBy="author")
      */
     private $participations;
 
